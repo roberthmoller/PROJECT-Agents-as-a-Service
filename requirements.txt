@@ -3,3 +3,15 @@
 # Manually managing azure-functions-worker may cause unexpected issues
 
 azure-functions
+azure-cosmos
+fastapi
+uvicorn
+python-dotenv
+dependency-injector
+pydblite
+sqlalchemy
+pydantic
+
+python-jose[cryptography]
+passlib[bcrypt]
+python-multipart

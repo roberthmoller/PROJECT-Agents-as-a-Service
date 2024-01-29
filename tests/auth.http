@@ -1,0 +1,20 @@
+
+### Authenticate user
+POST http://{{host}}/auth
+Content-Type: multipart/form-data; boundary=WebAppBoundary
+
+--WebAppBoundary
+Content-Disposition: form-data; name="username"
+Content-Type: text/plain
+
+robert@hjortsholm.com
+--WebAppBoundary
+Content-Disposition: form-data; name="password"
+Content-Type: text/plain
+
+1234
+--WebAppBoundary--
+
+### Get authenticated user
+GET http://{{host}}/auth
+

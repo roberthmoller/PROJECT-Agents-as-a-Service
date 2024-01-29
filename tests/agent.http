@@ -1,0 +1,26 @@
+
+### Get agents
+GET http://{{host}}/agent
+
+### Create agent
+
+POST http://{{host}}/agent
+Content-Type: application/json
+
+{
+  "name": "agent1"
+}
+
+### Get agent by id
+GET http://{{host}}/agent/1
+
+### Update agent
+PUT http://{{host}}/agent/1
+Content-Type: application/json
+
+{
+  "name": "agent1"
+}
+
+### Delete agent
+DELETE http://{{host}}/agent/1

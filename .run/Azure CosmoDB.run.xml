@@ -1,0 +1,44 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Azure CosmoDB" type="docker-deploy" factoryName="docker-image" server-name="Docker">
+    <deployment type="docker-image">
+      <settings>
+        <option name="imageTag" value="mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest" />
+        <option name="containerName" value="" />
+        <option name="portBindings">
+          <list>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="8081" />
+              <option name="hostPort" value="8081" />
+            </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="10250" />
+              <option name="hostPort" value="10250" />
+            </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="10251" />
+              <option name="hostPort" value="10251" />
+            </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="10252" />
+              <option name="hostPort" value="10252" />
+            </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="10253" />
+              <option name="hostPort" value="10253" />
+            </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="10254" />
+              <option name="hostPort" value="10254" />
+            </DockerPortBindingImpl>
+            <DockerPortBindingImpl>
+              <option name="containerPort" value="10255" />
+              <option name="hostPort" value="10255" />
+            </DockerPortBindingImpl>
+          </list>
+        </option>
+        <option name="showCommandPreview" value="true" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>
