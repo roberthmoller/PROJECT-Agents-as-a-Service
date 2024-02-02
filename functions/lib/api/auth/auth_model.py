@@ -2,7 +2,35 @@ from pydantic import BaseModel
 from sqlalchemy import String, Boolean
 from sqlalchemy.orm import mapped_column, Mapped
 
-from lib.utils.model import Schema
+from lib.utils.model import Schema, Model
+
+
+class UserLogin(Model):
+    email: str
+    password: str
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "email": "john.doe@gmail.com",
+                "password": "ExamplePassword123"
+            }
+        }
+
+
+class UserRegistration(Model):
+    name: str
+    email: str
+    password: str
+
+    class Config:
+        json_schema_extra = {
+            "example": {
+                "name": "John Doe",
+                "email": "john.doe@gmail.com",
+                "password": "ExamplePassword123"
+            }
+        }
 
 
 class Token(BaseModel):

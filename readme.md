@@ -2,6 +2,7 @@
 
 
 ## Todo
+ - [ ] Change to firebase
  - [ ] Feature testing
  - [ ] Playwright testing
  - [ ] Unit testing

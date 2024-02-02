@@ -1,0 +1,27 @@
+# Hosting
+firebase-admin==6.4.0
+firebase-functions==0.2.0
+
+# API
+fastapi==0.109.0
+agraffe==0.7.0
+
+# Client
+#Pyrebase4==4.7.1
+../../FORK-Pyrebase
+
+# Utilities
+python-dotenv
+pydblite
+sqlalchemy
+pydantic
+
+# Web
+python-multipart
+
+# Security
+python-jose[cryptography]
+passlib[bcrypt]
+
+# Artificial Intelligence
+pyautogen

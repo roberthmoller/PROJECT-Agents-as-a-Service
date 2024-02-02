@@ -1,9 +1,8 @@
 
 ### Get agents
-GET http://{{host}}/agent
+GET https://{{host}}/agent
 
 ### Create agent
-
 POST http://{{host}}/agent
 Content-Type: application/json
 

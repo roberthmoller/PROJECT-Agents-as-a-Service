@@ -1,0 +1,3 @@
+### Send message
+POST https://{{host}}/session/123?message=Can you define the word multitude?
+Content-Type: text/plain
