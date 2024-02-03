@@ -1,13 +1,12 @@
 from abc import abstractmethod, ABC
-from typing import TypeVar, Callable, Generic, Union
+from typing import TypeVar, Callable, Generic
 
 from fastapi import APIRouter, Depends, Body
 
 from lib.utils.crud_repository import CRUDRepository
-from lib.utils.model import Schema, Model
 
 UI = TypeVar('UI')
-DB = TypeVar('DB', bound=Schema)
+DB = TypeVar('DB')
 R = TypeVar('R', bound=CRUDRepository)
 
 

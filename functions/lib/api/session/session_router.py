@@ -1,14 +1,16 @@
 import datetime
 import os
-
-from fastapi import APIRouter, Body, Query, HTTPException
-from autogen import AssistantAgent, UserProxyAgent, GroupChat, GroupChatManager
-from dotenv import load_dotenv
-from pydantic import BaseModel, Field
-from lib.api.agent.agent_model import AgentModel
-from lib.api.session.session_model import SessionModel
-from lib.utils.firebase import db
 from datetime import datetime
+
+from autogen import AssistantAgent, UserProxyAgent
+from dotenv import load_dotenv
+from fastapi import APIRouter, Body, HTTPException, Depends
+
+from lib.api.agent.agent_model import SavedAgentSpecification
+from lib.api.session.message_model import SavedMessageModel
+from lib.api.session.session_model import SessionSpecification, SavedSessionSpecification, SessionSummary
+from lib.utils.auth_utils import user_scope
+from lib.utils.firebase.admin import db
 
 router = APIRouter(
     prefix="/session",
@@ -26,29 +28,15 @@ llm_config = {
 }
 
 
-class MessageModel(BaseModel):
-    id: str = Field(str)
-    content: str = Field(str)
-    sender: str = Field(str)
-    recipient: str = Field(str)
-    sent_at: str = Field(str)
-
-
-@router.post("/")
-def create_session(agent_ids: list[str]) -> SessionModel:
-    print("Create session with agents: {0}".format(agent_ids))
+@router.post("/", dependencies=[Depends(user_scope)])
+def create_session(session: SessionSpecification) -> SavedSessionSpecification:
+    print("Create session: {0}".format(session))
     document = db.collection("sessions").document()
-    document.set({"agents": agent_ids})
-    return SessionModel(id=document.id, agents=agent_ids)
+    document.set(session.model_dump())
+    return SavedSessionSpecification(id=document.id, **session.model_dump())
 
 
-class SessionSummary(BaseModel):
-    id: str
-    agents: list[AgentModel]
-    messages: list[MessageModel]
-
-
-@router.get("/{session_id}")
+@router.get("/{session_id}", dependencies=[Depends(user_scope)])
 def get_summary(session_id: str) -> SessionSummary:
     session_ref = db.collection("sessions").document(session_id)
     messages_ref = session_ref.collection("messages").order_by("sent_at")
@@ -58,14 +46,14 @@ def get_summary(session_id: str) -> SessionSummary:
         print(f"Session {session_id} not found")
         raise HTTPException(status_code=404, detail="Session not found")
 
-    session = SessionModel(id=session_ref.id, **session_ref.get().to_dict())
+    session = SavedSessionSpecification(id=session_ref.id, **session_ref.get().to_dict())
     print("Session: {0}".format(session))
     agents = [
-        AgentModel(id=agent_id, **agents_ref.document(agent_id).get().to_dict())
+        SavedAgentSpecification(id=agent_id, **agents_ref.document(agent_id).get().to_dict())
         for agent_id in session.agents
     ]
     print("Agents: {0}".format(agents))
-    messages = [MessageModel(id=message.id, **message.to_dict()) for message in messages_ref.get()]
+    messages = [SavedMessageModel(id=message.id, **message.to_dict()) for message in messages_ref.get()]
     print("Existing messages: {0}".format(messages))
 
     return SessionSummary(
@@ -75,7 +63,7 @@ def get_summary(session_id: str) -> SessionSummary:
     )
 
 
-@router.post("/{session_id}")
+@router.post("/{session_id}", dependencies=[Depends(user_scope)])
 def send_message(session_id: str, message_content: str = Body(str)) -> SessionSummary:
     summary = get_summary(session_id)
     print("Summary: {0}".format(summary))
@@ -121,36 +109,26 @@ def send_message(session_id: str, message_content: str = Body(str)) -> SessionSu
     if len(agents) == 1:
         agent = next(iter(agents.values()))
         sending_ref = messages_ref.document()
-        sending = MessageModel(
+        sending = SavedMessageModel(
             id=sending_ref.id,
             content=str(message_content),
             sender="UserProxy",
             recipient=agent.name,
             sent_at=str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         )
-        sending_ref.set({
-            "content": sending.content,
-            "sender": sending.sender,
-            "recipient": sending.recipient,
-            "sent_at": sending.sent_at
-        })
+        sending_ref.set(sending.model_dump())
         summary.messages.append(sending)
         proxy.initiate_chat(agent, message=str(message_content), clear_history=False)
 
         response_ref = messages_ref.document()
-        response = MessageModel(
+        response = SavedMessageModel(
             id=response_ref.id,
             content=str(proxy.last_message(agent)["content"]),
             sender=agent.name,
             recipient="UserProxy",
             sent_at=str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         )
-        response_ref.set({
-            "content": response.content,
-            "sender": response.sender,
-            "recipient": response.recipient,
-            "sent_at": response.sent_at
-        })
+        response_ref.set(response.model_dump())
         summary.messages.append(response)
 
     return SessionSummary(
@@ -158,24 +136,3 @@ def send_message(session_id: str, message_content: str = Body(str)) -> SessionSu
         agents=summary.agents,
         messages=summary.messages
     )
-
-    #
-    # if len(assistants) == 1:
-    #     assistant = next(iter(assistants.values()))
-    #     proxy.initiate_chat(assistant, message=message)
-
-    # messages_ref.add({"content": message})
-    # agent = AssistantAgent(
-    #     llm_config=llm_config,
-    #     name="HelpfulAssistant",
-    #     system_message="""
-    #     You are a helpful AI assistant that talks like a pirate. Think out loud and solve their problem step by step.
-    #     Reply "TERMINATE" in the end when everything is done.
-    #     """
-    # )
-
-    # proxy.initiate_chat(agent, message=message)
-    #
-    # proxy.send()
-
-    # return proxy.last_message(agent).get("content", "")

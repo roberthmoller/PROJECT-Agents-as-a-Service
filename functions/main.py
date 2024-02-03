@@ -4,7 +4,6 @@ from firebase_functions import https_fn, identity_fn
 from api import app
 
 
-
 @https_fn.on_request()
 def api(req: https_fn.Request):
     return Agraffe(app, HttpCycle)(request=req)

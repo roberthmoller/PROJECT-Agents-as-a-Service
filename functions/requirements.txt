@@ -4,11 +4,11 @@ firebase-functions==0.2.0
 
 # API
 fastapi==0.109.0
+fastapi_auth_middleware
 agraffe==0.7.0
 
 # Client
-#Pyrebase4==4.7.1
-../../FORK-Pyrebase
+Pyrebase4==4.7.1
 
 # Utilities
 python-dotenv
