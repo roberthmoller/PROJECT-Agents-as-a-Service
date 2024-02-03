@@ -1,12 +1,12 @@
 import os
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Body
 from fastapi.security import HTTPBasicCredentials
+from firebase_admin import auth
 
 from lib.api.auth.auth_scheme import basic_scheme
-from lib.utils.auth_utils import authenticated
+from lib.utils.auth_utils import authenticated, admin_scope, user_scope
 from lib.utils.firebase.client import client_auth
-from firebase_admin import auth
 
 os.environ["FIREBASE_AUTH_EMULATOR_HOST"] = ""
 # os.environ["FIREBASE_AUTH_EMULATOR_HOST"] = "127.0.0.1:9099"
@@ -37,21 +37,21 @@ def get_authenticated_user(user=Depends(authenticated)):
 
 
 @router.get("/scopes")
-def grant_scopes(user=Depends(authenticated)) -> list[str]:
+def get_scopes(user=Depends(user_scope)) -> list[str]:
     return list(dict(user.custom_claims).keys())
 
 
 @router.put("/scopes")
-def grant_scopes(scopes: list[str], user=Depends(authenticated)) -> list[str]:
+def grant_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_scope)) -> list[str]:
     claims: dict = user.custom_claims
     for scope in scopes:
         claims[scope] = True
-    auth.update_user(user.uid, custom_claims=claims, )
+    auth.update_user(user.uid, custom_claims=claims)
     return list(claims.keys())
 
 
 @router.delete("/scopes")
-def delete_scopes(scopes: list[str], user=Depends(authenticated)):
+def delete_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_scope)):
     claims: dict = user.custom_claims
     for scope in scopes:
         claims.pop(scope)

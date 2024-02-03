@@ -31,16 +31,16 @@ llm_config = {
 @router.post("/", dependencies=[Depends(user_scope)])
 def create_session(session: SessionSpecification) -> SavedSessionSpecification:
     print("Create session: {0}".format(session))
-    document = db.collection("sessions").document()
+    document = db().collection("sessions").document()
     document.set(session.model_dump())
     return SavedSessionSpecification(id=document.id, **session.model_dump())
 
 
 @router.get("/{session_id}", dependencies=[Depends(user_scope)])
 def get_summary(session_id: str) -> SessionSummary:
-    session_ref = db.collection("sessions").document(session_id)
+    session_ref = db().collection("sessions").document(session_id)
     messages_ref = session_ref.collection("messages").order_by("sent_at")
-    agents_ref = db.collection("agents")
+    agents_ref = db().collection("agents")
 
     if not session_ref.get().exists:
         print(f"Session {session_id} not found")
@@ -103,7 +103,7 @@ def send_message(session_id: str, message_content: str = Body(str)) -> SessionSu
     print("Message history inserted", proxy.chat_messages)
 
     #     Save user message
-    session_ref = db.collection("sessions").document(session_id)
+    session_ref = db().collection("sessions").document(session_id)
     messages_ref = session_ref.collection("messages")
 
     if len(agents) == 1:

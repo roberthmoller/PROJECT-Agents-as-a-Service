@@ -1,4 +1,18 @@
-from firebase_admin import initialize_app, firestore
+from typing import Optional
 
-app = initialize_app()
-db = firestore.client(app)
+from firebase_admin import firestore, initialize_app, App
+from firebase_admin.firestore import firestore as Firestore
+
+
+class Firebase:
+    app: Optional[App] = None
+
+
+def db() -> Firestore.Client:
+    return firestore.client(Firebase.app)
+
+
+def initialize() -> App:
+    if Firebase.app is None:
+        Firebase.app = initialize_app()
+    return Firebase.app

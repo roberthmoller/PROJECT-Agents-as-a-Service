@@ -8,12 +8,11 @@ app = FastAPI(
     title="Agents as a Service",
     description="API for the Agents as a Service project",
     version="0.0.1",
+    root_path="/api",
     docs_url="/",
     redoc_url="/redoc",
-    swagger_ui_oauth2_redirect_url="/auth",
-    swagger_ui_init_oauth={
-        "appName": "Agents as a Service",
-        "scopes": ["user", "admin"],
+    swagger_ui_parameters={
+        "persist authorization": True,
     }
 )
 app.include_router(auth_router)
