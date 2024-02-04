@@ -9,5 +9,4 @@ initialize()
 
 @https_fn.on_request()
 def api(req: https_fn.Request):
-    print("Request: {0}".format(req))
     return Agraffe(app, HttpCycle)(request=req)

@@ -1,3 +1,24 @@
-### Send message
-POST https://{{host}}/session/123?message=Can you define the word multitude?
+### Create session
+POST https://{{host}}/api/session
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "agents": [
+    "5BxFlw99OaN0s3xt9mXp",
+    "vp50LAisp5POzyQ1VqoK"
+  ]
+}
+
+
+### Get session
+GET https://{{host}}/api/session/ktp1IjcZNojzqUZyGWzz
+Authorization: Bearer {{access_token}}
+
+
+### Send message in session
+POST https://{{host}}/api/session/ktp1IjcZNojzqUZyGWzz
+Authorization: Bearer {{access_token}}
 Content-Type: text/plain
+
+"Hello Alfred! How are you?"

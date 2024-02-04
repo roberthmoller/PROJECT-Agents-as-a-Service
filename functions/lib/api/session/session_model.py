@@ -27,7 +27,7 @@ class SavedSessionSpecification(SessionSpecification):
         }
 
 
-class SessionSummary(BaseModel):
+class Session(BaseModel):
     id: str
     agents: list[SavedAgentSpecification]
     messages: list[SavedMessageModel]

@@ -3,7 +3,8 @@ import os
 from fastapi import APIRouter, Depends, Body
 from fastapi.security import HTTPBasicCredentials
 from firebase_admin import auth
-
+from fastapi import HTTPException
+from lib.api.auth.auth_model import FirebaseUser
 from lib.api.auth.auth_scheme import basic_scheme
 from lib.utils.auth_utils import authenticated, admin_scope, user_scope
 from lib.utils.firebase.client import client_auth
@@ -18,7 +19,7 @@ router = APIRouter(
 
 
 @router.post("/")
-def create_access_token(cred: HTTPBasicCredentials = Depends(basic_scheme)):
+def create_access_token(cred: HTTPBasicCredentials = Depends(basic_scheme)) -> str:
     print("Credentials: {0}".format(cred))
     try:
         authorization = client_auth.sign_in_with_email_and_password(email=cred.username, password=cred.password)
@@ -28,11 +29,11 @@ def create_access_token(cred: HTTPBasicCredentials = Depends(basic_scheme)):
         return token
     except Exception as e:
         print("Error creating token: {0}".format(e))
-        return e
+        raise HTTPException(status_code=401, detail="Invalid credentials")
 
 
 @router.get("/")
-def get_authenticated_user(user=Depends(authenticated)):
+def get_authenticated_user(user=Depends(authenticated)) -> FirebaseUser:
     return user
 
 
@@ -51,7 +52,7 @@ def grant_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_
 
 
 @router.delete("/scopes")
-def delete_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_scope)):
+def delete_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_scope)) -> list[str]:
     claims: dict = user.custom_claims
     for scope in scopes:
         claims.pop(scope)

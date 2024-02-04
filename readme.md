@@ -1,22 +1,23 @@
 # Agents as a Service
 
 
-## Todo
- - [ ] Change to firebase
- - [ ] Feature testing
- - [ ] Playwright testing
- - [ ] Unit testing
- - [ ] Integration testing
+## User flows
+
+### 1. Single agent interaction
+Steps:
+1. User creates an agent
+2. User creates session with agent
+3. User interacts with session
+
+### 2. Multi-agent interaction
+Steps:
+1. User creates multiple agents
+2. User creates session with agents
+3. User interacts with session
 
 ## Resources 
 
 
-[CosmoDB emulator](https://learn.microsoft.com/en-us/azure/cosmos-db/how-to-develop-emulator?tabs=docker-linux%2Ccsharp&pivots=api-nosql)
-```sh 
-docker run \
---publish 8081:8081 \
---publish 10250-10255:10250-10255 \
---interactive \
---tty \
-mcr.microsoft.com/cosmosdb/linux/azure-cosmos-emulator:latest
-```
+### shadcn-svelte
+
+Examples: https://github.com/huntabyte/shadcn-svelte/tree/main/apps/www/src/lib/registry/new-york/example

@@ -21,6 +21,7 @@ def list_agents() -> list[SavedAgentSpecification]:
 @router.post("/", dependencies=[Depends(user_scope)])
 def create_agent(agent: AgentSpecification) -> SavedAgentSpecification:
     print("Create agent: {0}".format(agent))
+    agent.name = agent.name.strip().replace(" ", "_")
     document = db().collection("agents").document()
     document.set(agent.model_dump())
     return SavedAgentSpecification(id=document.id, **agent.model_dump())
@@ -39,6 +40,7 @@ def get_agent(agent_id: str) -> SavedAgentSpecification:
 @router.put("/{agent_id}", dependencies=[Depends(user_scope)])
 def update_agent(agent_id: str, agent: AgentSpecification) -> SavedAgentSpecification:
     print("Update agent {0}: {1}".format(agent_id, agent))
+    agent.name = agent.name.strip().replace(" ", "_")
     document = db().collection("agents").document(agent_id)
     document.set(agent.model_dump())
     return SavedAgentSpecification(id=document.id, **agent.model_dump())

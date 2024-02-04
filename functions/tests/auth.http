@@ -1,20 +1,9 @@
 
 ### Authenticate user
-POST http://{{host}}/auth
-Content-Type: multipart/form-data; boundary=WebAppBoundary
+POST http://{{host}}/api/auth
+Authorization: Basic cm9iZXJ0QGhqb3J0c2hvbG0uY29tOlRlc3QxMjM=
 
---WebAppBoundary
-Content-Disposition: form-data; name="username"
-Content-Type: text/plain
-
-robert@hjortsholm.com
---WebAppBoundary
-Content-Disposition: form-data; name="password"
-Content-Type: text/plain
-
-1234
---WebAppBoundary--
-
-### Get authenticated user
-GET http://{{host}}/auth
-
+> {%
+    const body = response.body.toString();
+    client.global.set("access_token", body);
+%}
