@@ -21,4 +21,4 @@ POST https://{{host}}/api/session/ktp1IjcZNojzqUZyGWzz
 Authorization: Bearer {{access_token}}
 Content-Type: text/plain
 
-"Hello Alfred! How are you?"
+How is it going up in space?

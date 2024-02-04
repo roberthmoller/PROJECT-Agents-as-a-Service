@@ -6,9 +6,9 @@ from starlette.authentication import BaseUser
 class FirebaseUser(BaseModel, BaseUser):
     uid: str = Field()
     email: str = Field()
-    email_verified: bool = Field()
-    disabled: bool = Field()
-    custom_claims: dict = Field()
+    disabled: bool = Field(False)
+    email_verified: bool = Field(False)
+    custom_claims: dict = Field(dict())
     name: str | None = Field()
     photo_url: str | None = Field()
     phone_number: str | None = Field()
