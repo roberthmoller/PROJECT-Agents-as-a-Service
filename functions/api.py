@@ -9,7 +9,7 @@ app = FastAPI(
     description="API for the Agents as a Service project",
     version="0.0.1",
     root_path="/api",
-    docs_url="/",
+    docs_url="/doc",
     redoc_url="/redoc",
     swagger_ui_parameters={
         "persist authorization": True,

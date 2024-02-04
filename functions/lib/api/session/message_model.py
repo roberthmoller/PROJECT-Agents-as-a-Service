@@ -10,3 +10,11 @@ class MessageModel(BaseModel):
 
 class SavedMessageModel(MessageModel):
     id: str = Field(str)
+
+    def to_message(self) -> MessageModel:
+        return MessageModel(
+            content=self.content,
+            sender=self.sender,
+            recipient=self.recipient,
+            sent_at=self.sent_at
+        )

@@ -116,7 +116,7 @@ def send_message(session_id: str, message_content: str = Body(str)) -> SessionSu
             recipient=agent.name,
             sent_at=str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         )
-        sending_ref.set(sending.model_dump())
+        sending_ref.set(sending.to_message().model_dump())
         summary.messages.append(sending)
         proxy.initiate_chat(agent, message=str(message_content), clear_history=False)
 
@@ -128,7 +128,7 @@ def send_message(session_id: str, message_content: str = Body(str)) -> SessionSu
             recipient="UserProxy",
             sent_at=str(datetime.now().strftime("%Y-%m-%d %H:%M:%S"))
         )
-        response_ref.set(response.model_dump())
+        response_ref.set(response.to_message().model_dump())
         summary.messages.append(response)
 
     return SessionSummary(

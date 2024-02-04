@@ -12,7 +12,11 @@
     }
   ],
   "hosting": {
-    "public": "public",
+    "source": "website",
+    "frameworksBackend": {
+      "region": "europe-west1",
+      "invoker": "public"
+    },
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -21,7 +25,7 @@
     ],
     "rewrites": [
       {
-        "regex": "api.*",
+        "source": "/api/**",
         "function": "api"
       }
     ]
