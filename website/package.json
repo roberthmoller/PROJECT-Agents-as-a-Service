@@ -18,6 +18,7 @@
     "@sveltejs/kit": "^2.0.0",
     "@sveltejs/vite-plugin-svelte": "^3.0.0",
     "autoprefixer": "^10.4.16",
+    "lucide-svelte": "^0.321.0",
     "postcss": "^8.4.32",
     "postcss-load-config": "^5.0.2",
     "sass": "^1.70.0",
@@ -34,7 +35,10 @@
   },
   "type": "module",
   "dependencies": {
+    "bits-ui": "^0.16.0",
     "clsx": "^2.1.0",
+    "cmdk-sv": "^0.0.13",
+    "mode-watcher": "^0.2.0",
     "radix-icons-svelte": "^1.2.1",
     "tailwind-merge": "^2.2.1",
     "tailwind-variants": "^0.1.20"

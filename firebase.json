@@ -12,11 +12,11 @@
     }
   ],
   "hosting": {
-    "source": "website",
-    "frameworksBackend": {
-      "region": "europe-west1",
-      "invoker": "public"
-    },
+//    "source": "website",
+//    "frameworksBackend": {
+//      "region": "europe-west1",
+//      "invoker": "public"
+//    },
     "ignore": [
       "firebase.json",
       "**/.*",
