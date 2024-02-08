@@ -13,12 +13,11 @@ os.environ["FIREBASE_AUTH_EMULATOR_HOST"] = ""
 # os.environ["FIREBASE_AUTH_EMULATOR_HOST"] = "127.0.0.1:9099"
 
 router = APIRouter(
-    prefix="/auth",
     tags=["Auth"],
 )
 
 
-@router.post("/")
+@router.post("/auth")
 def create_access_token(cred: HTTPBasicCredentials = Depends(basic_scheme)) -> str:
     print("Credentials: {0}".format(cred))
     try:
@@ -32,18 +31,18 @@ def create_access_token(cred: HTTPBasicCredentials = Depends(basic_scheme)) -> s
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
 
-@router.get("/")
+@router.get("/auth")
 def get_authenticated_user(user=Depends(authenticated)) -> FirebaseUser:
     print("get_authenticated_user: {0}".format(user))
     return user
 
 
-@router.get("/scopes")
+@router.get("/auth/scopes")
 def get_scopes(user=Depends(user_scope)) -> list[str]:
     return list(dict(user.custom_claims).keys())
 
 
-@router.put("/scopes")
+@router.put("/auth/scopes")
 def grant_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_scope)) -> list[str]:
     claims: dict = user.custom_claims
     for scope in scopes:
@@ -52,7 +51,7 @@ def grant_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_
     return list(claims.keys())
 
 
-@router.delete("/scopes")
+@router.delete("/auth/scopes")
 def delete_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_scope)) -> list[str]:
     claims: dict = user.custom_claims
     for scope in scopes:
