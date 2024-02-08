@@ -54,10 +54,10 @@ class FirebaseAgent(ConversableAgent, ABC):
 class FirebaseUserProxyAgent(UserProxyAgent, FirebaseAgent):
     def __init__(self, session: Session, user: FirebaseUser):
         self.session = session
-        self.id = "User"
-        self.display_name = (user.name or "User").replace(" ", "_")
+        self.id = user.uid
+        self.display_name = ((user.name or "User").replace(" ", "_"))
         super().__init__(
-            name=self.display_name,
+            name=self.id,
             human_input_mode="NEVER",
             code_execution_config={
                 "work_dir": "work_dir",
@@ -138,5 +138,5 @@ class CustomGroupChat(GroupChatManager):
     def format_members(agents: list[FirebaseAgent], user: FirebaseUserProxyAgent):
         return ", ".join([
             (user.name if user.name == "User" else f"{user.name} ({user.id})"),
-            *(f"{agent.name} ({agent.id})" for agent in agents)
+            *(f"{agent.display_name} ({agent.id})" for agent in agents)
         ])

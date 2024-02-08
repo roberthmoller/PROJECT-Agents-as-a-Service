@@ -21,7 +21,7 @@ def initialize_chat(user: FirebaseUser, session: Session) \
         chat = CustomGroupChat(proxy, list(agents.values()), )
 
     for message in session.messages:
-        if message.sender in ["User", user.name]:
+        if message.sender == user.uid:
             proxy.send(message.content, chat, request_reply=False)
         else:
             sender = agents[message.sender]

@@ -34,6 +34,7 @@ def create_access_token(cred: HTTPBasicCredentials = Depends(basic_scheme)) -> s
 
 @router.get("/")
 def get_authenticated_user(user=Depends(authenticated)) -> FirebaseUser:
+    print("get_authenticated_user: {0}".format(user))
     return user
 
 

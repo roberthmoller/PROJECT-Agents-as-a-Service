@@ -3,6 +3,13 @@ from pydantic import Field, BaseModel
 from starlette.authentication import BaseUser
 
 
+def sanitize_name(display_name: str) -> str:
+    return display_name \
+        .replace("ø", "o").replace("Ø", "O") \
+        .replace("æ", "ae").replace("Æ", "AE") \
+        .replace("å", "aa").replace("Å", "AA")
+
+
 class FirebaseUser(BaseModel, BaseUser):
     uid: str = Field()
     email: str = Field()
@@ -17,7 +24,7 @@ class FirebaseUser(BaseModel, BaseUser):
     def of(user: UserRecord):
         return FirebaseUser(
             uid=user.uid,
-            name=user.display_name,
+            name=sanitize_name(user.display_name),
             email=user.email,
             email_verified=user.email_verified,
             disabled=user.disabled,

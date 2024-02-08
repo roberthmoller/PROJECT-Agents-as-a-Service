@@ -8,19 +8,26 @@ from lib.utils.auth_utils import user_scope
 from lib.utils.firebase.admin import db
 
 router = APIRouter(
-    prefix="/session",
     tags=["Session"],
 )
 
 
-@router.post("/", dependencies=[Depends(user_scope)])
+@router.get("/sessions", dependencies=[Depends(user_scope)])
+def list_sessions() -> list[Session]:
+    return list(map(
+        lambda document: get_summary(document.id),
+        db().collection("sessions").get()
+    ))
+
+
+@router.post("/session", dependencies=[Depends(user_scope)])
 def create_session(session: SessionSpecification) -> SavedSessionSpecification:
     document = db().collection("sessions").document()
     document.set(session.model_dump())
     return SavedSessionSpecification(id=document.id, **session.model_dump())
 
 
-@router.get("/{session_id}", dependencies=[Depends(user_scope)])
+@router.get("/session/{session_id}", dependencies=[Depends(user_scope)])
 def get_summary(session_id: str) -> Session:
     session_ref = db().collection("sessions").document(session_id)
     messages_ref = session_ref.collection("messages").order_by("sent_at")
@@ -45,7 +52,7 @@ def get_summary(session_id: str) -> Session:
     )
 
 
-@router.post("/{session_id}")
+@router.post("/session/{session_id}")
 def send_message(session_id: str, message_content: str = Body(str), user=Depends(user_scope)) -> Session:
     summary = get_summary(session_id)
     user, recipient = initialize_chat(user, summary)

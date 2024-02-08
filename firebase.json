@@ -12,11 +12,11 @@
     }
   ],
   "hosting": {
-//    "source": "website",
-//    "frameworksBackend": {
-//      "region": "europe-west1",
-//      "invoker": "public"
-//    },
+    "source": "website",
+    "frameworksBackend": {
+      "region": "europe-west1",
+      "invoker": "public"
+    },
     "ignore": [
       "firebase.json",
       "**/.*",
@@ -31,6 +31,9 @@
     ]
   },
   "emulators": {
+    "hosting": {
+      "port": 5002
+    },
     "auth": {
       "port": 9099
     },
