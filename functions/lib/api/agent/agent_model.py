@@ -1,6 +1,7 @@
+import datetime
 from enum import Enum
 from typing import Literal
-
+from datetime import datetime
 from pydantic import Field, BaseModel
 
 Model = Literal[
@@ -24,6 +25,10 @@ class AgentSpecification(BaseModel):
         description="The list of models that the agent can use to generate responses",
         min_items=1,
     )
+    description: str = Field(
+        title="Description",
+        description="A description of the agent for the user to be able to understand what the agent is about."
+    )
     cache_seed: int = Field(
         42,
         title="Cache seed",
@@ -34,6 +39,10 @@ class AgentSpecification(BaseModel):
         title="Temperature",
         description="The temperature of the agent's response generation process"
     )
+    created_at: str = Field(
+        lambda x: str(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]),
+        title="The date and time when the agent was created",
+    )
 
     class Config:
         description = "The specification of an agent that can be used to interact with the user."
@@ -41,6 +50,7 @@ class AgentSpecification(BaseModel):
             "example": {
                 "name": "Pirate Paul",
                 "system_message": "You are a helpful pirate agent who is always ready to help the user.",
+                "description": "A helpful pirate agent who is always ready to help the user.",
                 "models": ["gpt-3.5-turbo"],
                 "cache_seed": 42,
                 "temperature": 0
@@ -50,6 +60,10 @@ class AgentSpecification(BaseModel):
 
 class SavedAgentSpecification(AgentSpecification):
     id: str = Field(title="The unique identifier of the agent")
+    updated_at: str = Field(
+        lambda x: str(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]),
+        title="The date and time when the agent was last updated"
+    )
 
     @staticmethod
     def from_ref(ref):

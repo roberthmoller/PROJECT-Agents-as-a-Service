@@ -1,6 +1,6 @@
 # .SessionApi
 
-All URIs are relative to *http://localhost:5002/api*
+All URIs are relative to */api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

@@ -1,12 +1,12 @@
 # .AuthApi
 
-All URIs are relative to *http://localhost:5002/api*
+All URIs are relative to */api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createAccessTokenAuthPost**](AuthApi.md#createAccessTokenAuthPost) | **POST** /auth/ | Create Access Token
+[**createAccessTokenAuthPost**](AuthApi.md#createAccessTokenAuthPost) | **POST** /auth | Create Access Token
 [**deleteScopesAuthScopesDelete**](AuthApi.md#deleteScopesAuthScopesDelete) | **DELETE** /auth/scopes | Delete Scopes
-[**getAuthenticatedUserAuthGet**](AuthApi.md#getAuthenticatedUserAuthGet) | **GET** /auth/ | Get Authenticated User
+[**getAuthenticatedUserAuthGet**](AuthApi.md#getAuthenticatedUserAuthGet) | **GET** /auth | Get Authenticated User
 [**getScopesAuthScopesGet**](AuthApi.md#getScopesAuthScopesGet) | **GET** /auth/scopes | Get Scopes
 [**grantScopesAuthScopesPut**](AuthApi.md#grantScopesAuthScopesPut) | **PUT** /auth/scopes | Grant Scopes
 

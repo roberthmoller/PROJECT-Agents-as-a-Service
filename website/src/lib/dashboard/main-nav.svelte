@@ -23,6 +23,6 @@
             class:avtive={$page.url.pathname === "/agents"}
             class:text-muted-foreground={$page.url.pathname !== "/agents"}
     >
-        Agents
+        Workshop
     </a>
 </nav>

@@ -50,7 +50,7 @@ export class ServerConfiguration<T extends { [key: string]: string }> implements
     }
 }
 
-export const server1 = new ServerConfiguration<{  }>("http://localhost:5002/api", {  })
+export const server1 = new ServerConfiguration<{  }>("/api", {  })
 export const server2 = new ServerConfiguration<{  }>("http://localhost:5002/api", {  })
 export const server3 = new ServerConfiguration<{  }>("http://agents-as-a-service.web.app/api", {  })
 

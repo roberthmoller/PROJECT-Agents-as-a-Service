@@ -26,6 +26,10 @@ export class SavedAgentSpecification {
     */
     'models'?: Array<SavedAgentSpecificationModelsEnum>;
     /**
+    * A description of the agent for the user to be able to understand what the agent is about.
+    */
+    'description': string;
+    /**
     * The cache seed used to initialize the agent\'s random number generator
     */
     'cacheSeed'?: number;
@@ -33,7 +37,9 @@ export class SavedAgentSpecification {
     * The temperature of the agent\'s response generation process
     */
     'temperature'?: number;
+    'createdAt'?: string;
     'id': string;
+    'updatedAt': string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -57,6 +63,12 @@ export class SavedAgentSpecification {
             "format": ""
         },
         {
+            "name": "description",
+            "baseName": "description",
+            "type": "string",
+            "format": ""
+        },
+        {
             "name": "cacheSeed",
             "baseName": "cache_seed",
             "type": "number",
@@ -69,8 +81,20 @@ export class SavedAgentSpecification {
             "format": ""
         },
         {
+            "name": "createdAt",
+            "baseName": "created_at",
+            "type": "string",
+            "format": ""
+        },
+        {
             "name": "id",
             "baseName": "id",
+            "type": "string",
+            "format": ""
+        },
+        {
+            "name": "updatedAt",
+            "baseName": "updated_at",
             "type": "string",
             "format": ""
         }    ];

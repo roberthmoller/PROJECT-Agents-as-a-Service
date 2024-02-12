@@ -12,7 +12,8 @@
     "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
     "test:integration": "playwright test",
     "test:unit": "vitest",
-    "generate:client": "openapi-generator-cli generate -i http://localhost:5002/api/openapi.json -g typescript -o .generated/api-client --additional-properties=npmName=restClient,supportsES6=true,npmVersion=6.9.0,withInterfaces=true && npm i",
+    "generate:client:url": "openapi-generator-cli generate -i http://localhost:5002/api/openapi.json -g typescript -o .generated/api-client --additional-properties=npmName=restClient,supportsES6=true,npmVersion=6.9.0,withInterfaces=true && npm i",
+    "generate:client:file": "openapi-generator-cli generate -i openapi.json -g typescript -o .generated/api-client --additional-properties=npmName=restClient,supportsES6=true,npmVersion=6.9.0,withInterfaces=true && npm i",
     "firebase:serve": "firebase serve"
   },
   "devDependencies": {
