@@ -1,6 +1,7 @@
 from agraffe import Agraffe
 from agraffe.services.google_cloud_functions import HttpCycle
-from firebase_functions import https_fn, identity_fn
+from firebase_functions import https_fn
+
 from api import app
 from lib.utils.firebase.admin import initialize
 

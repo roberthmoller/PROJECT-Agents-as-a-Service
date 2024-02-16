@@ -1,24 +1,32 @@
+### List sessions
+GET {{host}}/api/sessions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+
+
 ### Create session
-POST https://{{host}}/api/session
+POST {{host}}/api/sessions
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
   "agents": [
-    "5BxFlw99OaN0s3xt9mXp",
-    "vp50LAisp5POzyQ1VqoK"
+    "5xdWnWKCTWQIg9aan1lg"
   ]
 }
 
 
 ### Get session
-GET https://{{host}}/api/session/ktp1IjcZNojzqUZyGWzz
+GET {{host}}/api/session/ktp1IjcZNojzqUZyGWzz
 Authorization: Bearer {{access_token}}
 
 
 ### Send message in session
-POST https://{{host}}/api/session/ktp1IjcZNojzqUZyGWzz
+### Todo change this message to a json object with the message, this way it can be used by ChatGPT as well
+POST {{host}}/api/session/ktp1IjcZNojzqUZyGWzz
 Authorization: Bearer {{access_token}}
 Content-Type: text/plain
 
 How is it going up in space?
+

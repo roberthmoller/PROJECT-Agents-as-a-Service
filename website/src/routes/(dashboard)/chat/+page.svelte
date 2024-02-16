@@ -15,13 +15,15 @@
     import {activeSession, listSessions} from "$lib/services";
     import {AgentSpecification, SavedSessionSpecification, Session} from "restClient";
     import {collection, getDocs} from "firebase/firestore";
-    import {db} from "$lib/firebase";
+    import {authenticatedState, db} from "$lib/firebase";
     import {onMount} from "svelte";
+    import type {User} from "firebase/auth";
 
     let sessions: Session[] = [];
     let isLoaded = false;
     let didFail = false;
     let showSidebar = false;
+    let user = $authenticatedState;
     listSessions()
         .then((values) => {
             sessions = values;
@@ -40,9 +42,9 @@
             isLoaded = true;
         }
     }
-    async function fetchSessions() {
+    async function fetchSessions(user: User) {
         try {
-            const sessionSpecifications = await getDocs(collection(db, "sessions"));
+            const sessionSpecifications = await getDocs(collection(db, `v1/public/users/${user.uid}/sessions`));
             const sessionData = sessionSpecifications.docs.map((doc) => doc.data() as Session);
 
         } catch (error) {
@@ -53,7 +55,7 @@
         }
     }
 
-    onMount(fetchSessions);
+    onMount(() => fetchSessions(user));
 </script>
 
 <div class="bg-background h-full">

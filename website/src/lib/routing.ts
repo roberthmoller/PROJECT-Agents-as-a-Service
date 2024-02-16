@@ -1,6 +1,9 @@
 import {goto} from "$app/navigation";
-export async function gotoHome() {
-    await goto("/home", {replaceState: true})
+export async function gotoChat() {
+    await goto("/chat", {replaceState: true})
+}
+export async function gotoWorkshop() {
+    await goto("/workshop", {replaceState: true})
 }
 
 export async function gotoLogin() {

@@ -4,10 +4,17 @@ from typing import Literal
 from datetime import datetime
 from pydantic import Field, BaseModel
 
+from lib.utils.env import env
+
 Model = Literal[
     "gpt-4-0125-preview", "gpt-4-turbo-preview", "gpt-4-1106-preview", "gpt-4", "gpt-4-0613", "gpt-4-32k", "gpt-4-32k-0613",
     "gpt-3.5-turbo-0125", "gpt-3.5-turbo", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-instruct",
+    *(["mixtral"] if env.is_local else []),
 ]
+
+
+def now():
+    return str(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3])
 
 
 class AgentSpecification(BaseModel):
@@ -20,7 +27,7 @@ class AgentSpecification(BaseModel):
         description="The message that the agent will send to the user when it is first connected"
     )
     models: list[Model] = Field(
-        ["gpt-3.5-turbo"],
+        ["mixtral" if env.is_local else "gpt-3.5-turbo"],
         title="Model",
         description="The list of models that the agent can use to generate responses",
         min_items=1,
@@ -40,7 +47,7 @@ class AgentSpecification(BaseModel):
         description="The temperature of the agent's response generation process"
     )
     created_at: str = Field(
-        lambda x: str(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]),
+        default_factory=now,
         title="The date and time when the agent was created",
     )
 
@@ -60,8 +67,9 @@ class AgentSpecification(BaseModel):
 
 class SavedAgentSpecification(AgentSpecification):
     id: str = Field(title="The unique identifier of the agent")
+
     updated_at: str = Field(
-        lambda x: str(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]),
+        default_factory=now,
         title="The date and time when the agent was last updated"
     )
 

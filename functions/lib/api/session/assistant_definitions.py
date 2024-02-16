@@ -13,8 +13,6 @@ from lib.api.session.message_model import SavedMessageModel
 from lib.api.session.session_model import Session
 from lib.utils.firebase.admin import db
 
-load_dotenv()
-
 
 class FirebaseAgent(ConversableAgent, ABC):
     id: str

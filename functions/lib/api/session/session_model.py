@@ -5,7 +5,7 @@ from lib.api.agent.agent_model import SavedAgentSpecification
 
 
 class SessionSpecification(BaseModel):
-    agents: list[str] = Field(title="The list of agents that should be part of the session.")
+    agents: list[str] = Field(title="The list of agent IDs that should be part of the session.")
 
     class Config:
         json_schema_extra = {

@@ -1,7 +1,6 @@
 from typing import Tuple, Union
 
 from autogen import ConversableAgent
-
 from lib.api.auth.auth_model import FirebaseUser
 from lib.api.session.assistant_definitions import FirebaseUserProxyAgent, FirebaseAgent, FirebaseAssistantAgent, \
     CustomGroupChat

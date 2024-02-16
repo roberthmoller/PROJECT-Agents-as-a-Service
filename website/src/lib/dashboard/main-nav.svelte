@@ -18,10 +18,10 @@
     </a>
 
     <a
-            href="/agents"
+            href="/workshop"
             class="text-sm font-medium transition-colors hover:text-primary"
-            class:avtive={$page.url.pathname === "/agents"}
-            class:text-muted-foreground={$page.url.pathname !== "/agents"}
+            class:avtive={$page.url.pathname === "/workshop"}
+            class:text-muted-foreground={$page.url.pathname !== "/workshop"}
     >
         Workshop
     </a>

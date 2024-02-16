@@ -1,5 +1,6 @@
 from fastapi import APIRouter, Body, HTTPException, Depends
 
+from lib.api.auth.auth_model import FirebaseUser
 from lib.api.agent.agent_model import SavedAgentSpecification
 from lib.api.session.assistant_utils import initialize_chat
 from lib.api.session.message_model import SavedMessageModel
@@ -12,26 +13,29 @@ router = APIRouter(
 )
 
 
-@router.get("/sessions", dependencies=[Depends(user_scope)])
-def list_sessions() -> list[Session]:
+@router.get("/sessions")
+def list_sessions(user: FirebaseUser = Depends(user_scope)) -> list[Session]:
     return list(map(
         lambda document: get_summary(document.id),
-        db().collection("sessions").get()
+        db().collection(f"v1/public/users/{user.uid}/sessions").get()
     ))
 
 
-@router.post("/session", dependencies=[Depends(user_scope)])
-def create_session(session: SessionSpecification) -> SavedSessionSpecification:
-    document = db().collection("sessions").document()
+@router.post("/sessions")
+def create_session(
+        session: SessionSpecification = Body(),
+        user: FirebaseUser = Depends(user_scope)
+) -> SavedSessionSpecification:
+    document = db().collection(f"v1/public/users/{user.uid}/sessions").document()
     document.set(session.model_dump())
     return SavedSessionSpecification(id=document.id, **session.model_dump())
 
 
-@router.get("/session/{session_id}", dependencies=[Depends(user_scope)])
-def get_summary(session_id: str) -> Session:
-    session_ref = db().collection("sessions").document(session_id)
+@router.get("/session/{session_id}")
+def get_summary(session_id: str, user: FirebaseUser = Depends(user_scope)) -> Session:
+    session_ref = db().collection(f"v1/public/users/{user.uid}/sessions").document(session_id)
     messages_ref = session_ref.collection("messages").order_by("sent_at")
-    agents_ref = db().collection("agents")
+    agents_ref = db().collection(f"v1/public/users/{user.uid}/agents")
 
     if not session_ref.get().exists:
         print(f"Session {session_id} not found")

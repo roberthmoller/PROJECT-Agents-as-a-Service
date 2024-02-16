@@ -1,6 +1,7 @@
 import {type FirebaseApp, initializeApp} from 'firebase/app';
 import {
     type Auth,
+    connectAuthEmulator,
     getAuth,
     GithubAuthProvider,
     GoogleAuthProvider,
@@ -9,8 +10,9 @@ import {
     signOut,
     type User
 } from 'firebase/auth';
-import {Firestore, getFirestore} from 'firebase/firestore';
+import {connectFirestoreEmulator, Firestore, getFirestore} from 'firebase/firestore';
 import {derived, writable} from "svelte/store";
+import {Env, env} from "./env";
 
 const firebaseConfig = {
     apiKey: "AIzaSyBeHOHnHOWrvGt-T41BeAm2-iUD6svrbjU",
@@ -19,13 +21,19 @@ const firebaseConfig = {
     storageBucket: "agents-as-a-service.appspot.com",
     messagingSenderId: "666361884823",
     appId: "1:666361884823:web:fc2f3f391d33298976b9d2",
-    measurementId: "G-E3XCKZ2Q2B"
+    measurementId: "G-E3XCKZ2Q2B",
+    useEmulator: Env.isLocal(env),
 };
 
 const app: FirebaseApp = initializeApp(firebaseConfig);
 
 export const db: Firestore = getFirestore(app);
 export const auth: Auth = getAuth(app);
+
+if (firebaseConfig.useEmulator) {
+    connectAuthEmulator(auth, "http://127.0.0.1:9099")
+    connectFirestoreEmulator(db, "127.0.0.1", 8080);
+}
 
 export {
     GoogleAuthProvider,

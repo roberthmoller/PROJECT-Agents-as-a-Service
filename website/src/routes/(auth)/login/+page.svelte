@@ -6,7 +6,7 @@
     import {signInWithGithub, signInWithEmailAndPassword, authState, signInWithGoogle} from '$lib/firebase';
     import {goto} from "$app/navigation";
     import * as Tooltip from "$lib/components/ui/tooltip";
-    import {gotoHome} from "$lib/routing";
+    import {gotoChat} from "$lib/routing";
 
     let isLoading = false;
     let email = '';
@@ -16,7 +16,7 @@
     $: isFormValid = isEmailValid && isPasswordValid;
 
     authState.subscribe(({isLoggedIn, isLoading}) => {
-        if (isLoggedIn && !isLoading) gotoHome();
+        if (isLoggedIn && !isLoading) gotoChat();
     });
 </script>
 

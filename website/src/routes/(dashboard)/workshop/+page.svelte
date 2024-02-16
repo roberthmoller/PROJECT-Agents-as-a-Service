@@ -7,32 +7,32 @@
     import {Input} from "$lib/components/ui/input";
     import {User, Users} from "lucide-svelte";
     import {AgentSpecification, SavedAgentSpecification} from "api-client";
-    import {db} from "$lib/firebase";
+    import {authenticatedState, db} from "$lib/firebase";
     import {collection, getDocs, type QueryDocumentSnapshot} from "firebase/firestore";
     import {onMount} from "svelte";
     import {PlusCircle, Computer, Hammer} from "lucide-svelte";
-
-    let agents: AgentSpecification[] = [];
+    import {authState}from '$lib/firebase';
+    let agents: SavedAgentSpecification[] = [];
     let isLoaded = false;
     let didFail = false;
-
+    let user = $authenticatedState;
     function toAgentSpecification(doc: QueryDocumentSnapshot): SavedAgentSpecification {
         const data = doc.data();
         return {
             id: doc.id,
             name: data.name,
-            systemMessage: data.systemMessage,
+            systemMessage: data.system_message,
             description: data.description ?? "",
-            createdAt: data.createdAt ?? null,
-            updatedAt: data.updatedAt ?? null,
+            createdAt: data.created_at ?? null,
+            updatedAt: data.updated_at ?? null,
         };
     }
 
     function fetchAgents() {
-        getDocs(collection(db, "agents"))
+        getDocs(collection(db, `v1/public/users/${user.uid}/agents`))
             .then((querySnapshot) => {
                 querySnapshot.forEach((doc) => {
-                    agents.push(doc.data() as AgentSpecification);
+                    agents.push(toAgentSpecification(doc));
                 });
                 isLoaded = true;
             })
