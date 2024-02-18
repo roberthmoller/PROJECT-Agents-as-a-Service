@@ -10,17 +10,20 @@
  * Do not edit the class manually.
  */
 
+import { Name } from '../models/Name';
+import { PhoneNumber } from '../models/PhoneNumber';
+import { PhotoUrl } from '../models/PhotoUrl';
 import { HttpFile } from '../http/http';
 
 export class FirebaseUser {
-    'uid': string;
-    'email': string;
-    'disabled'?: boolean;
-    'emailVerified'?: boolean;
-    'customClaims'?: any;
-    'name': string | null;
-    'photoUrl': string | null;
-    'phoneNumber': string | null;
+    'uid': any | null;
+    'email': any | null;
+    'disabled'?: any | null;
+    'emailVerified'?: any | null;
+    'customClaims'?: any | null;
+    'name': Name;
+    'photoUrl': PhotoUrl;
+    'phoneNumber': PhoneNumber;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -28,25 +31,25 @@ export class FirebaseUser {
         {
             "name": "uid",
             "baseName": "uid",
-            "type": "string",
+            "type": "any",
             "format": ""
         },
         {
             "name": "email",
             "baseName": "email",
-            "type": "string",
+            "type": "any",
             "format": ""
         },
         {
             "name": "disabled",
             "baseName": "disabled",
-            "type": "boolean",
+            "type": "any",
             "format": ""
         },
         {
             "name": "emailVerified",
             "baseName": "email_verified",
-            "type": "boolean",
+            "type": "any",
             "format": ""
         },
         {
@@ -58,19 +61,19 @@ export class FirebaseUser {
         {
             "name": "name",
             "baseName": "name",
-            "type": "string",
+            "type": "Name",
             "format": ""
         },
         {
             "name": "photoUrl",
             "baseName": "photo_url",
-            "type": "string",
+            "type": "PhotoUrl",
             "format": ""
         },
         {
             "name": "phoneNumber",
             "baseName": "phone_number",
-            "type": "string",
+            "type": "PhoneNumber",
             "format": ""
         }    ];
 

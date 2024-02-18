@@ -8,7 +8,6 @@ from lib.api.auth.auth_scheme import bearer_scheme
 
 def authenticated(bearer=Depends(bearer_scheme)) -> FirebaseUser:
     token = bearer.credentials
-    print("Token: {0}".format(token))
     try:
         authorization = auth.verify_id_token(token)
     except Exception as e:

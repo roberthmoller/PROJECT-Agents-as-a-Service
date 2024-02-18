@@ -1,5 +1,6 @@
 <script lang="ts">
     import ThemeToggle from "$lib/theme-toggle.svelte";
+    import {Command} from "lucide-svelte";
 </script>
 
 
@@ -7,24 +8,26 @@
     <div class="absolute right-4 top-4 md:right-8 md:top-8">
         <ThemeToggle/>
     </div>
-    <div class="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
-        <img class="absolute inset-0 bg-cover object-cover h-full w-full"
-             src="https://images.unsplash.com/photo-1590069261209-f8e9b8642343?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1376&q=80"
+    <div class="relative hidden h-full flex-col bg-muted p-10 dark:border-r lg:flex">
+        <!--             src="https://unsplash.com/photos/XUlsF9LYeVk/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzA4MTg2MDU0fA&force=true&w=640"-->
+        <img class="absolute inset-0 bg-cover object-cover h-full w-full dark:invert grayscale"
              alt="A person working on a computer"
+             src="https://unsplash.com/photos/7JX0-bfiuxQ/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzA4MTg2MTQ3fA&force=true&w=1920"
         />
         <div class="relative z-20 flex items-center text-lg font-medium">
+            <Command class="h-5 mr-2"/>
             Agents as a Service
         </div>
-        <!--        <div class="relative z-20 mt-auto">-->
-        <!--            <blockquote class="space-y-2">-->
-        <!--                <p class="text-lg">-->
-        <!--                    &ldquo;This library has saved me countless hours of work and helped me deliver-->
-        <!--                    stunning designs to my clients faster than ever before. Highly-->
-        <!--                    recommended!&rdquo;-->
-        <!--                </p>-->
-        <!--                <footer class="text-sm">Sofia Davis</footer>-->
-        <!--            </blockquote>-->
-        <!--        </div>-->
+        <div class="relative z-20 mt-auto">
+            <blockquote class="space-y-2">
+                <p class="text-lg">
+                    &ldquo;This library has saved me countless hours of work and helped me deliver
+                    stunning designs to my clients faster than ever before. Highly
+                    recommended!&rdquo;
+                </p>
+                <footer class="text-sm">Sofia Davis</footer>
+            </blockquote>
+        </div>
     </div>
     <slot/>
 </div>

@@ -16,30 +16,30 @@ export class SavedAgentSpecification {
     /**
     * The name of the agent that will be used to identify it in the system.
     */
-    'name': string;
+    'name': any | null;
     /**
     * The message that the agent will send to the user when it is first connected
     */
-    'systemMessage': string;
+    'systemMessage': any | null;
     /**
     * The list of models that the agent can use to generate responses
     */
-    'models'?: Array<SavedAgentSpecificationModelsEnum>;
+    'models'?: any | null;
     /**
     * A description of the agent for the user to be able to understand what the agent is about.
     */
-    'description': string;
+    'description': any | null;
     /**
     * The cache seed used to initialize the agent\'s random number generator
     */
-    'cacheSeed'?: number;
+    'cacheSeed'?: any | null;
     /**
     * The temperature of the agent\'s response generation process
     */
-    'temperature'?: number;
-    'createdAt'?: string;
-    'id': string;
-    'updatedAt': string;
+    'temperature'?: any | null;
+    'createdAt'?: any | null;
+    'id': any | null;
+    'updatedAt'?: any | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -47,55 +47,55 @@ export class SavedAgentSpecification {
         {
             "name": "name",
             "baseName": "name",
-            "type": "string",
+            "type": "any",
             "format": ""
         },
         {
             "name": "systemMessage",
             "baseName": "system_message",
-            "type": "string",
+            "type": "any",
             "format": ""
         },
         {
             "name": "models",
             "baseName": "models",
-            "type": "Array<SavedAgentSpecificationModelsEnum>",
+            "type": "any",
             "format": ""
         },
         {
             "name": "description",
             "baseName": "description",
-            "type": "string",
+            "type": "any",
             "format": ""
         },
         {
             "name": "cacheSeed",
             "baseName": "cache_seed",
-            "type": "number",
+            "type": "any",
             "format": ""
         },
         {
             "name": "temperature",
             "baseName": "temperature",
-            "type": "number",
+            "type": "any",
             "format": ""
         },
         {
             "name": "createdAt",
             "baseName": "created_at",
-            "type": "string",
+            "type": "any",
             "format": ""
         },
         {
             "name": "id",
             "baseName": "id",
-            "type": "string",
+            "type": "any",
             "format": ""
         },
         {
             "name": "updatedAt",
             "baseName": "updated_at",
-            "type": "string",
+            "type": "any",
             "format": ""
         }    ];
 
@@ -105,20 +105,5 @@ export class SavedAgentSpecification {
 
     public constructor() {
     }
-}
-
-
-export enum SavedAgentSpecificationModelsEnum {
-    _40125Preview = 'gpt-4-0125-preview',
-    _4TurboPreview = 'gpt-4-turbo-preview',
-    _41106Preview = 'gpt-4-1106-preview',
-    _4 = 'gpt-4',
-    _40613 = 'gpt-4-0613',
-    _432k = 'gpt-4-32k',
-    _432k0613 = 'gpt-4-32k-0613',
-    _35Turbo0125 = 'gpt-3.5-turbo-0125',
-    _35Turbo = 'gpt-3.5-turbo',
-    _35Turbo1106 = 'gpt-3.5-turbo-1106',
-    _35TurboInstruct = 'gpt-3.5-turbo-instruct'
 }
 

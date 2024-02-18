@@ -1,6 +1,6 @@
 # .AuthApi
 
-All URIs are relative to */api*
+All URIs are relative to *http://localhost:5002/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------

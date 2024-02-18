@@ -5,13 +5,16 @@ import {mergeMap, map} from  '../rxjsStub';
 import { AgentSpecification } from '../models/AgentSpecification';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
+import { MessageContentModel } from '../models/MessageContentModel';
+import { Name } from '../models/Name';
+import { PhoneNumber } from '../models/PhoneNumber';
+import { PhotoUrl } from '../models/PhotoUrl';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { ValidationError } from '../models/ValidationError';
-import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
 export class ObservableAgentApi {
@@ -30,11 +33,12 @@ export class ObservableAgentApi {
     }
 
     /**
+     * Create a new agent
      * Create Agent
      * @param agentSpecification 
      */
-    public createAgentAgentPostWithHttpInfo(agentSpecification: AgentSpecification, _options?: Configuration): Observable<HttpInfo<SavedAgentSpecification>> {
-        const requestContextPromise = this.requestFactory.createAgentAgentPost(agentSpecification, _options);
+    public createAgentAgentsPostWithHttpInfo(agentSpecification: AgentSpecification, _options?: Configuration): Observable<HttpInfo<SavedAgentSpecification>> {
+        const requestContextPromise = this.requestFactory.createAgentAgentsPost(agentSpecification, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -48,24 +52,26 @@ export class ObservableAgentApi {
                 for (let middleware of this.configuration.middleware) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.createAgentAgentPostWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.createAgentAgentsPostWithHttpInfo(rsp)));
             }));
     }
 
     /**
+     * Create a new agent
      * Create Agent
      * @param agentSpecification 
      */
-    public createAgentAgentPost(agentSpecification: AgentSpecification, _options?: Configuration): Observable<SavedAgentSpecification> {
-        return this.createAgentAgentPostWithHttpInfo(agentSpecification, _options).pipe(map((apiResponse: HttpInfo<SavedAgentSpecification>) => apiResponse.data));
+    public createAgentAgentsPost(agentSpecification: AgentSpecification, _options?: Configuration): Observable<SavedAgentSpecification> {
+        return this.createAgentAgentsPostWithHttpInfo(agentSpecification, _options).pipe(map((apiResponse: HttpInfo<SavedAgentSpecification>) => apiResponse.data));
     }
 
     /**
+     * Delete a specific agent by its ID
      * Delete Agent
      * @param agentId 
      */
-    public deleteAgentAgentAgentIdDeleteWithHttpInfo(agentId: string, _options?: Configuration): Observable<HttpInfo<any>> {
-        const requestContextPromise = this.requestFactory.deleteAgentAgentAgentIdDelete(agentId, _options);
+    public deleteAgentAgentsAgentIdDeleteWithHttpInfo(agentId: string, _options?: Configuration): Observable<HttpInfo<any>> {
+        const requestContextPromise = this.requestFactory.deleteAgentAgentsAgentIdDelete(agentId, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -79,16 +85,17 @@ export class ObservableAgentApi {
                 for (let middleware of this.configuration.middleware) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deleteAgentAgentAgentIdDeleteWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deleteAgentAgentsAgentIdDeleteWithHttpInfo(rsp)));
             }));
     }
 
     /**
+     * Delete a specific agent by its ID
      * Delete Agent
      * @param agentId 
      */
-    public deleteAgentAgentAgentIdDelete(agentId: string, _options?: Configuration): Observable<any> {
-        return this.deleteAgentAgentAgentIdDeleteWithHttpInfo(agentId, _options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
+    public deleteAgentAgentsAgentIdDelete(agentId: string, _options?: Configuration): Observable<any> {
+        return this.deleteAgentAgentsAgentIdDeleteWithHttpInfo(agentId, _options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
     }
 
     /**
@@ -96,8 +103,8 @@ export class ObservableAgentApi {
      * Get Agent
      * @param agentId 
      */
-    public getAgentAgentAgentIdGetWithHttpInfo(agentId: string, _options?: Configuration): Observable<HttpInfo<SavedAgentSpecification>> {
-        const requestContextPromise = this.requestFactory.getAgentAgentAgentIdGet(agentId, _options);
+    public getAgentAgentsAgentIdGetWithHttpInfo(agentId: string, _options?: Configuration): Observable<HttpInfo<SavedAgentSpecification>> {
+        const requestContextPromise = this.requestFactory.getAgentAgentsAgentIdGet(agentId, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -111,7 +118,7 @@ export class ObservableAgentApi {
                 for (let middleware of this.configuration.middleware) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getAgentAgentAgentIdGetWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getAgentAgentsAgentIdGetWithHttpInfo(rsp)));
             }));
     }
 
@@ -120,8 +127,8 @@ export class ObservableAgentApi {
      * Get Agent
      * @param agentId 
      */
-    public getAgentAgentAgentIdGet(agentId: string, _options?: Configuration): Observable<SavedAgentSpecification> {
-        return this.getAgentAgentAgentIdGetWithHttpInfo(agentId, _options).pipe(map((apiResponse: HttpInfo<SavedAgentSpecification>) => apiResponse.data));
+    public getAgentAgentsAgentIdGet(agentId: string, _options?: Configuration): Observable<SavedAgentSpecification> {
+        return this.getAgentAgentsAgentIdGetWithHttpInfo(agentId, _options).pipe(map((apiResponse: HttpInfo<SavedAgentSpecification>) => apiResponse.data));
     }
 
     /**
@@ -156,12 +163,10 @@ export class ObservableAgentApi {
     }
 
     /**
-     * Update Agent
-     * @param agentId 
-     * @param agentSpecification 
+     * Options
      */
-    public updateAgentAgentAgentIdPutWithHttpInfo(agentId: string, agentSpecification: AgentSpecification, _options?: Configuration): Observable<HttpInfo<SavedAgentSpecification>> {
-        const requestContextPromise = this.requestFactory.updateAgentAgentAgentIdPut(agentId, agentSpecification, _options);
+    public optionsAgentsOptionsWithHttpInfo(_options?: Configuration): Observable<HttpInfo<any>> {
+        const requestContextPromise = this.requestFactory.optionsAgentsOptions(_options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -175,17 +180,50 @@ export class ObservableAgentApi {
                 for (let middleware of this.configuration.middleware) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.updateAgentAgentAgentIdPutWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.optionsAgentsOptionsWithHttpInfo(rsp)));
             }));
     }
 
     /**
+     * Options
+     */
+    public optionsAgentsOptions(_options?: Configuration): Observable<any> {
+        return this.optionsAgentsOptionsWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
+    }
+
+    /**
+     * Update a specific agent by its ID
      * Update Agent
      * @param agentId 
      * @param agentSpecification 
      */
-    public updateAgentAgentAgentIdPut(agentId: string, agentSpecification: AgentSpecification, _options?: Configuration): Observable<SavedAgentSpecification> {
-        return this.updateAgentAgentAgentIdPutWithHttpInfo(agentId, agentSpecification, _options).pipe(map((apiResponse: HttpInfo<SavedAgentSpecification>) => apiResponse.data));
+    public updateAgentAgentsAgentIdPutWithHttpInfo(agentId: string, agentSpecification: AgentSpecification, _options?: Configuration): Observable<HttpInfo<SavedAgentSpecification>> {
+        const requestContextPromise = this.requestFactory.updateAgentAgentsAgentIdPut(agentId, agentSpecification, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.updateAgentAgentsAgentIdPutWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Update a specific agent by its ID
+     * Update Agent
+     * @param agentId 
+     * @param agentSpecification 
+     */
+    public updateAgentAgentsAgentIdPut(agentId: string, agentSpecification: AgentSpecification, _options?: Configuration): Observable<SavedAgentSpecification> {
+        return this.updateAgentAgentsAgentIdPutWithHttpInfo(agentId, agentSpecification, _options).pipe(map((apiResponse: HttpInfo<SavedAgentSpecification>) => apiResponse.data));
     }
 
 }
@@ -377,8 +415,8 @@ export class ObservableSessionApi {
      * Create Session
      * @param sessionSpecification 
      */
-    public createSessionSessionPostWithHttpInfo(sessionSpecification: SessionSpecification, _options?: Configuration): Observable<HttpInfo<SavedSessionSpecification>> {
-        const requestContextPromise = this.requestFactory.createSessionSessionPost(sessionSpecification, _options);
+    public createSessionSessionsPostWithHttpInfo(sessionSpecification: SessionSpecification, _options?: Configuration): Observable<HttpInfo<SavedSessionSpecification>> {
+        const requestContextPromise = this.requestFactory.createSessionSessionsPost(sessionSpecification, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -392,7 +430,7 @@ export class ObservableSessionApi {
                 for (let middleware of this.configuration.middleware) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.createSessionSessionPostWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.createSessionSessionsPostWithHttpInfo(rsp)));
             }));
     }
 
@@ -400,16 +438,16 @@ export class ObservableSessionApi {
      * Create Session
      * @param sessionSpecification 
      */
-    public createSessionSessionPost(sessionSpecification: SessionSpecification, _options?: Configuration): Observable<SavedSessionSpecification> {
-        return this.createSessionSessionPostWithHttpInfo(sessionSpecification, _options).pipe(map((apiResponse: HttpInfo<SavedSessionSpecification>) => apiResponse.data));
+    public createSessionSessionsPost(sessionSpecification: SessionSpecification, _options?: Configuration): Observable<SavedSessionSpecification> {
+        return this.createSessionSessionsPostWithHttpInfo(sessionSpecification, _options).pipe(map((apiResponse: HttpInfo<SavedSessionSpecification>) => apiResponse.data));
     }
 
     /**
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionSessionIdGetWithHttpInfo(sessionId: string, _options?: Configuration): Observable<HttpInfo<Session>> {
-        const requestContextPromise = this.requestFactory.getSummarySessionSessionIdGet(sessionId, _options);
+    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: any, _options?: Configuration): Observable<HttpInfo<Session>> {
+        const requestContextPromise = this.requestFactory.getSummarySessionsSessionIdGet(sessionId, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -423,7 +461,7 @@ export class ObservableSessionApi {
                 for (let middleware of this.configuration.middleware) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getSummarySessionSessionIdGetWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getSummarySessionsSessionIdGetWithHttpInfo(rsp)));
             }));
     }
 
@@ -431,8 +469,8 @@ export class ObservableSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionSessionIdGet(sessionId: string, _options?: Configuration): Observable<Session> {
-        return this.getSummarySessionSessionIdGetWithHttpInfo(sessionId, _options).pipe(map((apiResponse: HttpInfo<Session>) => apiResponse.data));
+    public getSummarySessionsSessionIdGet(sessionId: any, _options?: Configuration): Observable<Session> {
+        return this.getSummarySessionsSessionIdGetWithHttpInfo(sessionId, _options).pipe(map((apiResponse: HttpInfo<Session>) => apiResponse.data));
     }
 
     /**
@@ -465,12 +503,10 @@ export class ObservableSessionApi {
     }
 
     /**
-     * Send Message
-     * @param sessionId 
-     * @param body 
+     * Options
      */
-    public sendMessageSessionSessionIdPostWithHttpInfo(sessionId: string, body?: string, _options?: Configuration): Observable<HttpInfo<Session>> {
-        const requestContextPromise = this.requestFactory.sendMessageSessionSessionIdPost(sessionId, body, _options);
+    public optionsSessionsOptionsWithHttpInfo(_options?: Configuration): Observable<HttpInfo<any>> {
+        const requestContextPromise = this.requestFactory.optionsSessionsOptions(_options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -484,17 +520,79 @@ export class ObservableSessionApi {
                 for (let middleware of this.configuration.middleware) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.sendMessageSessionSessionIdPostWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.optionsSessionsOptionsWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Options
+     */
+    public optionsSessionsOptions(_options?: Configuration): Observable<any> {
+        return this.optionsSessionsOptionsWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
+    }
+
+    /**
+     * Send Message
+     * @param sessionId 
+     * @param messageContentModel 
+     */
+    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Observable<HttpInfo<Session>> {
+        const requestContextPromise = this.requestFactory.sendMessageSessionsSessionIdPost(sessionId, messageContentModel, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.sendMessageSessionsSessionIdPostWithHttpInfo(rsp)));
             }));
     }
 
     /**
      * Send Message
      * @param sessionId 
-     * @param body 
+     * @param messageContentModel 
      */
-    public sendMessageSessionSessionIdPost(sessionId: string, body?: string, _options?: Configuration): Observable<Session> {
-        return this.sendMessageSessionSessionIdPostWithHttpInfo(sessionId, body, _options).pipe(map((apiResponse: HttpInfo<Session>) => apiResponse.data));
+    public sendMessageSessionsSessionIdPost(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Observable<Session> {
+        return this.sendMessageSessionsSessionIdPostWithHttpInfo(sessionId, messageContentModel, _options).pipe(map((apiResponse: HttpInfo<Session>) => apiResponse.data));
+    }
+
+    /**
+     * Session Id Options
+     * @param sessionId 
+     */
+    public sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(sessionId: any, _options?: Configuration): Observable<HttpInfo<any>> {
+        const requestContextPromise = this.requestFactory.sessionIdOptionsSessionsSessionIdOptions(sessionId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Session Id Options
+     * @param sessionId 
+     */
+    public sessionIdOptionsSessionsSessionIdOptions(sessionId: any, _options?: Configuration): Observable<any> {
+        return this.sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(sessionId, _options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
     }
 
 }

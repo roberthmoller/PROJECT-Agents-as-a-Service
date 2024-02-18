@@ -21,6 +21,7 @@ router = APIRouter(
 def create_access_token(cred: HTTPBasicCredentials = Depends(basic_scheme)) -> str:
     print("Credentials: {0}".format(cred))
     try:
+
         authorization = client_auth.sign_in_with_email_and_password(email=cred.username, password=cred.password)
         print("Authorization: {0}".format(authorization))
         token = authorization["idToken"]

@@ -9,6 +9,7 @@ import {SecurityAuthentication} from '../auth/auth';
 
 
 import { HTTPValidationError } from '../models/HTTPValidationError';
+import { MessageContentModel } from '../models/MessageContentModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
@@ -22,17 +23,17 @@ export class SessionApiRequestFactory extends BaseAPIRequestFactory {
      * Create Session
      * @param sessionSpecification 
      */
-    public async createSessionSessionPost(sessionSpecification: SessionSpecification, _options?: Configuration): Promise<RequestContext> {
+    public async createSessionSessionsPost(sessionSpecification: SessionSpecification, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'sessionSpecification' is not null or undefined
         if (sessionSpecification === null || sessionSpecification === undefined) {
-            throw new RequiredError("SessionApi", "createSessionSessionPost", "sessionSpecification");
+            throw new RequiredError("SessionApi", "createSessionSessionsPost", "sessionSpecification");
         }
 
 
         // Path Params
-        const localVarPath = '/session';
+        const localVarPath = '/sessions';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
@@ -69,17 +70,17 @@ export class SessionApiRequestFactory extends BaseAPIRequestFactory {
      * Get Summary
      * @param sessionId 
      */
-    public async getSummarySessionSessionIdGet(sessionId: string, _options?: Configuration): Promise<RequestContext> {
+    public async getSummarySessionsSessionIdGet(sessionId: any, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'sessionId' is not null or undefined
         if (sessionId === null || sessionId === undefined) {
-            throw new RequiredError("SessionApi", "getSummarySessionSessionIdGet", "sessionId");
+            throw new RequiredError("SessionApi", "getSummarySessionsSessionIdGet", "sessionId");
         }
 
 
         // Path Params
-        const localVarPath = '/session/{session_id}'
+        const localVarPath = '/sessions/{session_id}'
             .replace('{' + 'session_id' + '}', encodeURIComponent(String(sessionId)));
 
         // Make Request Context
@@ -132,22 +133,50 @@ export class SessionApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
+     * Options
+     */
+    public async optionsSessionsOptions(_options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // Path Params
+        const localVarPath = '/sessions';
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.OPTIONS);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        
+        const defaultAuth: SecurityAuthentication | undefined = _options?.authMethods?.default || this.configuration?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
      * Send Message
      * @param sessionId 
-     * @param body 
+     * @param messageContentModel 
      */
-    public async sendMessageSessionSessionIdPost(sessionId: string, body?: string, _options?: Configuration): Promise<RequestContext> {
+    public async sendMessageSessionsSessionIdPost(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'sessionId' is not null or undefined
         if (sessionId === null || sessionId === undefined) {
-            throw new RequiredError("SessionApi", "sendMessageSessionSessionIdPost", "sessionId");
+            throw new RequiredError("SessionApi", "sendMessageSessionsSessionIdPost", "sessionId");
         }
 
 
+        // verify required parameter 'messageContentModel' is not null or undefined
+        if (messageContentModel === null || messageContentModel === undefined) {
+            throw new RequiredError("SessionApi", "sendMessageSessionsSessionIdPost", "messageContentModel");
+        }
+
 
         // Path Params
-        const localVarPath = '/session/{session_id}'
+        const localVarPath = '/sessions/{session_id}'
             .replace('{' + 'session_id' + '}', encodeURIComponent(String(sessionId)));
 
         // Make Request Context
@@ -161,7 +190,7 @@ export class SessionApiRequestFactory extends BaseAPIRequestFactory {
         ]);
         requestContext.setHeaderParam("Content-Type", contentType);
         const serializedBody = ObjectSerializer.stringify(
-            ObjectSerializer.serialize(body, "string", ""),
+            ObjectSerializer.serialize(messageContentModel, "MessageContentModel", ""),
             contentType
         );
         requestContext.setBody(serializedBody);
@@ -181,6 +210,37 @@ export class SessionApiRequestFactory extends BaseAPIRequestFactory {
         return requestContext;
     }
 
+    /**
+     * Session Id Options
+     * @param sessionId 
+     */
+    public async sessionIdOptionsSessionsSessionIdOptions(sessionId: any, _options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // verify required parameter 'sessionId' is not null or undefined
+        if (sessionId === null || sessionId === undefined) {
+            throw new RequiredError("SessionApi", "sessionIdOptionsSessionsSessionIdOptions", "sessionId");
+        }
+
+
+        // Path Params
+        const localVarPath = '/sessions/{session_id}'
+            .replace('{' + 'session_id' + '}', encodeURIComponent(String(sessionId)));
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.OPTIONS);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        
+        const defaultAuth: SecurityAuthentication | undefined = _options?.authMethods?.default || this.configuration?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
 }
 
 export class SessionApiResponseProcessor {
@@ -189,10 +249,10 @@ export class SessionApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to createSessionSessionPost
+     * @params response Response returned by the server for a request to createSessionSessionsPost
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async createSessionSessionPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<SavedSessionSpecification >> {
+     public async createSessionSessionsPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<SavedSessionSpecification >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: SavedSessionSpecification = ObjectSerializer.deserialize(
@@ -225,10 +285,10 @@ export class SessionApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to getSummarySessionSessionIdGet
+     * @params response Response returned by the server for a request to getSummarySessionsSessionIdGet
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async getSummarySessionSessionIdGetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Session >> {
+     public async getSummarySessionsSessionIdGetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Session >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: Session = ObjectSerializer.deserialize(
@@ -290,10 +350,39 @@ export class SessionApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to sendMessageSessionSessionIdPost
+     * @params response Response returned by the server for a request to optionsSessionsOptions
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async sendMessageSessionSessionIdPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Session >> {
+     public async optionsSessionsOptionsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<any >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: any = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "any", ""
+            ) as any;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: any = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "any", ""
+            ) as any;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to sendMessageSessionsSessionIdPost
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async sendMessageSessionsSessionIdPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<Session >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: Session = ObjectSerializer.deserialize(
@@ -316,6 +405,42 @@ export class SessionApiResponseProcessor {
                 ObjectSerializer.parse(await response.body.text(), contentType),
                 "Session", ""
             ) as Session;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to sessionIdOptionsSessionsSessionIdOptions
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<any >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: any = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "any", ""
+            ) as any;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+        if (isCodeInRange("422", response.httpStatusCode)) {
+            const body: HTTPValidationError = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "HTTPValidationError", ""
+            ) as HTTPValidationError;
+            throw new ApiException<HTTPValidationError>(response.httpStatusCode, "Validation Error", body, response.headers);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: any = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "any", ""
+            ) as any;
             return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
         }
 

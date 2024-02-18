@@ -1,17 +1,19 @@
 # .SessionApi
 
-All URIs are relative to */api*
+All URIs are relative to *http://localhost:5002/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createSessionSessionPost**](SessionApi.md#createSessionSessionPost) | **POST** /session | Create Session
-[**getSummarySessionSessionIdGet**](SessionApi.md#getSummarySessionSessionIdGet) | **GET** /session/{session_id} | Get Summary
+[**createSessionSessionsPost**](SessionApi.md#createSessionSessionsPost) | **POST** /sessions | Create Session
+[**getSummarySessionsSessionIdGet**](SessionApi.md#getSummarySessionsSessionIdGet) | **GET** /sessions/{session_id} | Get Summary
 [**listSessionsSessionsGet**](SessionApi.md#listSessionsSessionsGet) | **GET** /sessions | List Sessions
-[**sendMessageSessionSessionIdPost**](SessionApi.md#sendMessageSessionSessionIdPost) | **POST** /session/{session_id} | Send Message
+[**optionsSessionsOptions**](SessionApi.md#optionsSessionsOptions) | **OPTIONS** /sessions | Options
+[**sendMessageSessionsSessionIdPost**](SessionApi.md#sendMessageSessionsSessionIdPost) | **POST** /sessions/{session_id} | Send Message
+[**sessionIdOptionsSessionsSessionIdOptions**](SessionApi.md#sessionIdOptionsSessionsSessionIdOptions) | **OPTIONS** /sessions/{session_id} | Session Id Options
 
 
-# **createSessionSessionPost**
-> SavedSessionSpecification createSessionSessionPost(sessionSpecification)
+# **createSessionSessionsPost**
+> SavedSessionSpecification createSessionSessionsPost(sessionSpecification)
 
 
 ### Example
@@ -24,12 +26,12 @@ import * as fs from 'fs';
 const configuration = .createConfiguration();
 const apiInstance = new .SessionApi(configuration);
 
-let body:.SessionApiCreateSessionSessionPostRequest = {
+let body:.SessionApiCreateSessionSessionsPostRequest = {
   // SessionSpecification
   sessionSpecification: null,
 };
 
-apiInstance.createSessionSessionPost(body).then((data:any) => {
+apiInstance.createSessionSessionsPost(body).then((data:any) => {
   console.log('API called successfully. Returned data: ' + data);
 }).catch((error:any) => console.error(error));
 ```
@@ -64,8 +66,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **getSummarySessionSessionIdGet**
-> Session getSummarySessionSessionIdGet()
+# **getSummarySessionsSessionIdGet**
+> Session getSummarySessionsSessionIdGet()
 
 
 ### Example
@@ -78,12 +80,12 @@ import * as fs from 'fs';
 const configuration = .createConfiguration();
 const apiInstance = new .SessionApi(configuration);
 
-let body:.SessionApiGetSummarySessionSessionIdGetRequest = {
-  // string
-  sessionId: "session_id_example",
+let body:.SessionApiGetSummarySessionsSessionIdGetRequest = {
+  // any
+  sessionId: null,
 };
 
-apiInstance.getSummarySessionSessionIdGet(body).then((data:any) => {
+apiInstance.getSummarySessionsSessionIdGet(body).then((data:any) => {
   console.log('API called successfully. Returned data: ' + data);
 }).catch((error:any) => console.error(error));
 ```
@@ -93,7 +95,7 @@ apiInstance.getSummarySessionSessionIdGet(body).then((data:any) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **sessionId** | [**string**] |  | defaults to undefined
+ **sessionId** | **any** |  | defaults to undefined
 
 
 ### Return type
@@ -165,8 +167,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **sendMessageSessionSessionIdPost**
-> Session sendMessageSessionSessionIdPost()
+# **optionsSessionsOptions**
+> any optionsSessionsOptions()
 
 
 ### Example
@@ -179,14 +181,61 @@ import * as fs from 'fs';
 const configuration = .createConfiguration();
 const apiInstance = new .SessionApi(configuration);
 
-let body:.SessionApiSendMessageSessionSessionIdPostRequest = {
-  // string
-  sessionId: "session_id_example",
-  // string (optional)
-  body: "body_example",
+let body:any = {};
+
+apiInstance.optionsSessionsOptions(body).then((data:any) => {
+  console.log('API called successfully. Returned data: ' + data);
+}).catch((error:any) => console.error(error));
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **sendMessageSessionsSessionIdPost**
+> Session sendMessageSessionsSessionIdPost(messageContentModel)
+
+
+### Example
+
+
+```typescript
+import {  } from '';
+import * as fs from 'fs';
+
+const configuration = .createConfiguration();
+const apiInstance = new .SessionApi(configuration);
+
+let body:.SessionApiSendMessageSessionsSessionIdPostRequest = {
+  // any
+  sessionId: null,
+  // MessageContentModel
+  messageContentModel: null,
 };
 
-apiInstance.sendMessageSessionSessionIdPost(body).then((data:any) => {
+apiInstance.sendMessageSessionsSessionIdPost(body).then((data:any) => {
   console.log('API called successfully. Returned data: ' + data);
 }).catch((error:any) => console.error(error));
 ```
@@ -196,8 +245,8 @@ apiInstance.sendMessageSessionSessionIdPost(body).then((data:any) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | **string**|  |
- **sessionId** | [**string**] |  | defaults to undefined
+ **messageContentModel** | **MessageContentModel**|  |
+ **sessionId** | **any** |  | defaults to undefined
 
 
 ### Return type
@@ -211,6 +260,60 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+**422** | Validation Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **sessionIdOptionsSessionsSessionIdOptions**
+> any sessionIdOptionsSessionsSessionIdOptions()
+
+
+### Example
+
+
+```typescript
+import {  } from '';
+import * as fs from 'fs';
+
+const configuration = .createConfiguration();
+const apiInstance = new .SessionApi(configuration);
+
+let body:.SessionApiSessionIdOptionsSessionsSessionIdOptionsRequest = {
+  // any
+  sessionId: null,
+};
+
+apiInstance.sessionIdOptionsSessionsSessionIdOptions(body).then((data:any) => {
+  console.log('API called successfully. Returned data: ' + data);
+}).catch((error:any) => console.error(error));
+```
+
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **sessionId** | **any** |  | defaults to undefined
+
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 

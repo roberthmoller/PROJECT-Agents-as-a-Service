@@ -1,24 +1,30 @@
 export * from '../models/AgentSpecification';
 export * from '../models/FirebaseUser';
 export * from '../models/HTTPValidationError';
+export * from '../models/MessageContentModel';
+export * from '../models/Name';
+export * from '../models/PhoneNumber';
+export * from '../models/PhotoUrl';
 export * from '../models/SavedAgentSpecification';
 export * from '../models/SavedMessageModel';
 export * from '../models/SavedSessionSpecification';
 export * from '../models/Session';
 export * from '../models/SessionSpecification';
 export * from '../models/ValidationError';
-export * from '../models/ValidationErrorLocInner';
 
-import { AgentSpecification  , AgentSpecificationModelsEnum       } from '../models/AgentSpecification';
+import { AgentSpecification } from '../models/AgentSpecification';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
-import { SavedAgentSpecification  , SavedAgentSpecificationModelsEnum         } from '../models/SavedAgentSpecification';
+import { MessageContentModel } from '../models/MessageContentModel';
+import { Name } from '../models/Name';
+import { PhoneNumber } from '../models/PhoneNumber';
+import { PhotoUrl } from '../models/PhotoUrl';
+import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { ValidationError } from '../models/ValidationError';
-import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
@@ -33,21 +39,22 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
-    "AgentSpecificationModelsEnum",
-    "SavedAgentSpecificationModelsEnum",
 ]);
 
 let typeMap: {[index: string]: any} = {
     "AgentSpecification": AgentSpecification,
     "FirebaseUser": FirebaseUser,
     "HTTPValidationError": HTTPValidationError,
+    "MessageContentModel": MessageContentModel,
+    "Name": Name,
+    "PhoneNumber": PhoneNumber,
+    "PhotoUrl": PhotoUrl,
     "SavedAgentSpecification": SavedAgentSpecification,
     "SavedMessageModel": SavedMessageModel,
     "SavedSessionSpecification": SavedSessionSpecification,
     "Session": Session,
     "SessionSpecification": SessionSpecification,
     "ValidationError": ValidationError,
-    "ValidationErrorLocInner": ValidationErrorLocInner,
 }
 
 type MimeTypeDescriptor = {

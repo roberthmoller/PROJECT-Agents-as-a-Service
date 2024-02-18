@@ -18,20 +18,21 @@ import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 export class AgentApiRequestFactory extends BaseAPIRequestFactory {
 
     /**
+     * Create a new agent
      * Create Agent
      * @param agentSpecification 
      */
-    public async createAgentAgentPost(agentSpecification: AgentSpecification, _options?: Configuration): Promise<RequestContext> {
+    public async createAgentAgentsPost(agentSpecification: AgentSpecification, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'agentSpecification' is not null or undefined
         if (agentSpecification === null || agentSpecification === undefined) {
-            throw new RequiredError("AgentApi", "createAgentAgentPost", "agentSpecification");
+            throw new RequiredError("AgentApi", "createAgentAgentsPost", "agentSpecification");
         }
 
 
         // Path Params
-        const localVarPath = '/agent';
+        const localVarPath = '/agents';
 
         // Make Request Context
         const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.POST);
@@ -65,20 +66,21 @@ export class AgentApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
+     * Delete a specific agent by its ID
      * Delete Agent
      * @param agentId 
      */
-    public async deleteAgentAgentAgentIdDelete(agentId: string, _options?: Configuration): Promise<RequestContext> {
+    public async deleteAgentAgentsAgentIdDelete(agentId: string, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'agentId' is not null or undefined
         if (agentId === null || agentId === undefined) {
-            throw new RequiredError("AgentApi", "deleteAgentAgentAgentIdDelete", "agentId");
+            throw new RequiredError("AgentApi", "deleteAgentAgentsAgentIdDelete", "agentId");
         }
 
 
         // Path Params
-        const localVarPath = '/agent/{agent_id}'
+        const localVarPath = '/agents/{agent_id}'
             .replace('{' + 'agent_id' + '}', encodeURIComponent(String(agentId)));
 
         // Make Request Context
@@ -106,17 +108,17 @@ export class AgentApiRequestFactory extends BaseAPIRequestFactory {
      * Get Agent
      * @param agentId 
      */
-    public async getAgentAgentAgentIdGet(agentId: string, _options?: Configuration): Promise<RequestContext> {
+    public async getAgentAgentsAgentIdGet(agentId: string, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'agentId' is not null or undefined
         if (agentId === null || agentId === undefined) {
-            throw new RequiredError("AgentApi", "getAgentAgentAgentIdGet", "agentId");
+            throw new RequiredError("AgentApi", "getAgentAgentsAgentIdGet", "agentId");
         }
 
 
         // Path Params
-        const localVarPath = '/agent/{agent_id}'
+        const localVarPath = '/agents/{agent_id}'
             .replace('{' + 'agent_id' + '}', encodeURIComponent(String(agentId)));
 
         // Make Request Context
@@ -170,27 +172,51 @@ export class AgentApiRequestFactory extends BaseAPIRequestFactory {
     }
 
     /**
+     * Options
+     */
+    public async optionsAgentsOptions(_options?: Configuration): Promise<RequestContext> {
+        let _config = _options || this.configuration;
+
+        // Path Params
+        const localVarPath = '/agents';
+
+        // Make Request Context
+        const requestContext = _config.baseServer.makeRequestContext(localVarPath, HttpMethod.OPTIONS);
+        requestContext.setHeaderParam("Accept", "application/json, */*;q=0.8")
+
+
+        
+        const defaultAuth: SecurityAuthentication | undefined = _options?.authMethods?.default || this.configuration?.authMethods?.default
+        if (defaultAuth?.applySecurityAuthentication) {
+            await defaultAuth?.applySecurityAuthentication(requestContext);
+        }
+
+        return requestContext;
+    }
+
+    /**
+     * Update a specific agent by its ID
      * Update Agent
      * @param agentId 
      * @param agentSpecification 
      */
-    public async updateAgentAgentAgentIdPut(agentId: string, agentSpecification: AgentSpecification, _options?: Configuration): Promise<RequestContext> {
+    public async updateAgentAgentsAgentIdPut(agentId: string, agentSpecification: AgentSpecification, _options?: Configuration): Promise<RequestContext> {
         let _config = _options || this.configuration;
 
         // verify required parameter 'agentId' is not null or undefined
         if (agentId === null || agentId === undefined) {
-            throw new RequiredError("AgentApi", "updateAgentAgentAgentIdPut", "agentId");
+            throw new RequiredError("AgentApi", "updateAgentAgentsAgentIdPut", "agentId");
         }
 
 
         // verify required parameter 'agentSpecification' is not null or undefined
         if (agentSpecification === null || agentSpecification === undefined) {
-            throw new RequiredError("AgentApi", "updateAgentAgentAgentIdPut", "agentSpecification");
+            throw new RequiredError("AgentApi", "updateAgentAgentsAgentIdPut", "agentSpecification");
         }
 
 
         // Path Params
-        const localVarPath = '/agent/{agent_id}'
+        const localVarPath = '/agents/{agent_id}'
             .replace('{' + 'agent_id' + '}', encodeURIComponent(String(agentId)));
 
         // Make Request Context
@@ -232,10 +258,10 @@ export class AgentApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to createAgentAgentPost
+     * @params response Response returned by the server for a request to createAgentAgentsPost
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async createAgentAgentPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<SavedAgentSpecification >> {
+     public async createAgentAgentsPostWithHttpInfo(response: ResponseContext): Promise<HttpInfo<SavedAgentSpecification >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: SavedAgentSpecification = ObjectSerializer.deserialize(
@@ -268,10 +294,10 @@ export class AgentApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to deleteAgentAgentAgentIdDelete
+     * @params response Response returned by the server for a request to deleteAgentAgentsAgentIdDelete
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async deleteAgentAgentAgentIdDeleteWithHttpInfo(response: ResponseContext): Promise<HttpInfo<any >> {
+     public async deleteAgentAgentsAgentIdDeleteWithHttpInfo(response: ResponseContext): Promise<HttpInfo<any >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: any = ObjectSerializer.deserialize(
@@ -304,10 +330,10 @@ export class AgentApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to getAgentAgentAgentIdGet
+     * @params response Response returned by the server for a request to getAgentAgentsAgentIdGet
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async getAgentAgentAgentIdGetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<SavedAgentSpecification >> {
+     public async getAgentAgentsAgentIdGetWithHttpInfo(response: ResponseContext): Promise<HttpInfo<SavedAgentSpecification >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: SavedAgentSpecification = ObjectSerializer.deserialize(
@@ -369,10 +395,39 @@ export class AgentApiResponseProcessor {
      * Unwraps the actual response sent by the server from the response context and deserializes the response content
      * to the expected objects
      *
-     * @params response Response returned by the server for a request to updateAgentAgentAgentIdPut
+     * @params response Response returned by the server for a request to optionsAgentsOptions
      * @throws ApiException if the response code was not in [200, 299]
      */
-     public async updateAgentAgentAgentIdPutWithHttpInfo(response: ResponseContext): Promise<HttpInfo<SavedAgentSpecification >> {
+     public async optionsAgentsOptionsWithHttpInfo(response: ResponseContext): Promise<HttpInfo<any >> {
+        const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
+        if (isCodeInRange("200", response.httpStatusCode)) {
+            const body: any = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "any", ""
+            ) as any;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        // Work around for missing responses in specification, e.g. for petstore.yaml
+        if (response.httpStatusCode >= 200 && response.httpStatusCode <= 299) {
+            const body: any = ObjectSerializer.deserialize(
+                ObjectSerializer.parse(await response.body.text(), contentType),
+                "any", ""
+            ) as any;
+            return new HttpInfo(response.httpStatusCode, response.headers, response.body, body);
+        }
+
+        throw new ApiException<string | Blob | undefined>(response.httpStatusCode, "Unknown API Status Code!", await response.getBodyAsAny(), response.headers);
+    }
+
+    /**
+     * Unwraps the actual response sent by the server from the response context and deserializes the response content
+     * to the expected objects
+     *
+     * @params response Response returned by the server for a request to updateAgentAgentsAgentIdPut
+     * @throws ApiException if the response code was not in [200, 299]
+     */
+     public async updateAgentAgentsAgentIdPutWithHttpInfo(response: ResponseContext): Promise<HttpInfo<SavedAgentSpecification >> {
         const contentType = ObjectSerializer.normalizeMediaType(response.headers["content-type"]);
         if (isCodeInRange("200", response.httpStatusCode)) {
             const body: SavedAgentSpecification = ObjectSerializer.deserialize(

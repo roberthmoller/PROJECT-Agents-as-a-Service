@@ -1,20 +1,10 @@
-import datetime
-from enum import Enum
-from typing import Literal
-from datetime import datetime
+from typing import Union
+
 from pydantic import Field, BaseModel
 
 from lib.utils.env import env
-
-Model = Literal[
-    "gpt-4-0125-preview", "gpt-4-turbo-preview", "gpt-4-1106-preview", "gpt-4", "gpt-4-0613", "gpt-4-32k", "gpt-4-32k-0613",
-    "gpt-3.5-turbo-0125", "gpt-3.5-turbo", "gpt-3.5-turbo-1106", "gpt-3.5-turbo-instruct",
-    *(["mixtral"] if env.is_local else []),
-]
-
-
-def now():
-    return str(datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3])
+from lib.utils.now import now
+from .llm_model import OpenAILlmModel, LocalLlmModel
 
 
 class AgentSpecification(BaseModel):
@@ -26,8 +16,8 @@ class AgentSpecification(BaseModel):
         title="System message",
         description="The message that the agent will send to the user when it is first connected"
     )
-    models: list[Model] = Field(
-        ["mixtral" if env.is_local else "gpt-3.5-turbo"],
+    models: list[Union[LocalLlmModel, OpenAILlmModel]] = Field(
+        [LocalLlmModel.mixtral if env.is_local else OpenAILlmModel.gpt_3_5_turbo],
         title="Model",
         description="The list of models that the agent can use to generate responses",
         min_items=1,
@@ -75,7 +65,7 @@ class SavedAgentSpecification(AgentSpecification):
 
     @staticmethod
     def from_ref(ref):
-        return AgentSpecification(id=ref.id, **ref.to_dict())
+        return SavedAgentSpecification(id=ref.id, **ref.to_dict())
 
     class Config:
         description = "The specification of an agent that can be used to interact with the user."

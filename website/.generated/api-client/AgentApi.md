@@ -1,19 +1,21 @@
 # .AgentApi
 
-All URIs are relative to */api*
+All URIs are relative to *http://localhost:5002/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createAgentAgentPost**](AgentApi.md#createAgentAgentPost) | **POST** /agent | Create Agent
-[**deleteAgentAgentAgentIdDelete**](AgentApi.md#deleteAgentAgentAgentIdDelete) | **DELETE** /agent/{agent_id} | Delete Agent
-[**getAgentAgentAgentIdGet**](AgentApi.md#getAgentAgentAgentIdGet) | **GET** /agent/{agent_id} | Get Agent
+[**createAgentAgentsPost**](AgentApi.md#createAgentAgentsPost) | **POST** /agents | Create Agent
+[**deleteAgentAgentsAgentIdDelete**](AgentApi.md#deleteAgentAgentsAgentIdDelete) | **DELETE** /agents/{agent_id} | Delete Agent
+[**getAgentAgentsAgentIdGet**](AgentApi.md#getAgentAgentsAgentIdGet) | **GET** /agents/{agent_id} | Get Agent
 [**listAgentsAgentsGet**](AgentApi.md#listAgentsAgentsGet) | **GET** /agents | List Agents
-[**updateAgentAgentAgentIdPut**](AgentApi.md#updateAgentAgentAgentIdPut) | **PUT** /agent/{agent_id} | Update Agent
+[**optionsAgentsOptions**](AgentApi.md#optionsAgentsOptions) | **OPTIONS** /agents | Options
+[**updateAgentAgentsAgentIdPut**](AgentApi.md#updateAgentAgentsAgentIdPut) | **PUT** /agents/{agent_id} | Update Agent
 
 
-# **createAgentAgentPost**
-> SavedAgentSpecification createAgentAgentPost(agentSpecification)
+# **createAgentAgentsPost**
+> SavedAgentSpecification createAgentAgentsPost(agentSpecification)
 
+Create a new agent
 
 ### Example
 
@@ -25,12 +27,12 @@ import * as fs from 'fs';
 const configuration = .createConfiguration();
 const apiInstance = new .AgentApi(configuration);
 
-let body:.AgentApiCreateAgentAgentPostRequest = {
+let body:.AgentApiCreateAgentAgentsPostRequest = {
   // AgentSpecification
   agentSpecification: null,
 };
 
-apiInstance.createAgentAgentPost(body).then((data:any) => {
+apiInstance.createAgentAgentsPost(body).then((data:any) => {
   console.log('API called successfully. Returned data: ' + data);
 }).catch((error:any) => console.error(error));
 ```
@@ -65,9 +67,10 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **deleteAgentAgentAgentIdDelete**
-> any deleteAgentAgentAgentIdDelete()
+# **deleteAgentAgentsAgentIdDelete**
+> any deleteAgentAgentsAgentIdDelete()
 
+Delete a specific agent by its ID
 
 ### Example
 
@@ -79,12 +82,12 @@ import * as fs from 'fs';
 const configuration = .createConfiguration();
 const apiInstance = new .AgentApi(configuration);
 
-let body:.AgentApiDeleteAgentAgentAgentIdDeleteRequest = {
+let body:.AgentApiDeleteAgentAgentsAgentIdDeleteRequest = {
   // string
   agentId: "agent_id_example",
 };
 
-apiInstance.deleteAgentAgentAgentIdDelete(body).then((data:any) => {
+apiInstance.deleteAgentAgentsAgentIdDelete(body).then((data:any) => {
   console.log('API called successfully. Returned data: ' + data);
 }).catch((error:any) => console.error(error));
 ```
@@ -119,8 +122,8 @@ Name | Type | Description  | Notes
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **getAgentAgentAgentIdGet**
-> SavedAgentSpecification getAgentAgentAgentIdGet()
+# **getAgentAgentsAgentIdGet**
+> SavedAgentSpecification getAgentAgentsAgentIdGet()
 
 Get a specific agent by its ID
 
@@ -134,12 +137,12 @@ import * as fs from 'fs';
 const configuration = .createConfiguration();
 const apiInstance = new .AgentApi(configuration);
 
-let body:.AgentApiGetAgentAgentAgentIdGetRequest = {
+let body:.AgentApiGetAgentAgentsAgentIdGetRequest = {
   // string
   agentId: "agent_id_example",
 };
 
-apiInstance.getAgentAgentAgentIdGet(body).then((data:any) => {
+apiInstance.getAgentAgentsAgentIdGet(body).then((data:any) => {
   console.log('API called successfully. Returned data: ' + data);
 }).catch((error:any) => console.error(error));
 ```
@@ -222,8 +225,8 @@ This endpoint does not need any parameter.
 
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
-# **updateAgentAgentAgentIdPut**
-> SavedAgentSpecification updateAgentAgentAgentIdPut(agentSpecification)
+# **optionsAgentsOptions**
+> any optionsAgentsOptions()
 
 
 ### Example
@@ -236,14 +239,62 @@ import * as fs from 'fs';
 const configuration = .createConfiguration();
 const apiInstance = new .AgentApi(configuration);
 
-let body:.AgentApiUpdateAgentAgentAgentIdPutRequest = {
+let body:any = {};
+
+apiInstance.optionsAgentsOptions(body).then((data:any) => {
+  console.log('API called successfully. Returned data: ' + data);
+}).catch((error:any) => console.error(error));
+```
+
+
+### Parameters
+This endpoint does not need any parameter.
+
+
+### Return type
+
+**any**
+
+### Authorization
+
+No authorization required
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Successful Response |  -  |
+
+[[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
+
+# **updateAgentAgentsAgentIdPut**
+> SavedAgentSpecification updateAgentAgentsAgentIdPut(agentSpecification)
+
+Update a specific agent by its ID
+
+### Example
+
+
+```typescript
+import {  } from '';
+import * as fs from 'fs';
+
+const configuration = .createConfiguration();
+const apiInstance = new .AgentApi(configuration);
+
+let body:.AgentApiUpdateAgentAgentsAgentIdPutRequest = {
   // string
   agentId: "agent_id_example",
   // AgentSpecification
   agentSpecification: null,
 };
 
-apiInstance.updateAgentAgentAgentIdPut(body).then((data:any) => {
+apiInstance.updateAgentAgentsAgentIdPut(body).then((data:any) => {
   console.log('API called successfully. Returned data: ' + data);
 }).catch((error:any) => console.error(error));
 ```

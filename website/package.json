@@ -50,11 +50,13 @@
     "clsx": "^2.1.0",
     "cmdk-sv": "^0.0.13",
     "firebase": "^10.8.0",
-    "mode-watcher": "^0.2.0",
+    "mode-watcher": "^0.2.1",
     "radix-icons-svelte": "^1.2.1",
     "restClient": "file:.generated/api-client",
     "rxfire": "^6.0.5",
     "rxjs": "^7.8.1",
+    "svelte-sonner": "^0.3.17",
+    "moment": "^2.30.1",
     "tailwind-merge": "^2.2.1",
     "tailwind-variants": "^0.1.20"
   }

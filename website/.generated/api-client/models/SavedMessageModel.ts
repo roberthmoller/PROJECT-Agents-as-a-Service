@@ -13,10 +13,22 @@
 import { HttpFile } from '../http/http';
 
 export class SavedMessageModel {
-    'content'?: string;
-    'sender'?: string;
-    'sentAt'?: string;
-    'id'?: string;
+    /**
+    * The content of the message.
+    */
+    'content': any | null;
+    /**
+    * The identifier of the sender of the message.
+    */
+    'sender': any | null;
+    /**
+    * The date and time the message was sent.
+    */
+    'sentAt': any | null;
+    /**
+    * The unique identifier of the message.
+    */
+    'id': any | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -24,25 +36,25 @@ export class SavedMessageModel {
         {
             "name": "content",
             "baseName": "content",
-            "type": "string",
+            "type": "any",
             "format": ""
         },
         {
             "name": "sender",
             "baseName": "sender",
-            "type": "string",
+            "type": "any",
             "format": ""
         },
         {
             "name": "sentAt",
             "baseName": "sent_at",
-            "type": "string",
+            "type": "any",
             "format": ""
         },
         {
             "name": "id",
             "baseName": "id",
-            "type": "string",
+            "type": "any",
             "format": ""
         }    ];
 

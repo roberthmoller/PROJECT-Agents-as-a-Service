@@ -16,7 +16,7 @@ class SessionSpecification(BaseModel):
 
 
 class SavedSessionSpecification(SessionSpecification):
-    id: str | None = Field(default=None, title="The unique identifier of the item")
+    id: str = Field(title="The unique identifier of the item")
 
     class Config:
         json_schema_extra = {

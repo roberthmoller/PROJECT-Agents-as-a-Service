@@ -4,40 +4,43 @@ import { Configuration} from '../configuration'
 import { AgentSpecification } from '../models/AgentSpecification';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
+import { MessageContentModel } from '../models/MessageContentModel';
+import { Name } from '../models/Name';
+import { PhoneNumber } from '../models/PhoneNumber';
+import { PhotoUrl } from '../models/PhotoUrl';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { ValidationError } from '../models/ValidationError';
-import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 
 import { ObservableAgentApi } from "./ObservableAPI";
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
 
-export interface AgentApiCreateAgentAgentPostRequest {
+export interface AgentApiCreateAgentAgentsPostRequest {
     /**
      * 
      * @type AgentSpecification
-     * @memberof AgentApicreateAgentAgentPost
+     * @memberof AgentApicreateAgentAgentsPost
      */
     agentSpecification: AgentSpecification
 }
 
-export interface AgentApiDeleteAgentAgentAgentIdDeleteRequest {
+export interface AgentApiDeleteAgentAgentsAgentIdDeleteRequest {
     /**
      * 
      * @type string
-     * @memberof AgentApideleteAgentAgentAgentIdDelete
+     * @memberof AgentApideleteAgentAgentsAgentIdDelete
      */
     agentId: string
 }
 
-export interface AgentApiGetAgentAgentAgentIdGetRequest {
+export interface AgentApiGetAgentAgentsAgentIdGetRequest {
     /**
      * 
      * @type string
-     * @memberof AgentApigetAgentAgentAgentIdGet
+     * @memberof AgentApigetAgentAgentsAgentIdGet
      */
     agentId: string
 }
@@ -45,17 +48,20 @@ export interface AgentApiGetAgentAgentAgentIdGetRequest {
 export interface AgentApiListAgentsAgentsGetRequest {
 }
 
-export interface AgentApiUpdateAgentAgentAgentIdPutRequest {
+export interface AgentApiOptionsAgentsOptionsRequest {
+}
+
+export interface AgentApiUpdateAgentAgentsAgentIdPutRequest {
     /**
      * 
      * @type string
-     * @memberof AgentApiupdateAgentAgentAgentIdPut
+     * @memberof AgentApiupdateAgentAgentsAgentIdPut
      */
     agentId: string
     /**
      * 
      * @type AgentSpecification
-     * @memberof AgentApiupdateAgentAgentAgentIdPut
+     * @memberof AgentApiupdateAgentAgentsAgentIdPut
      */
     agentSpecification: AgentSpecification
 }
@@ -68,35 +74,39 @@ export class ObjectAgentApi {
     }
 
     /**
+     * Create a new agent
      * Create Agent
      * @param param the request object
      */
-    public createAgentAgentPostWithHttpInfo(param: AgentApiCreateAgentAgentPostRequest, options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
-        return this.api.createAgentAgentPostWithHttpInfo(param.agentSpecification,  options).toPromise();
+    public createAgentAgentsPostWithHttpInfo(param: AgentApiCreateAgentAgentsPostRequest, options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
+        return this.api.createAgentAgentsPostWithHttpInfo(param.agentSpecification,  options).toPromise();
     }
 
     /**
+     * Create a new agent
      * Create Agent
      * @param param the request object
      */
-    public createAgentAgentPost(param: AgentApiCreateAgentAgentPostRequest, options?: Configuration): Promise<SavedAgentSpecification> {
-        return this.api.createAgentAgentPost(param.agentSpecification,  options).toPromise();
+    public createAgentAgentsPost(param: AgentApiCreateAgentAgentsPostRequest, options?: Configuration): Promise<SavedAgentSpecification> {
+        return this.api.createAgentAgentsPost(param.agentSpecification,  options).toPromise();
     }
 
     /**
+     * Delete a specific agent by its ID
      * Delete Agent
      * @param param the request object
      */
-    public deleteAgentAgentAgentIdDeleteWithHttpInfo(param: AgentApiDeleteAgentAgentAgentIdDeleteRequest, options?: Configuration): Promise<HttpInfo<any>> {
-        return this.api.deleteAgentAgentAgentIdDeleteWithHttpInfo(param.agentId,  options).toPromise();
+    public deleteAgentAgentsAgentIdDeleteWithHttpInfo(param: AgentApiDeleteAgentAgentsAgentIdDeleteRequest, options?: Configuration): Promise<HttpInfo<any>> {
+        return this.api.deleteAgentAgentsAgentIdDeleteWithHttpInfo(param.agentId,  options).toPromise();
     }
 
     /**
+     * Delete a specific agent by its ID
      * Delete Agent
      * @param param the request object
      */
-    public deleteAgentAgentAgentIdDelete(param: AgentApiDeleteAgentAgentAgentIdDeleteRequest, options?: Configuration): Promise<any> {
-        return this.api.deleteAgentAgentAgentIdDelete(param.agentId,  options).toPromise();
+    public deleteAgentAgentsAgentIdDelete(param: AgentApiDeleteAgentAgentsAgentIdDeleteRequest, options?: Configuration): Promise<any> {
+        return this.api.deleteAgentAgentsAgentIdDelete(param.agentId,  options).toPromise();
     }
 
     /**
@@ -104,8 +114,8 @@ export class ObjectAgentApi {
      * Get Agent
      * @param param the request object
      */
-    public getAgentAgentAgentIdGetWithHttpInfo(param: AgentApiGetAgentAgentAgentIdGetRequest, options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
-        return this.api.getAgentAgentAgentIdGetWithHttpInfo(param.agentId,  options).toPromise();
+    public getAgentAgentsAgentIdGetWithHttpInfo(param: AgentApiGetAgentAgentsAgentIdGetRequest, options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
+        return this.api.getAgentAgentsAgentIdGetWithHttpInfo(param.agentId,  options).toPromise();
     }
 
     /**
@@ -113,8 +123,8 @@ export class ObjectAgentApi {
      * Get Agent
      * @param param the request object
      */
-    public getAgentAgentAgentIdGet(param: AgentApiGetAgentAgentAgentIdGetRequest, options?: Configuration): Promise<SavedAgentSpecification> {
-        return this.api.getAgentAgentAgentIdGet(param.agentId,  options).toPromise();
+    public getAgentAgentsAgentIdGet(param: AgentApiGetAgentAgentsAgentIdGetRequest, options?: Configuration): Promise<SavedAgentSpecification> {
+        return this.api.getAgentAgentsAgentIdGet(param.agentId,  options).toPromise();
     }
 
     /**
@@ -136,19 +146,37 @@ export class ObjectAgentApi {
     }
 
     /**
-     * Update Agent
+     * Options
      * @param param the request object
      */
-    public updateAgentAgentAgentIdPutWithHttpInfo(param: AgentApiUpdateAgentAgentAgentIdPutRequest, options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
-        return this.api.updateAgentAgentAgentIdPutWithHttpInfo(param.agentId, param.agentSpecification,  options).toPromise();
+    public optionsAgentsOptionsWithHttpInfo(param: AgentApiOptionsAgentsOptionsRequest = {}, options?: Configuration): Promise<HttpInfo<any>> {
+        return this.api.optionsAgentsOptionsWithHttpInfo( options).toPromise();
     }
 
     /**
+     * Options
+     * @param param the request object
+     */
+    public optionsAgentsOptions(param: AgentApiOptionsAgentsOptionsRequest = {}, options?: Configuration): Promise<any> {
+        return this.api.optionsAgentsOptions( options).toPromise();
+    }
+
+    /**
+     * Update a specific agent by its ID
      * Update Agent
      * @param param the request object
      */
-    public updateAgentAgentAgentIdPut(param: AgentApiUpdateAgentAgentAgentIdPutRequest, options?: Configuration): Promise<SavedAgentSpecification> {
-        return this.api.updateAgentAgentAgentIdPut(param.agentId, param.agentSpecification,  options).toPromise();
+    public updateAgentAgentsAgentIdPutWithHttpInfo(param: AgentApiUpdateAgentAgentsAgentIdPutRequest, options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
+        return this.api.updateAgentAgentsAgentIdPutWithHttpInfo(param.agentId, param.agentSpecification,  options).toPromise();
+    }
+
+    /**
+     * Update a specific agent by its ID
+     * Update Agent
+     * @param param the request object
+     */
+    public updateAgentAgentsAgentIdPut(param: AgentApiUpdateAgentAgentsAgentIdPutRequest, options?: Configuration): Promise<SavedAgentSpecification> {
+        return this.api.updateAgentAgentsAgentIdPut(param.agentId, param.agentSpecification,  options).toPromise();
     }
 
 }
@@ -275,40 +303,52 @@ export class ObjectAuthApi {
 import { ObservableSessionApi } from "./ObservableAPI";
 import { SessionApiRequestFactory, SessionApiResponseProcessor} from "../apis/SessionApi";
 
-export interface SessionApiCreateSessionSessionPostRequest {
+export interface SessionApiCreateSessionSessionsPostRequest {
     /**
      * 
      * @type SessionSpecification
-     * @memberof SessionApicreateSessionSessionPost
+     * @memberof SessionApicreateSessionSessionsPost
      */
     sessionSpecification: SessionSpecification
 }
 
-export interface SessionApiGetSummarySessionSessionIdGetRequest {
+export interface SessionApiGetSummarySessionsSessionIdGetRequest {
     /**
      * 
-     * @type string
-     * @memberof SessionApigetSummarySessionSessionIdGet
+     * @type any
+     * @memberof SessionApigetSummarySessionsSessionIdGet
      */
-    sessionId: string
+    sessionId: any
 }
 
 export interface SessionApiListSessionsSessionsGetRequest {
 }
 
-export interface SessionApiSendMessageSessionSessionIdPostRequest {
+export interface SessionApiOptionsSessionsOptionsRequest {
+}
+
+export interface SessionApiSendMessageSessionsSessionIdPostRequest {
     /**
      * 
-     * @type string
-     * @memberof SessionApisendMessageSessionSessionIdPost
+     * @type any
+     * @memberof SessionApisendMessageSessionsSessionIdPost
      */
-    sessionId: string
+    sessionId: any
     /**
      * 
-     * @type string
-     * @memberof SessionApisendMessageSessionSessionIdPost
+     * @type MessageContentModel
+     * @memberof SessionApisendMessageSessionsSessionIdPost
      */
-    body?: string
+    messageContentModel: MessageContentModel
+}
+
+export interface SessionApiSessionIdOptionsSessionsSessionIdOptionsRequest {
+    /**
+     * 
+     * @type any
+     * @memberof SessionApisessionIdOptionsSessionsSessionIdOptions
+     */
+    sessionId: any
 }
 
 export class ObjectSessionApi {
@@ -322,32 +362,32 @@ export class ObjectSessionApi {
      * Create Session
      * @param param the request object
      */
-    public createSessionSessionPostWithHttpInfo(param: SessionApiCreateSessionSessionPostRequest, options?: Configuration): Promise<HttpInfo<SavedSessionSpecification>> {
-        return this.api.createSessionSessionPostWithHttpInfo(param.sessionSpecification,  options).toPromise();
+    public createSessionSessionsPostWithHttpInfo(param: SessionApiCreateSessionSessionsPostRequest, options?: Configuration): Promise<HttpInfo<SavedSessionSpecification>> {
+        return this.api.createSessionSessionsPostWithHttpInfo(param.sessionSpecification,  options).toPromise();
     }
 
     /**
      * Create Session
      * @param param the request object
      */
-    public createSessionSessionPost(param: SessionApiCreateSessionSessionPostRequest, options?: Configuration): Promise<SavedSessionSpecification> {
-        return this.api.createSessionSessionPost(param.sessionSpecification,  options).toPromise();
+    public createSessionSessionsPost(param: SessionApiCreateSessionSessionsPostRequest, options?: Configuration): Promise<SavedSessionSpecification> {
+        return this.api.createSessionSessionsPost(param.sessionSpecification,  options).toPromise();
     }
 
     /**
      * Get Summary
      * @param param the request object
      */
-    public getSummarySessionSessionIdGetWithHttpInfo(param: SessionApiGetSummarySessionSessionIdGetRequest, options?: Configuration): Promise<HttpInfo<Session>> {
-        return this.api.getSummarySessionSessionIdGetWithHttpInfo(param.sessionId,  options).toPromise();
+    public getSummarySessionsSessionIdGetWithHttpInfo(param: SessionApiGetSummarySessionsSessionIdGetRequest, options?: Configuration): Promise<HttpInfo<Session>> {
+        return this.api.getSummarySessionsSessionIdGetWithHttpInfo(param.sessionId,  options).toPromise();
     }
 
     /**
      * Get Summary
      * @param param the request object
      */
-    public getSummarySessionSessionIdGet(param: SessionApiGetSummarySessionSessionIdGetRequest, options?: Configuration): Promise<Session> {
-        return this.api.getSummarySessionSessionIdGet(param.sessionId,  options).toPromise();
+    public getSummarySessionsSessionIdGet(param: SessionApiGetSummarySessionsSessionIdGetRequest, options?: Configuration): Promise<Session> {
+        return this.api.getSummarySessionsSessionIdGet(param.sessionId,  options).toPromise();
     }
 
     /**
@@ -367,19 +407,51 @@ export class ObjectSessionApi {
     }
 
     /**
-     * Send Message
+     * Options
      * @param param the request object
      */
-    public sendMessageSessionSessionIdPostWithHttpInfo(param: SessionApiSendMessageSessionSessionIdPostRequest, options?: Configuration): Promise<HttpInfo<Session>> {
-        return this.api.sendMessageSessionSessionIdPostWithHttpInfo(param.sessionId, param.body,  options).toPromise();
+    public optionsSessionsOptionsWithHttpInfo(param: SessionApiOptionsSessionsOptionsRequest = {}, options?: Configuration): Promise<HttpInfo<any>> {
+        return this.api.optionsSessionsOptionsWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * Options
+     * @param param the request object
+     */
+    public optionsSessionsOptions(param: SessionApiOptionsSessionsOptionsRequest = {}, options?: Configuration): Promise<any> {
+        return this.api.optionsSessionsOptions( options).toPromise();
     }
 
     /**
      * Send Message
      * @param param the request object
      */
-    public sendMessageSessionSessionIdPost(param: SessionApiSendMessageSessionSessionIdPostRequest, options?: Configuration): Promise<Session> {
-        return this.api.sendMessageSessionSessionIdPost(param.sessionId, param.body,  options).toPromise();
+    public sendMessageSessionsSessionIdPostWithHttpInfo(param: SessionApiSendMessageSessionsSessionIdPostRequest, options?: Configuration): Promise<HttpInfo<Session>> {
+        return this.api.sendMessageSessionsSessionIdPostWithHttpInfo(param.sessionId, param.messageContentModel,  options).toPromise();
+    }
+
+    /**
+     * Send Message
+     * @param param the request object
+     */
+    public sendMessageSessionsSessionIdPost(param: SessionApiSendMessageSessionsSessionIdPostRequest, options?: Configuration): Promise<Session> {
+        return this.api.sendMessageSessionsSessionIdPost(param.sessionId, param.messageContentModel,  options).toPromise();
+    }
+
+    /**
+     * Session Id Options
+     * @param param the request object
+     */
+    public sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(param: SessionApiSessionIdOptionsSessionsSessionIdOptionsRequest, options?: Configuration): Promise<HttpInfo<any>> {
+        return this.api.sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(param.sessionId,  options).toPromise();
+    }
+
+    /**
+     * Session Id Options
+     * @param param the request object
+     */
+    public sessionIdOptionsSessionsSessionIdOptions(param: SessionApiSessionIdOptionsSessionsSessionIdOptionsRequest, options?: Configuration): Promise<any> {
+        return this.api.sessionIdOptionsSessionsSessionIdOptions(param.sessionId,  options).toPromise();
     }
 
 }

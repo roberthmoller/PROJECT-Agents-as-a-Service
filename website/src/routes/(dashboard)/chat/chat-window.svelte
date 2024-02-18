@@ -1,6 +1,5 @@
 <script lang="ts">
-    import {Check, PaperPlane, Plus, Pencil1} from "radix-icons-svelte";
-    import {cn} from "$lib/utils";
+    import {Check, PaperPlane} from "radix-icons-svelte";
     import * as Avatar from "$lib/components/ui/avatar";
     import * as Card from "$lib/components/ui/card";
     import * as Command from "$lib/components/ui/command";
@@ -8,38 +7,27 @@
     import * as Tooltip from "$lib/components/ui/tooltip";
     import {Button} from "$lib/components/ui/button";
     import {Input} from "$lib/components/ui/input";
-    import {authState,authenticatedState} from "$lib/firebase";
-    import {agentApi} from "$lib/api";
-    import {
-        SavedAgentSpecification,
-        SavedMessageModel,
-        SavedSessionSpecification,
-        Session,
-        SessionSpecification
-    } from "restClient";
-    import {activeSession, agentStore, listAgents, sendMessage,} from "$lib/services"
-    import {writable} from "svelte/store";
+    import {authenticatedState} from "$lib/firebase";
+    import {activeSession, activeSessionMessages, sendMessage} from "$lib/services"
     import {Badge} from "$lib/components/ui/badge";
+    import {agentsMapStore} from "$lib/services/index.js";
+    import {SavedMessageModel} from "api-client";
 
     let user = $authenticatedState;
-    $: session = $activeSession
     let open = false;
-    $: selectedAgents = session?.agents ?? [];
-    $: messages = session?.messages ?? [];
 
     let input = "";
     $: inputLength = input.trim().length;
-    let agents: Map<string, SavedAgentSpecification> = new Map();
+    $: session = $activeSession
+    $: agents = $agentsMapStore;
+    $: selectedAgents = session?.agents.map((agent: string) => agents.value.get(agent)!) ?? [];
+    $: sessionMessages = $activeSessionMessages
+    $: messages = $sessionMessages
 
-    listAgents().then((values) => {
-        values.forEach((agent) => {
-            agents.set(agent.id,agent);
-        })
-    });
 
     function named(senderId: string | null): string {
         if (senderId === null) return "";
-        return (agents.get(senderId)?.name ?? senderId);
+        return (agents.value.get(senderId)?.name ?? senderId);
     }
 
 
@@ -49,7 +37,6 @@
     <Card.Header class="flex flex-row items-center border-b">
         {#if selectedAgents.length < 1}
             <h2 class="mb-2 px-4 text2xl font-semibold tracking-tight text-muted-foreground">New chat</h2>
-
         {:else}
             <div class="flex items-center space-x-4">
                 {#each selectedAgents as agent}
@@ -57,13 +44,12 @@
                         <Tooltip.Trigger>
                             <div class="flex space-x-4 align-middle">
                                 <Avatar.Root>
-                                    <!--                        <Avatar.Image src={user.avatar} alt="Image"/>-->
                                     <Avatar.Fallback>{agent.name[0]}</Avatar.Fallback>
                                 </Avatar.Root>
-                                <!--                                <div>-->
-                                <p class="text-sm font-medium leading-none">{agent.name}</p>
-                                <!--                                    <p class="text-sm text-muted-foreground">{agent.models}</p>-->
-                                <!--                                </div>-->
+                                <div class="flex flex-col items-start text-left">
+                                    <p class="text-sm font-medium leading-none">{agent.name}</p>
+                                    <p class="text-sm text-muted-foreground w-[8rem] truncate">{agent.description}</p>
+                                </div>
                             </div>
                         </Tooltip.Trigger>
                         <Tooltip.Content sideOffset={10}>{agent.systemMessage}</Tooltip.Content>
@@ -150,21 +136,11 @@
             <Command.List>
                 <Command.Empty>No agents found.</Command.Empty>
                 <Command.Group class="p-2">
-                    {#each agents.values() as agent}
+                    {#each agents.value.values() as agent}
                         <Command.Item
                                 class="flex items-center px-2"
-                                onSelect={() => {
-								if (selectedAgents.includes(agent)) {
-									selectedAgents = selectedAgents.filter(
-										(selectedUser) => selectedUser !== agent
-									);
-								} else {
-									selectedAgents = [...$agentStore].filter((u) =>
-										[...selectedAgents, agent].includes(u)
-									);
-								}
-							}}
                         >
+
                             <Avatar.Root>
                                 <!--                                <Avatar.Image src={user.avatar} alt="Image"/>-->
                                 <Avatar.Fallback>{agent.name[0]}</Avatar.Fallback>
@@ -174,7 +150,7 @@
                                 <p class="text-sm text-muted-foreground">{agent.systemMessage}</p>
 
                                 <div class="mt-2">
-                                    {#each agent.models as model}
+                                    {#each agent.models ?? [] as model}
                                         <Badge>{model}</Badge>
                                     {/each}
                                 </div>

@@ -10,11 +10,10 @@
  * Do not edit the class manually.
  */
 
-import { ValidationError } from '../models/ValidationError';
 import { HttpFile } from '../http/http';
 
 export class HTTPValidationError {
-    'detail'?: Array<ValidationError>;
+    'detail'?: any | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -22,7 +21,7 @@ export class HTTPValidationError {
         {
             "name": "detail",
             "baseName": "detail",
-            "type": "Array<ValidationError>",
+            "type": "any",
             "format": ""
         }    ];
 

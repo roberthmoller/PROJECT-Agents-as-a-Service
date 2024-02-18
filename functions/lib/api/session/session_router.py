@@ -1,19 +1,27 @@
-from fastapi import APIRouter, Body, HTTPException, Depends
+from fastapi import APIRouter, Body, HTTPException, Depends, Path
 
-from lib.api.auth.auth_model import FirebaseUser
+from fastapi import APIRouter, Body, HTTPException, Depends, Path
+
 from lib.api.agent.agent_model import SavedAgentSpecification
+from lib.api.auth.auth_model import FirebaseUser
 from lib.api.session.assistant_utils import initialize_chat
-from lib.api.session.message_model import SavedMessageModel
+from lib.api.session.message_model import SavedMessageModel, MessageContentModel
 from lib.api.session.session_model import SessionSpecification, SavedSessionSpecification, Session
 from lib.utils.auth_utils import user_scope
 from lib.utils.firebase.admin import db
 
 router = APIRouter(
+    prefix="/sessions",
     tags=["Session"],
 )
 
 
-@router.get("/sessions")
+@router.options("", include_in_schema=False)
+def options():
+    return {"methods": ["GET", "POST"]}
+
+
+@router.get("")
 def list_sessions(user: FirebaseUser = Depends(user_scope)) -> list[Session]:
     return list(map(
         lambda document: get_summary(document.id),
@@ -21,7 +29,7 @@ def list_sessions(user: FirebaseUser = Depends(user_scope)) -> list[Session]:
     ))
 
 
-@router.post("/sessions")
+@router.post("")
 def create_session(
         session: SessionSpecification = Body(),
         user: FirebaseUser = Depends(user_scope)
@@ -31,8 +39,17 @@ def create_session(
     return SavedSessionSpecification(id=document.id, **session.model_dump())
 
 
-@router.get("/session/{session_id}")
-def get_summary(session_id: str, user: FirebaseUser = Depends(user_scope)) -> Session:
+@router.options("/{session_id}", include_in_schema=False)
+def options(session_id: str = Path()):
+    return {"methods": ["GET", "POST"]}
+
+
+@router.get("/{session_id}")
+def get_summary(
+        session_id: str = Path(),
+        user: FirebaseUser = Depends(user_scope)
+) -> Session:
+    print("User: {0}".format(user))
     session_ref = db().collection(f"v1/public/users/{user.uid}/sessions").document(session_id)
     messages_ref = session_ref.collection("messages").order_by("sent_at")
     agents_ref = db().collection(f"v1/public/users/{user.uid}/agents")
@@ -56,9 +73,12 @@ def get_summary(session_id: str, user: FirebaseUser = Depends(user_scope)) -> Se
     )
 
 
-@router.post("/session/{session_id}")
-def send_message(session_id: str, message_content: str = Body(str), user=Depends(user_scope)) -> Session:
-    summary = get_summary(session_id)
+@router.post("/{session_id}")
+def send_message(session_id: str = Path(),
+                 message: MessageContentModel = Body(),
+                 user: FirebaseUser = Depends(user_scope)
+                 ) -> Session:
+    summary = get_summary(session_id, user=user)
     user, recipient = initialize_chat(user, summary)
-    user.send(message=message_content, recipient=recipient, request_reply=True)
+    user.send(message=message.content, recipient=recipient, request_reply=True)
     return summary

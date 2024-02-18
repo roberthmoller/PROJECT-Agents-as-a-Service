@@ -18,14 +18,15 @@ class FirebaseAgent(ConversableAgent, ABC):
     id: str
     display_name: str
     session: Session
+    user: FirebaseUser
     should_record: bool = False
 
     def record_message(self, message: Union[Dict, str]):
         content = (str(message["content"]) if isinstance(message, Dict) else str(message)).strip()
         sender = str(message["name"]) if isinstance(message, Dict) else self.name
         if self.should_record and len(content) > 0:
-            session_collection = db().collection("sessions").document(self.session.id)
-            messages_collection = session_collection.collection("messages")
+            messages_collection = db().collection(
+                f"v1/public/users/{self.user.uid}/sessions/{self.session.id}/messages")
             message_document = messages_collection.document()
             stripped_content = content \
                 .rstrip("TERMINATE") \
@@ -53,6 +54,7 @@ class FirebaseUserProxyAgent(UserProxyAgent, FirebaseAgent):
     def __init__(self, session: Session, user: FirebaseUser):
         self.session = session
         self.id = user.uid
+        self.user = user
         self.display_name = ((user.name or "User").replace(" ", "_"))
         super().__init__(
             name=self.id,
@@ -68,18 +70,16 @@ class FirebaseUserProxyAgent(UserProxyAgent, FirebaseAgent):
 
 
 class FirebaseAssistantAgent(AssistantAgent, FirebaseAgent):
-    def __init__(self, session: Session, agent: SavedAgentSpecification, user: FirebaseUserProxyAgent):
+    def __init__(self, session: Session, agent: SavedAgentSpecification, proxy: FirebaseUserProxyAgent):
         self.session = session
         self.id = agent.id
+        self.user = proxy.user
         self.display_name = agent.name
         super().__init__(
             llm_config={
                 "cache_seed": agent.cache_seed,
                 "temperature": agent.temperature,
-                "config_list": [
-                    {"model": model, "api_key": os.environ["OPENAI_API_KEY"]}
-                    for model in agent.models
-                ]
+                "config_list": [model.config() for model in agent.models]
             },
             name=agent.id,
             description=agent.system_message,
@@ -87,7 +87,7 @@ class FirebaseAssistantAgent(AssistantAgent, FirebaseAgent):
             # {self.display_name}
             Your name is "{self.display_name}". Follow the system message to answer the user's question.
             ## Chat members
-            {", ".join([member.name.replace("_", " ") for member in [user, *session.agents]])}
+            {", ".join([member.name.replace("_", " ") for member in [proxy, *session.agents]])}
             ## System message
             {agent.system_message}.
             ## Rules
@@ -113,6 +113,7 @@ class CustomGroupChat(GroupChatManager):
                 "cache_seed": 42,
                 "temperature": 0,
                 "config_list": [
+                    # Todo: Take this as a parameter for the session
                     {"model": "gpt-3.5-turbo", "api_key": os.environ["OPENAI_API_KEY"]}
                 ]
             },

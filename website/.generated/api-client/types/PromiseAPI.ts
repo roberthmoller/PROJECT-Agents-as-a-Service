@@ -4,13 +4,16 @@ import { Configuration} from '../configuration'
 import { AgentSpecification } from '../models/AgentSpecification';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
+import { MessageContentModel } from '../models/MessageContentModel';
+import { Name } from '../models/Name';
+import { PhoneNumber } from '../models/PhoneNumber';
+import { PhotoUrl } from '../models/PhotoUrl';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { ValidationError } from '../models/ValidationError';
-import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 import { ObservableAgentApi } from './ObservableAPI';
 
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
@@ -26,38 +29,42 @@ export class PromiseAgentApi {
     }
 
     /**
+     * Create a new agent
      * Create Agent
      * @param agentSpecification 
      */
-    public createAgentAgentPostWithHttpInfo(agentSpecification: AgentSpecification, _options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
-        const result = this.api.createAgentAgentPostWithHttpInfo(agentSpecification, _options);
+    public createAgentAgentsPostWithHttpInfo(agentSpecification: AgentSpecification, _options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
+        const result = this.api.createAgentAgentsPostWithHttpInfo(agentSpecification, _options);
         return result.toPromise();
     }
 
     /**
+     * Create a new agent
      * Create Agent
      * @param agentSpecification 
      */
-    public createAgentAgentPost(agentSpecification: AgentSpecification, _options?: Configuration): Promise<SavedAgentSpecification> {
-        const result = this.api.createAgentAgentPost(agentSpecification, _options);
+    public createAgentAgentsPost(agentSpecification: AgentSpecification, _options?: Configuration): Promise<SavedAgentSpecification> {
+        const result = this.api.createAgentAgentsPost(agentSpecification, _options);
         return result.toPromise();
     }
 
     /**
+     * Delete a specific agent by its ID
      * Delete Agent
      * @param agentId 
      */
-    public deleteAgentAgentAgentIdDeleteWithHttpInfo(agentId: string, _options?: Configuration): Promise<HttpInfo<any>> {
-        const result = this.api.deleteAgentAgentAgentIdDeleteWithHttpInfo(agentId, _options);
+    public deleteAgentAgentsAgentIdDeleteWithHttpInfo(agentId: string, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.deleteAgentAgentsAgentIdDeleteWithHttpInfo(agentId, _options);
         return result.toPromise();
     }
 
     /**
+     * Delete a specific agent by its ID
      * Delete Agent
      * @param agentId 
      */
-    public deleteAgentAgentAgentIdDelete(agentId: string, _options?: Configuration): Promise<any> {
-        const result = this.api.deleteAgentAgentAgentIdDelete(agentId, _options);
+    public deleteAgentAgentsAgentIdDelete(agentId: string, _options?: Configuration): Promise<any> {
+        const result = this.api.deleteAgentAgentsAgentIdDelete(agentId, _options);
         return result.toPromise();
     }
 
@@ -66,8 +73,8 @@ export class PromiseAgentApi {
      * Get Agent
      * @param agentId 
      */
-    public getAgentAgentAgentIdGetWithHttpInfo(agentId: string, _options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
-        const result = this.api.getAgentAgentAgentIdGetWithHttpInfo(agentId, _options);
+    public getAgentAgentsAgentIdGetWithHttpInfo(agentId: string, _options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
+        const result = this.api.getAgentAgentsAgentIdGetWithHttpInfo(agentId, _options);
         return result.toPromise();
     }
 
@@ -76,8 +83,8 @@ export class PromiseAgentApi {
      * Get Agent
      * @param agentId 
      */
-    public getAgentAgentAgentIdGet(agentId: string, _options?: Configuration): Promise<SavedAgentSpecification> {
-        const result = this.api.getAgentAgentAgentIdGet(agentId, _options);
+    public getAgentAgentsAgentIdGet(agentId: string, _options?: Configuration): Promise<SavedAgentSpecification> {
+        const result = this.api.getAgentAgentsAgentIdGet(agentId, _options);
         return result.toPromise();
     }
 
@@ -100,22 +107,40 @@ export class PromiseAgentApi {
     }
 
     /**
-     * Update Agent
-     * @param agentId 
-     * @param agentSpecification 
+     * Options
      */
-    public updateAgentAgentAgentIdPutWithHttpInfo(agentId: string, agentSpecification: AgentSpecification, _options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
-        const result = this.api.updateAgentAgentAgentIdPutWithHttpInfo(agentId, agentSpecification, _options);
+    public optionsAgentsOptionsWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.optionsAgentsOptionsWithHttpInfo(_options);
         return result.toPromise();
     }
 
     /**
+     * Options
+     */
+    public optionsAgentsOptions(_options?: Configuration): Promise<any> {
+        const result = this.api.optionsAgentsOptions(_options);
+        return result.toPromise();
+    }
+
+    /**
+     * Update a specific agent by its ID
      * Update Agent
      * @param agentId 
      * @param agentSpecification 
      */
-    public updateAgentAgentAgentIdPut(agentId: string, agentSpecification: AgentSpecification, _options?: Configuration): Promise<SavedAgentSpecification> {
-        const result = this.api.updateAgentAgentAgentIdPut(agentId, agentSpecification, _options);
+    public updateAgentAgentsAgentIdPutWithHttpInfo(agentId: string, agentSpecification: AgentSpecification, _options?: Configuration): Promise<HttpInfo<SavedAgentSpecification>> {
+        const result = this.api.updateAgentAgentsAgentIdPutWithHttpInfo(agentId, agentSpecification, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Update a specific agent by its ID
+     * Update Agent
+     * @param agentId 
+     * @param agentSpecification 
+     */
+    public updateAgentAgentsAgentIdPut(agentId: string, agentSpecification: AgentSpecification, _options?: Configuration): Promise<SavedAgentSpecification> {
+        const result = this.api.updateAgentAgentsAgentIdPut(agentId, agentSpecification, _options);
         return result.toPromise();
     }
 
@@ -245,8 +270,8 @@ export class PromiseSessionApi {
      * Create Session
      * @param sessionSpecification 
      */
-    public createSessionSessionPostWithHttpInfo(sessionSpecification: SessionSpecification, _options?: Configuration): Promise<HttpInfo<SavedSessionSpecification>> {
-        const result = this.api.createSessionSessionPostWithHttpInfo(sessionSpecification, _options);
+    public createSessionSessionsPostWithHttpInfo(sessionSpecification: SessionSpecification, _options?: Configuration): Promise<HttpInfo<SavedSessionSpecification>> {
+        const result = this.api.createSessionSessionsPostWithHttpInfo(sessionSpecification, _options);
         return result.toPromise();
     }
 
@@ -254,8 +279,8 @@ export class PromiseSessionApi {
      * Create Session
      * @param sessionSpecification 
      */
-    public createSessionSessionPost(sessionSpecification: SessionSpecification, _options?: Configuration): Promise<SavedSessionSpecification> {
-        const result = this.api.createSessionSessionPost(sessionSpecification, _options);
+    public createSessionSessionsPost(sessionSpecification: SessionSpecification, _options?: Configuration): Promise<SavedSessionSpecification> {
+        const result = this.api.createSessionSessionsPost(sessionSpecification, _options);
         return result.toPromise();
     }
 
@@ -263,8 +288,8 @@ export class PromiseSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionSessionIdGetWithHttpInfo(sessionId: string, _options?: Configuration): Promise<HttpInfo<Session>> {
-        const result = this.api.getSummarySessionSessionIdGetWithHttpInfo(sessionId, _options);
+    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: any, _options?: Configuration): Promise<HttpInfo<Session>> {
+        const result = this.api.getSummarySessionsSessionIdGetWithHttpInfo(sessionId, _options);
         return result.toPromise();
     }
 
@@ -272,8 +297,8 @@ export class PromiseSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionSessionIdGet(sessionId: string, _options?: Configuration): Promise<Session> {
-        const result = this.api.getSummarySessionSessionIdGet(sessionId, _options);
+    public getSummarySessionsSessionIdGet(sessionId: any, _options?: Configuration): Promise<Session> {
+        const result = this.api.getSummarySessionsSessionIdGet(sessionId, _options);
         return result.toPromise();
     }
 
@@ -294,22 +319,56 @@ export class PromiseSessionApi {
     }
 
     /**
-     * Send Message
-     * @param sessionId 
-     * @param body 
+     * Options
      */
-    public sendMessageSessionSessionIdPostWithHttpInfo(sessionId: string, body?: string, _options?: Configuration): Promise<HttpInfo<Session>> {
-        const result = this.api.sendMessageSessionSessionIdPostWithHttpInfo(sessionId, body, _options);
+    public optionsSessionsOptionsWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.optionsSessionsOptionsWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     * Options
+     */
+    public optionsSessionsOptions(_options?: Configuration): Promise<any> {
+        const result = this.api.optionsSessionsOptions(_options);
         return result.toPromise();
     }
 
     /**
      * Send Message
      * @param sessionId 
-     * @param body 
+     * @param messageContentModel 
      */
-    public sendMessageSessionSessionIdPost(sessionId: string, body?: string, _options?: Configuration): Promise<Session> {
-        const result = this.api.sendMessageSessionSessionIdPost(sessionId, body, _options);
+    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Promise<HttpInfo<Session>> {
+        const result = this.api.sendMessageSessionsSessionIdPostWithHttpInfo(sessionId, messageContentModel, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Send Message
+     * @param sessionId 
+     * @param messageContentModel 
+     */
+    public sendMessageSessionsSessionIdPost(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Promise<Session> {
+        const result = this.api.sendMessageSessionsSessionIdPost(sessionId, messageContentModel, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Session Id Options
+     * @param sessionId 
+     */
+    public sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(sessionId: any, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(sessionId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Session Id Options
+     * @param sessionId 
+     */
+    public sessionIdOptionsSessionsSessionIdOptions(sessionId: any, _options?: Configuration): Promise<any> {
+        const result = this.api.sessionIdOptionsSessionsSessionIdOptions(sessionId, _options);
         return result.toPromise();
     }
 

@@ -4,7 +4,6 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Agents-as-a-Service.iml" filepath="$PROJECT_DIR$/Agents-as-a-Service.iml" />
       <module fileurl="file://$PROJECT_DIR$/functions/functions.iml" filepath="$PROJECT_DIR$/functions/functions.iml" />
-      <module fileurl="file://$PROJECT_DIR$/public/public.iml" filepath="$PROJECT_DIR$/public/public.iml" />
       <module fileurl="file://$PROJECT_DIR$/website/website.iml" filepath="$PROJECT_DIR$/website/website.iml" />
     </modules>
   </component>

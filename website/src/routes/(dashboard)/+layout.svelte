@@ -1,35 +1,37 @@
 <script lang="ts">
-    import {DashboardMainNav, ThemeToggle, UserNav} from "$lib/dashboard";
+    import {DashboardMainNav, ThemeToggle, UserNav} from "./";
     import {authState} from "$lib/firebase";
     import {gotoLogin} from "$lib/routing";
+    import {Command} from "lucide-svelte";
+    import Authguard from './authguard.svelte';
 
     authState.subscribe(({isLoading, isLoggedIn}) => {
         if (!isLoggedIn && !isLoading) gotoLogin()
     });
 </script>
 
-{#if $authState.user}
-    <div class="flex-col md:flex h-full">
-        <!--Navigation-->
-        <div class="border-b">
-            <div class="flex h-16 items-center px-4">
-                <!--            <TeamSwitcher/>-->
-                <DashboardMainNav class="mx-6"/>
-                <div class="ml-auto flex items-center space-x-4">
-                    <ThemeToggle/>
-                    <!--                <Search/>-->
-                    {#if $authState.user}
-                        <UserNav user={$authState.user}/>
-                    {/if}
+<Authguard>
+    <span slot="authenticated">
+        <div class="flex-col md:flex h-full">
+            <!--Navigation-->
+            <div class="border-b h-[4rem]">
+                <div class="flex h-16 items-center px-4">
+                    <!--            <TeamSwitcher/>-->
+                    <!--                <h1 id="logo" class="text-lg font-bold font-sans">Personal</h1>-->
+                    <Command class="h-5"/>
+                    <DashboardMainNav class="mx-6"/>
+                    <div class="ml-auto flex items-center space-x-4">
+                        <ThemeToggle/>
+                        <!--                <Search/>-->
+                        {#if $authState.user}
+                            <UserNav user={$authState.user}/>
+                        {/if}
+                    </div>
                 </div>
             </div>
+            <div class="max-h-screen" style="height: calc(100vh - 4rem);">
+                <slot/>
+            </div>
         </div>
-        <div class="h-full">
-            <slot/>
-        </div>
-    </div>
-{:else}
-    <div>
-        Loading...
-    </div>
-{/if}
+    </span>
+</Authguard>
