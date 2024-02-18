@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {activeSession, agentsMapStore, refreshAgents, refreshSessions, sessionsStore} from "$lib/services";
+    import {activeSession, agentsMapStore, refreshSessions, sessionsStore} from "$lib/services";
     import {PlusCircled, Reload} from "radix-icons-svelte";
     import * as Sheet from "$lib/components/ui/sheet";
     import {Input} from "$lib/components/ui/input";
@@ -10,7 +10,7 @@
     $: sessions = $sessionsStore;
     $: agents = $agentsMapStore;
     onMount(refreshSessions);
-    onMount(refreshAgents);
+    // onMount(refreshAgents);
 
 
 </script>

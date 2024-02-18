@@ -1,0 +1,89 @@
+<script lang="ts">
+    import * as Dialog from "$lib/components/ui/dialog";
+    import {Button} from "$lib/components/ui/button";
+    import {Label} from "$lib/components/ui/label";
+    import {Input} from "$lib/components/ui/input";
+    import {PipRequirement, SkillSpecification} from "restClient";
+    import Editor from "./editor.svelte"
+
+    let open = false;
+    let name = "";
+    let requirement: PipRequirement[] = [];
+    let code = "import autogen";
+
+    async function createSkill() {
+        let skill = new SkillSpecification();
+        skill.name = name;
+        skill.requirements = requirement;
+        skill.code = code;
+
+        try {
+            // toast.promise(
+            //     agentApi.createAgentAgentsPost(null), {
+            //         loading: "Creating agent...",
+            //         success: "Agent created successfully",
+            //         error: "Failed to create agent",
+            //         description: "This might take some seconds. Please wait..."
+            //     }
+            // );
+            open = false;
+        } catch (e: any) {
+            console.error("Error creating skill: ", e);
+        }
+    }
+</script>
+
+<Dialog.Root bind:open>
+    <Dialog.Trigger asChild let:builder>
+        <Button size="sm" builders={[builder]} class="relative">Create</Button>
+    </Dialog.Trigger>
+    <Dialog.Content>
+        <Dialog.Header>
+            <Dialog.Title>Create an agent</Dialog.Title>
+            <Dialog.Description>Define a new agent and its capabilities.</Dialog.Description>
+        </Dialog.Header>
+        <form on:submit|preventDefault>
+            <div class="grid gap-4 py-4">
+                <div class="grid gap-2">
+                    <Label for="url">Name</Label>
+                    <Input
+                            id="name"
+                            placeholder="Descriptive title of the skill, e.g. Search for Wikipedia articles."
+                            type="text"
+                            autocapitalize="words"
+                            autocorrect="off"
+                            bind:value={name}
+                    />
+                </div>
+                <div class="grid gap-2">
+                    <Label for="url">Requirements</Label>
+                    <Input
+                            id="requirements"
+                            placeholder="A list of requirements that the skill needs to be able to run. E.g. pip install wikipedia."
+                            autocorrect="on"
+                            bind:value={requirement}
+                    />
+                </div>
+                <div class="grid gap-2 max-h-[30rem] overflow-y-scroll">
+                    <Label for="code" class="flex-shrink">Code</Label>
+                    <Editor bind:value={code}/>
+                    <!--                    <CodeMirror-->
+                    <!--                            bind:value={code}-->
+                    <!--                            lang={python()}-->
+                    <!--                            theme={vscodeDark}-->
+                    <!--                            class="h-[10rem] w-[20rem]"-->
+                    <!--                    />-->
+                    <!--                    <Input-->
+                    <!--                            id="code"-->
+                    <!--                            placeholder="import wikipedia"-->
+                    <!--                            autocorrect="on"-->
+                    <!--                            bind:value={skillCode}-->
+                    <!--                    />-->
+                </div>
+            </div>
+        </form>
+        <Dialog.Footer>
+            <Button on:click={createSkill}>Create</Button>
+        </Dialog.Footer>
+    </Dialog.Content>
+</Dialog.Root>

@@ -1,5 +1,5 @@
 <script>
-    import { refreshAgents, workshopStore} from "$lib/services/workshop-service";
+    import { workshopStore} from "$lib/services/workshop-service";
     import AgentCard from "./agents/agent-card.svelte";
     import CreateAgentCard from "./agents/create-agent-card.svelte";
     import {Button} from "$lib/components/ui/button";
@@ -25,7 +25,7 @@
             <p class="mb-4 mt-2 text-sm text-muted-foreground">
                 There was an error loading agents. Please try again.
             </p>
-            <Button variant="outline" on:click={refreshAgents}>Try Again</Button>
+<!--            <Button variant="outline" on:click={refreshAgents}>Try Again</Button>-->
         </div>
     </div>
 {:else}

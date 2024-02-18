@@ -3,11 +3,12 @@
     import {Users} from "lucide-svelte";
     import {onMount} from "svelte";
     import {Computer, Hammer, CheckCircle} from "lucide-svelte";
-    import {activeTab, refreshWorkshop, WorkshopTab} from "$lib/services/workshop-service";
+    import {activeTab, workshopStore, WorkshopTab} from "$lib/services/workshop-service";
     import {AgentsTab, SkillsTab, TasksTab, TabButton} from './tabs';
 
-    $: tab = $activeTab
-    onMount(refreshWorkshop);
+    $: ({tabStore} = $workshopStore)
+    $: tab = $tabStore
+
 </script>
 <div class="flex">
     <!--Sidebar-->
@@ -16,15 +17,15 @@
             <div class="px-3 py-2">
                 <h2 class="mb-2 px-4 text-lg font-semibold tracking-tight">Build</h2>
                 <div class="space-y-1">
-                    <TabButton isActive={tab === WorkshopTab.AGENTS} on:click={() => activeTab.set(WorkshopTab.AGENTS)}>
+                    <TabButton isActive={tab === WorkshopTab.AGENTS} on:click={() => tabStore.set(WorkshopTab.AGENTS)}>
                         <Computer class="w-4 mr-2"/>
                         Agents
                     </TabButton>
-                    <TabButton isActive={tab === WorkshopTab.SKILLS} on:click={() => activeTab.set(WorkshopTab.SKILLS)}>
+                    <TabButton isActive={tab === WorkshopTab.SKILLS} on:click={() => tabStore.set(WorkshopTab.SKILLS)}>
                         <Hammer class="w-4 mr-2"/>
                         Skills
                     </TabButton>
-                    <TabButton isActive={tab === WorkshopTab.TASKS} on:click={() => activeTab.set(WorkshopTab.TASKS)}>
+                    <TabButton isActive={tab === WorkshopTab.TASKS} on:click={() => tabStore.set(WorkshopTab.TASKS)}>
                         <CheckCircle class="w-4 mr-2"/>
                         Tasks
                     </TabButton>

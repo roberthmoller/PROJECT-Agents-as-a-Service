@@ -2,18 +2,24 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 
 import { AgentSpecification } from '../models/AgentSpecification';
+import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
+import { CodeAndIgnore } from '../models/CodeAndIgnore';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
+import { HasRequirements } from '../models/HasRequirements';
+import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
-import { Name } from '../models/Name';
-import { PhoneNumber } from '../models/PhoneNumber';
-import { PhotoUrl } from '../models/PhotoUrl';
+import { OpenAILlmModel } from '../models/OpenAILlmModel';
+import { PipRequirement } from '../models/PipRequirement';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
+import { SavedSkillSpecification } from '../models/SavedSkillSpecification';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
+import { SkillSpecification } from '../models/SkillSpecification';
 import { ValidationError } from '../models/ValidationError';
+import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 import { ObservableAgentApi } from './ObservableAPI';
 
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
@@ -103,22 +109,6 @@ export class PromiseAgentApi {
      */
     public listAgentsAgentsGet(_options?: Configuration): Promise<Array<SavedAgentSpecification>> {
         const result = this.api.listAgentsAgentsGet(_options);
-        return result.toPromise();
-    }
-
-    /**
-     * Options
-     */
-    public optionsAgentsOptionsWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
-        const result = this.api.optionsAgentsOptionsWithHttpInfo(_options);
-        return result.toPromise();
-    }
-
-    /**
-     * Options
-     */
-    public optionsAgentsOptions(_options?: Configuration): Promise<any> {
-        const result = this.api.optionsAgentsOptions(_options);
         return result.toPromise();
     }
 
@@ -288,7 +278,7 @@ export class PromiseSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: any, _options?: Configuration): Promise<HttpInfo<Session>> {
+    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: string, _options?: Configuration): Promise<HttpInfo<Session>> {
         const result = this.api.getSummarySessionsSessionIdGetWithHttpInfo(sessionId, _options);
         return result.toPromise();
     }
@@ -297,7 +287,7 @@ export class PromiseSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionsSessionIdGet(sessionId: any, _options?: Configuration): Promise<Session> {
+    public getSummarySessionsSessionIdGet(sessionId: string, _options?: Configuration): Promise<Session> {
         const result = this.api.getSummarySessionsSessionIdGet(sessionId, _options);
         return result.toPromise();
     }
@@ -319,27 +309,11 @@ export class PromiseSessionApi {
     }
 
     /**
-     * Options
-     */
-    public optionsSessionsOptionsWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
-        const result = this.api.optionsSessionsOptionsWithHttpInfo(_options);
-        return result.toPromise();
-    }
-
-    /**
-     * Options
-     */
-    public optionsSessionsOptions(_options?: Configuration): Promise<any> {
-        const result = this.api.optionsSessionsOptions(_options);
-        return result.toPromise();
-    }
-
-    /**
      * Send Message
      * @param sessionId 
      * @param messageContentModel 
      */
-    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Promise<HttpInfo<Session>> {
+    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: string, messageContentModel: MessageContentModel, _options?: Configuration): Promise<HttpInfo<Session>> {
         const result = this.api.sendMessageSessionsSessionIdPostWithHttpInfo(sessionId, messageContentModel, _options);
         return result.toPromise();
     }
@@ -349,26 +323,85 @@ export class PromiseSessionApi {
      * @param sessionId 
      * @param messageContentModel 
      */
-    public sendMessageSessionsSessionIdPost(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Promise<Session> {
+    public sendMessageSessionsSessionIdPost(sessionId: string, messageContentModel: MessageContentModel, _options?: Configuration): Promise<Session> {
         const result = this.api.sendMessageSessionsSessionIdPost(sessionId, messageContentModel, _options);
         return result.toPromise();
     }
 
+
+}
+
+
+
+import { ObservableSkillsApi } from './ObservableAPI';
+
+import { SkillsApiRequestFactory, SkillsApiResponseProcessor} from "../apis/SkillsApi";
+export class PromiseSkillsApi {
+    private api: ObservableSkillsApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: SkillsApiRequestFactory,
+        responseProcessor?: SkillsApiResponseProcessor
+    ) {
+        this.api = new ObservableSkillsApi(configuration, requestFactory, responseProcessor);
+    }
+
     /**
-     * Session Id Options
-     * @param sessionId 
+     * Create a new skill
+     * Create Skill
+     * @param skillSpecification 
      */
-    public sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(sessionId: any, _options?: Configuration): Promise<HttpInfo<any>> {
-        const result = this.api.sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(sessionId, _options);
+    public createSkillSkillsPostWithHttpInfo(skillSpecification: SkillSpecification, _options?: Configuration): Promise<HttpInfo<SavedSkillSpecification>> {
+        const result = this.api.createSkillSkillsPostWithHttpInfo(skillSpecification, _options);
         return result.toPromise();
     }
 
     /**
-     * Session Id Options
-     * @param sessionId 
+     * Create a new skill
+     * Create Skill
+     * @param skillSpecification 
      */
-    public sessionIdOptionsSessionsSessionIdOptions(sessionId: any, _options?: Configuration): Promise<any> {
-        const result = this.api.sessionIdOptionsSessionsSessionIdOptions(sessionId, _options);
+    public createSkillSkillsPost(skillSpecification: SkillSpecification, _options?: Configuration): Promise<SavedSkillSpecification> {
+        const result = this.api.createSkillSkillsPost(skillSpecification, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * List all skills you have access to
+     * List Skills
+     */
+    public listSkillsSkillsGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<SavedSkillSpecification>>> {
+        const result = this.api.listSkillsSkillsGetWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     * List all skills you have access to
+     * List Skills
+     */
+    public listSkillsSkillsGet(_options?: Configuration): Promise<Array<SavedSkillSpecification>> {
+        const result = this.api.listSkillsSkillsGet(_options);
+        return result.toPromise();
+    }
+
+    /**
+     * Create a new skill
+     * Skill Requirements
+     * @param codeAndIgnore 
+     */
+    public skillRequirementsSkillsRequirementsPostWithHttpInfo(codeAndIgnore: CodeAndIgnore, _options?: Configuration): Promise<HttpInfo<HasRequirements>> {
+        const result = this.api.skillRequirementsSkillsRequirementsPostWithHttpInfo(codeAndIgnore, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Create a new skill
+     * Skill Requirements
+     * @param codeAndIgnore 
+     */
+    public skillRequirementsSkillsRequirementsPost(codeAndIgnore: CodeAndIgnore, _options?: Configuration): Promise<HasRequirements> {
+        const result = this.api.skillRequirementsSkillsRequirementsPost(codeAndIgnore, _options);
         return result.toPromise();
     }
 

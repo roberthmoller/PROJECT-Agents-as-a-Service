@@ -13,7 +13,7 @@
 import { HttpFile } from '../http/http';
 
 export class SessionSpecification {
-    'agents': any | null;
+    'agents': Array<string>;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -21,7 +21,7 @@ export class SessionSpecification {
         {
             "name": "agents",
             "baseName": "agents",
-            "type": "any",
+            "type": "Array<string>",
             "format": ""
         }    ];
 

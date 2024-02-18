@@ -16,19 +16,19 @@ export class SavedMessageModel {
     /**
     * The content of the message.
     */
-    'content': any | null;
+    'content': string;
     /**
     * The identifier of the sender of the message.
     */
-    'sender': any | null;
+    'sender': string;
     /**
     * The date and time the message was sent.
     */
-    'sentAt': any | null;
+    'sentAt': string;
     /**
     * The unique identifier of the message.
     */
-    'id': any | null;
+    'id': string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -36,25 +36,25 @@ export class SavedMessageModel {
         {
             "name": "content",
             "baseName": "content",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "sender",
             "baseName": "sender",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "sentAt",
             "baseName": "sent_at",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "id",
             "baseName": "id",
-            "type": "any",
+            "type": "string",
             "format": ""
         }    ];
 

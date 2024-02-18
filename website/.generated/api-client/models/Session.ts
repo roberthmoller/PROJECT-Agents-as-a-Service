@@ -10,12 +10,14 @@
  * Do not edit the class manually.
  */
 
+import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
+import { SavedMessageModel } from '../models/SavedMessageModel';
 import { HttpFile } from '../http/http';
 
 export class Session {
-    'id': any | null;
-    'agents': any | null;
-    'messages': any | null;
+    'id': string;
+    'agents': Array<SavedAgentSpecification>;
+    'messages': Array<SavedMessageModel>;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -23,19 +25,19 @@ export class Session {
         {
             "name": "id",
             "baseName": "id",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "agents",
             "baseName": "agents",
-            "type": "any",
+            "type": "Array<SavedAgentSpecification>",
             "format": ""
         },
         {
             "name": "messages",
             "baseName": "messages",
-            "type": "any",
+            "type": "Array<SavedMessageModel>",
             "format": ""
         }    ];
 

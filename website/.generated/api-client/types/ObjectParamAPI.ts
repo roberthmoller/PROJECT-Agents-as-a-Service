@@ -2,18 +2,24 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 
 import { AgentSpecification } from '../models/AgentSpecification';
+import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
+import { CodeAndIgnore } from '../models/CodeAndIgnore';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
+import { HasRequirements } from '../models/HasRequirements';
+import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
-import { Name } from '../models/Name';
-import { PhoneNumber } from '../models/PhoneNumber';
-import { PhotoUrl } from '../models/PhotoUrl';
+import { OpenAILlmModel } from '../models/OpenAILlmModel';
+import { PipRequirement } from '../models/PipRequirement';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
+import { SavedSkillSpecification } from '../models/SavedSkillSpecification';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
+import { SkillSpecification } from '../models/SkillSpecification';
 import { ValidationError } from '../models/ValidationError';
+import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 
 import { ObservableAgentApi } from "./ObservableAPI";
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
@@ -46,9 +52,6 @@ export interface AgentApiGetAgentAgentsAgentIdGetRequest {
 }
 
 export interface AgentApiListAgentsAgentsGetRequest {
-}
-
-export interface AgentApiOptionsAgentsOptionsRequest {
 }
 
 export interface AgentApiUpdateAgentAgentsAgentIdPutRequest {
@@ -143,22 +146,6 @@ export class ObjectAgentApi {
      */
     public listAgentsAgentsGet(param: AgentApiListAgentsAgentsGetRequest = {}, options?: Configuration): Promise<Array<SavedAgentSpecification>> {
         return this.api.listAgentsAgentsGet( options).toPromise();
-    }
-
-    /**
-     * Options
-     * @param param the request object
-     */
-    public optionsAgentsOptionsWithHttpInfo(param: AgentApiOptionsAgentsOptionsRequest = {}, options?: Configuration): Promise<HttpInfo<any>> {
-        return this.api.optionsAgentsOptionsWithHttpInfo( options).toPromise();
-    }
-
-    /**
-     * Options
-     * @param param the request object
-     */
-    public optionsAgentsOptions(param: AgentApiOptionsAgentsOptionsRequest = {}, options?: Configuration): Promise<any> {
-        return this.api.optionsAgentsOptions( options).toPromise();
     }
 
     /**
@@ -315,40 +302,28 @@ export interface SessionApiCreateSessionSessionsPostRequest {
 export interface SessionApiGetSummarySessionsSessionIdGetRequest {
     /**
      * 
-     * @type any
+     * @type string
      * @memberof SessionApigetSummarySessionsSessionIdGet
      */
-    sessionId: any
+    sessionId: string
 }
 
 export interface SessionApiListSessionsSessionsGetRequest {
 }
 
-export interface SessionApiOptionsSessionsOptionsRequest {
-}
-
 export interface SessionApiSendMessageSessionsSessionIdPostRequest {
     /**
      * 
-     * @type any
+     * @type string
      * @memberof SessionApisendMessageSessionsSessionIdPost
      */
-    sessionId: any
+    sessionId: string
     /**
      * 
      * @type MessageContentModel
      * @memberof SessionApisendMessageSessionsSessionIdPost
      */
     messageContentModel: MessageContentModel
-}
-
-export interface SessionApiSessionIdOptionsSessionsSessionIdOptionsRequest {
-    /**
-     * 
-     * @type any
-     * @memberof SessionApisessionIdOptionsSessionsSessionIdOptions
-     */
-    sessionId: any
 }
 
 export class ObjectSessionApi {
@@ -407,22 +382,6 @@ export class ObjectSessionApi {
     }
 
     /**
-     * Options
-     * @param param the request object
-     */
-    public optionsSessionsOptionsWithHttpInfo(param: SessionApiOptionsSessionsOptionsRequest = {}, options?: Configuration): Promise<HttpInfo<any>> {
-        return this.api.optionsSessionsOptionsWithHttpInfo( options).toPromise();
-    }
-
-    /**
-     * Options
-     * @param param the request object
-     */
-    public optionsSessionsOptions(param: SessionApiOptionsSessionsOptionsRequest = {}, options?: Configuration): Promise<any> {
-        return this.api.optionsSessionsOptions( options).toPromise();
-    }
-
-    /**
      * Send Message
      * @param param the request object
      */
@@ -438,20 +397,91 @@ export class ObjectSessionApi {
         return this.api.sendMessageSessionsSessionIdPost(param.sessionId, param.messageContentModel,  options).toPromise();
     }
 
+}
+
+import { ObservableSkillsApi } from "./ObservableAPI";
+import { SkillsApiRequestFactory, SkillsApiResponseProcessor} from "../apis/SkillsApi";
+
+export interface SkillsApiCreateSkillSkillsPostRequest {
     /**
-     * Session Id Options
-     * @param param the request object
+     * 
+     * @type SkillSpecification
+     * @memberof SkillsApicreateSkillSkillsPost
      */
-    public sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(param: SessionApiSessionIdOptionsSessionsSessionIdOptionsRequest, options?: Configuration): Promise<HttpInfo<any>> {
-        return this.api.sessionIdOptionsSessionsSessionIdOptionsWithHttpInfo(param.sessionId,  options).toPromise();
+    skillSpecification: SkillSpecification
+}
+
+export interface SkillsApiListSkillsSkillsGetRequest {
+}
+
+export interface SkillsApiSkillRequirementsSkillsRequirementsPostRequest {
+    /**
+     * 
+     * @type CodeAndIgnore
+     * @memberof SkillsApiskillRequirementsSkillsRequirementsPost
+     */
+    codeAndIgnore: CodeAndIgnore
+}
+
+export class ObjectSkillsApi {
+    private api: ObservableSkillsApi
+
+    public constructor(configuration: Configuration, requestFactory?: SkillsApiRequestFactory, responseProcessor?: SkillsApiResponseProcessor) {
+        this.api = new ObservableSkillsApi(configuration, requestFactory, responseProcessor);
     }
 
     /**
-     * Session Id Options
+     * Create a new skill
+     * Create Skill
      * @param param the request object
      */
-    public sessionIdOptionsSessionsSessionIdOptions(param: SessionApiSessionIdOptionsSessionsSessionIdOptionsRequest, options?: Configuration): Promise<any> {
-        return this.api.sessionIdOptionsSessionsSessionIdOptions(param.sessionId,  options).toPromise();
+    public createSkillSkillsPostWithHttpInfo(param: SkillsApiCreateSkillSkillsPostRequest, options?: Configuration): Promise<HttpInfo<SavedSkillSpecification>> {
+        return this.api.createSkillSkillsPostWithHttpInfo(param.skillSpecification,  options).toPromise();
+    }
+
+    /**
+     * Create a new skill
+     * Create Skill
+     * @param param the request object
+     */
+    public createSkillSkillsPost(param: SkillsApiCreateSkillSkillsPostRequest, options?: Configuration): Promise<SavedSkillSpecification> {
+        return this.api.createSkillSkillsPost(param.skillSpecification,  options).toPromise();
+    }
+
+    /**
+     * List all skills you have access to
+     * List Skills
+     * @param param the request object
+     */
+    public listSkillsSkillsGetWithHttpInfo(param: SkillsApiListSkillsSkillsGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<SavedSkillSpecification>>> {
+        return this.api.listSkillsSkillsGetWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * List all skills you have access to
+     * List Skills
+     * @param param the request object
+     */
+    public listSkillsSkillsGet(param: SkillsApiListSkillsSkillsGetRequest = {}, options?: Configuration): Promise<Array<SavedSkillSpecification>> {
+        return this.api.listSkillsSkillsGet( options).toPromise();
+    }
+
+    /**
+     * Create a new skill
+     * Skill Requirements
+     * @param param the request object
+     */
+    public skillRequirementsSkillsRequirementsPostWithHttpInfo(param: SkillsApiSkillRequirementsSkillsRequirementsPostRequest, options?: Configuration): Promise<HttpInfo<HasRequirements>> {
+        return this.api.skillRequirementsSkillsRequirementsPostWithHttpInfo(param.codeAndIgnore,  options).toPromise();
+    }
+
+    /**
+     * Create a new skill
+     * Skill Requirements
+     * @param param the request object
+     */
+    public skillRequirementsSkillsRequirementsPost(param: SkillsApiSkillRequirementsSkillsRequirementsPostRequest, options?: Configuration): Promise<HasRequirements> {
+        return this.api.skillRequirementsSkillsRequirementsPost(param.codeAndIgnore,  options).toPromise();
     }
 
 }

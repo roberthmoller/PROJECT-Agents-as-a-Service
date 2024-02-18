@@ -34,4 +34,7 @@
             </div>
         </div>
     </span>
+    <span slot="unauthenticated">
+        Not allowed
+    </span>
 </Authguard>
