@@ -15,7 +15,7 @@ jobs:
         with:
           args: hosting:channel:deploy pr-${{ github.event.number }} --expires 1d
         env:
-          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
 #        with:
 #          repoToken: '${{ secrets.GITHUB_TOKEN }}'
 #          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_AGENTS_AS_A_SERVICE }}'
