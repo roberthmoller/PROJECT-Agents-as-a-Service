@@ -40,7 +40,7 @@ def create_session(
 
 
 @router.options("/{session_id}", include_in_schema=False)
-def options(session_id: str = Path()):
+def options(session_id: str):
     return {"methods": ["GET", "POST"]}
 
 
@@ -49,16 +49,15 @@ def get_summary(
         session_id: str = Path(),
         user: FirebaseUser = Depends(user_scope)
 ) -> Session:
-    print("User: {0}".format(user))
     session_ref = db().collection(f"v1/public/users/{user.uid}/sessions").document(session_id)
     messages_ref = session_ref.collection("messages").order_by("sent_at")
     agents_ref = db().collection(f"v1/public/users/{user.uid}/agents")
-
-    if not session_ref.get().exists:
+    session_doc = session_ref.get()
+    if not session_doc.exists:
         print(f"Session {session_id} not found")
         raise HTTPException(status_code=404, detail="Session not found")
 
-    session = SavedSessionSpecification(id=session_ref.id, **session_ref.get().to_dict())
+    session = SavedSessionSpecification(id=session_ref.id, **session_doc.to_dict())
     agents = [
         SavedAgentSpecification(id=agent_id, **agents_ref.document(agent_id).get().to_dict())
         for agent_id in session.agents

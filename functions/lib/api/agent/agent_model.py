@@ -22,6 +22,11 @@ class AgentSpecification(BaseModel):
         description="The list of models that the agent can use to generate responses",
         min_items=1,
     )
+    skills: list[str] = Field(
+        [],
+        title="Skills",
+        description="The list of skills that the agent can apply to the user's requests.",
+    )
     description: str = Field(
         title="Description",
         description="A description of the agent for the user to be able to understand what the agent is about."
@@ -49,6 +54,7 @@ class AgentSpecification(BaseModel):
                 "system_message": "You are a helpful pirate agent who is always ready to help the user.",
                 "description": "A helpful pirate agent who is always ready to help the user.",
                 "models": ["gpt-3.5-turbo"],
+                "skills": ["skill_id_1", "skill_id_2"],
                 "cache_seed": 42,
                 "temperature": 0
             }

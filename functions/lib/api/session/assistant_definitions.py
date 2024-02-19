@@ -1,5 +1,14 @@
 import datetime
 import os
+
+
+DEFAULT_LLM_CONFIG = {
+    "cache_seed": 42,
+    "temperature": 0,
+    "config_list": [
+        {"model": "gpt-3.5-turbo-125", "api_key": os.environ["OPENAI_API_KEY"]}
+    ]
+}
 from abc import ABC
 from datetime import datetime
 from typing import Union, Dict, Optional
@@ -22,7 +31,12 @@ class FirebaseAgent(ConversableAgent, ABC):
     should_record: bool = False
 
     def record_message(self, message: Union[Dict, str]):
+        if isinstance(message, Dict) and ("tool_calls" in message or "function_call" in message):
+            # Todo: In the future record the function call request to see it loading and see params in the ui
+            return
         content = (str(message["content"]) if isinstance(message, Dict) else str(message)).strip()
+        # Todo: Change this to the ID but how can we get the ID when the sender is not the current instance
+        #  but instead the group chat manager?
         sender = str(message["name"]) if isinstance(message, Dict) else self.name
         if self.should_record and len(content) > 0:
             messages_collection = db().collection(
@@ -59,19 +73,32 @@ class FirebaseUserProxyAgent(UserProxyAgent, FirebaseAgent):
         super().__init__(
             name=self.id,
             human_input_mode="NEVER",
+            # Todo: Take this as a parameter for the session
+            llm_config=DEFAULT_LLM_CONFIG,
             code_execution_config={
                 "work_dir": "work_dir",
+                # Todo: Use docker for code execution in the future
                 "use_docker": False
             },
             # todo: Consider taking this as a parameter for the session
             max_consecutive_auto_reply=10,
             is_termination_msg=lambda x: x.get("content", "").rstrip().endswith("TERMINATE"),
+            default_auto_reply="...",
+            system_message=f"""
+            # User
+            You are the user. You can ask questions and the agents will answer them.
+            ## Rules
+            - You can ask questions and the agents will answer them
+            - You can execute functions registered by the admin
+            - You can execute code blocks that have the "python" or "sh" language tag
+            """
         )
 
 
 class FirebaseAssistantAgent(AssistantAgent, FirebaseAgent):
     def __init__(self, session: Session, agent: SavedAgentSpecification, proxy: FirebaseUserProxyAgent):
         self.session = session
+        self.specification = agent
         self.id = agent.id
         self.user = proxy.user
         self.display_name = agent.name
@@ -91,6 +118,8 @@ class FirebaseAssistantAgent(AssistantAgent, FirebaseAgent):
             ## System message
             {agent.system_message}.
             ## Rules
+            - You can use any of the functions registered by the admin
+            - You can write and execute code blocks that have the "python" or "sh" language tag
             - Reply 'TERMINATE' when you have answered the user
             - End your questions with 'TERMINATE'
             """,
@@ -109,14 +138,8 @@ class CustomGroupChat(GroupChatManager):
                 max_round=proxy.max_consecutive_auto_reply()
             ),
             name="Admin",
-            llm_config={
-                "cache_seed": 42,
-                "temperature": 0,
-                "config_list": [
-                    # Todo: Take this as a parameter for the session
-                    {"model": "gpt-3.5-turbo", "api_key": os.environ["OPENAI_API_KEY"]}
-                ]
-            },
+            # Todo: Take this as a parameter for the session
+            llm_config=DEFAULT_LLM_CONFIG,
             max_consecutive_auto_reply=10,
             description="Chat admin responsible for managing the chat and ensuring the user's questions are answered.",
             system_message=f"""

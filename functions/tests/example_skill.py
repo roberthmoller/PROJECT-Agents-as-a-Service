@@ -1,10 +1,11 @@
+from lib.api.skills.skill_utils import extract_methods
+
 # import datetime
 #
 #
 # def current_time():
 #     return str(datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3])
 # code = "import datetime\ndef current_time():\n\treturn str(datetime.datetime.now().strftime(\"%Y-%m-%d %H:%M:%S.%f\")[:-3])\n\ndef foo():\n\tprint(\"bar\")"
-
 
 code = """
 import datetime
@@ -15,11 +16,6 @@ def current_time():
 def foo():
     print("bar")
 """
-
-import ast
-
-
-
 
 if __name__ == '__main__':
     method_handles = extract_methods(code)

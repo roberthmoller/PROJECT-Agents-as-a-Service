@@ -12,21 +12,22 @@ Content-Type: application/json
 
 {
   "agents": [
-    "5xdWnWKCTWQIg9aan1lg"
+    "5BQYLmwIxTmgn09f85zn"
   ]
 }
 
 
 ### Get session
-GET {{host}}/api/session/ktp1IjcZNojzqUZyGWzz
+GET {{host}}/api/sessions/CLYdq0WcIcpeYz26moCb
 Authorization: Bearer {{access_token}}
 
 
 ### Send message in session
 ### Todo change this message to a json object with the message, this way it can be used by ChatGPT as well
-POST {{host}}/api/session/ktp1IjcZNojzqUZyGWzz
+POST {{host}}/api/sessions/CLYdq0WcIcpeYz26moCb
 Authorization: Bearer {{access_token}}
-Content-Type: text/plain
+Content-Type: application/json
 
-How is it going up in space?
-
+{
+  "content": "Can you write and run a python script to get the stock price of Tesla (TSLA)?"
+}

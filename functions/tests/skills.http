@@ -25,14 +25,14 @@ Authorization: Bearer {{access_token}}
 }
 
 ### Get skill by id
-GET {{host}}/api/skills/1
-Authorization: Bearer {access_token}
+GET {{host}}/api/skills/knzgb065dSUQBX7ueAkM
+Authorization: Bearer {{access_token}}
 
 
 ### Update skill
 PUT {{host}}/api/skills/1
 Content-Type: application/json
-Authorization: Bearer {access_token}
+Authorization: Bearer {{access_token}}
 
 {
   "name": "skill1"
@@ -41,3 +41,14 @@ Authorization: Bearer {access_token}
 ### Delete skill
 DELETE {{host}}/api/skills/1
 Authorization: Bearer {access_token}
+
+
+
+### Call skill
+POST {{host}}/api/skills/knzgb065dSUQBX7ueAkM?method=foo
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+
+}

@@ -1,4 +1,5 @@
 import ast
+from typing import Callable
 
 
 def imports_from_code(code: str) -> list[str]:
@@ -13,7 +14,7 @@ def imports_from_code(code: str) -> list[str]:
     return raw_imports
 
 
-def extract_methods(code: str) -> dict[str, callable]:
+def extract_methods(code: str) -> dict[str, Callable]:
     exec(code, globals())
     tree = ast.parse(code)
     method_names = [node.name for node in ast.walk(tree) if isinstance(node, ast.FunctionDef)]

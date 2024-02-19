@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Body, Query, Path
 from pipreqs import pipreqs
 
 from lib.api.auth.auth_model import FirebaseUser
@@ -55,33 +55,55 @@ def skill_requirements(codeAndIgnore: CodeAndIgnore) -> HasRequirements:
         print("Error: {0}".format(e))
         raise HTTPException(status_code=400, detail="Could not find requirements for the given code")
 
-# @router.options("/{agent_id}")
-# def options(agent_id: str):
-#     return {"methods": ["GET", "PUT", "DELETE"]}
-#
-#
-# @router.get("/{agent_id}", description="Get a specific agent by its ID")
-# def get_agent(agent_id: str, user: FirebaseUser = Depends(user_scope)) -> SavedAgentSpecification:
-#     print("Get agent: {0}".format(agent_id))
-#     agent = db().collection(f"v1/public/users/{user.uid}/agents").document(agent_id).get()
-#     if not agent.exists:
-#         print(f"Agent {agent_id} not found")
-#         raise HTTPException(status_code=404, detail="Agent not found")
-#     return SavedAgentSpecification(id=agent.id, **agent.to_dict())
-#
-#
-# @router.put("/{agent_id}", description="Update a specific agent by its ID")
-# def update_agent(agent_id: str, agent: AgentSpecification,
-#                  user: FirebaseUser = Depends(user_scope)) -> SavedAgentSpecification:
-#     print("Update agent {0}: {1}".format(agent_id, agent))
-#     agent.name = agent.name.strip()
-#     document = db().collection(f"v1/public/users/{user.uid}/agents").document(agent_id)
-#     document.set(agent.model_dump())
-#     return SavedAgentSpecification(id=document.id, **agent.model_dump())
-#
-#
-# @router.delete("/{agent_id}", description="Delete a specific agent by its ID")
-# def delete_agent(agent_id: str, user: FirebaseUser = Depends(user_scope)) -> None:
-#     print("Delete agent: {0}".format(agent_id))
-#     document = db().collection(f"v1/public/users/{user.uid}/agents").document(agent_id)
-#     document.delete()
+
+@router.options("/{skill_id}")
+def options(skill_id: str):
+    return {"methods": ["GET", "PUT", "DELETE", "POST"]}
+
+
+@router.get("/{skill_id}", description="Get a specific agent by its ID")
+def get_skill(skill_id: str, user: FirebaseUser = Depends(user_scope)) -> SavedSkillSpecification:
+    print("Get skill: {0}".format(skill_id))
+    skill = db().collection(f"v1/public/users/{user.uid}/skills").document(skill_id).get()
+    if not skill.exists:
+        print(f"Skill {skill_id} not found")
+        raise HTTPException(status_code=404, detail="Agent not found")
+    return SavedSkillSpecification(id=skill.id, **skill.to_dict())
+
+
+@router.put("/{skill_id}", description="Update a specific skill by its ID")
+def update_skill(skill_id: str, skill: SkillSpecification,
+                 user: FirebaseUser = Depends(user_scope)) -> SavedSkillSpecification:
+    print("Update skill {0}: {1}".format(skill_id, skill))
+    skill.name = skill.name.strip()
+    document = db().collection(f"v1/public/users/{user.uid}/skills").document(skill_id)
+    document.set(skill.model_dump())
+    return SavedSkillSpecification(id=document.id, **skill.model_dump())
+
+
+@router.delete("/{skill_id}", description="Delete a specific skill by its ID")
+def delete_skill(skill_id: str, user: FirebaseUser = Depends(user_scope)) -> None:
+    print("Delete skill: {0}".format(skill_id))
+    document = db().collection(f"v1/public/users/{user.uid}/skills").document(skill_id)
+    document.delete()
+
+
+from .skill_utils import extract_methods
+
+
+@router.post("/{skill_id}")
+def options(
+        skill_id: str = Path(),
+        method: str = Query(),
+        params: dict = Body(),
+        user: FirebaseUser = Depends(user_scope)
+) -> str:
+    skill = get_skill(skill_id, user)
+    methods = extract_methods(skill.code)
+    if method not in methods:
+        raise HTTPException(status_code=400, detail="Method not found")
+    try:
+        result = methods[method](**params)
+    except Exception as e:
+        raise HTTPException(status_code=400, detail=str(e))
+    return str(result)

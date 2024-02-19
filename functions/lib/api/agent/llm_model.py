@@ -19,14 +19,15 @@ class LlmModel(str, Enum):
 
 
 class OpenAILlmModel(LlmModel):
-    gpt_4_0125_preview = "gpt-4-0125-preview",
+    gpt_4_0125_preview = "gpt-4-0125-preview"  # new
     gpt_4_turbo_preview = "gpt-4-turbo-preview"
     gpt_4_1106_preview = "gpt-4-1106-preview"
     gpt_4 = "gpt-4"
     gpt_4_0613 = "gpt-4-0613"
     gpt_4_32k = "gpt-4-32k"
     gpt_4_32k_0613 = "gpt-4-32k-0613"
-    gpt_3_5_turbo_0125 = "gpt-3.5-turbo-0125"
+
+    gpt_3_5_turbo_0125 = "gpt-3.5-turbo-0125"  # new
     gpt_3_5_turbo = "gpt-3.5-turbo"
     gpt_3_5_turbo_1106 = "gpt-3.5-turbo-1106"
     gpt_3_5_turbo_instruct = "gpt-3.5-turbo-instruct"
