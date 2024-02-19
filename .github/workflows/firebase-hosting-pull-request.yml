@@ -4,19 +4,28 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 jobs:
-  preview:
+  website_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-#      Run any tests
-      - name: Deploy preview to Firebase
-        uses: joinflux/firebase-tools@v9.16.0
+      - name: "Checkout code"
+        uses: actions/checkout@v4
+      - name: "Setup Node.js"
+        uses: actions/setup-node@v3
         with:
-          args: hosting:channel:deploy pr-${{ github.event.number }} --expires 1d
-        env:
-          FIREBASE_TOKEN: '${{ secrets.FIREBASE_TOKEN }}'
-#        with:
-#          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-#          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_AGENTS_AS_A_SERVICE }}'
-#          projectId: agents-as-a-service
+          node-version: 18
+      - name: "Setup Firebase"
+        uses: w9jds/setup-firebase@main
+        with:
+          tools-version: 11.9.0
+          firebase_token: ${{ secrets.FIREBASE_TOKEN }}
+
+      - run: cd website
+      - name: "Install Dependencies"
+        run: npm install
+      - name: "Build"
+        run: npm run build
+      - name: "Test"
+        run: npm test
+      - name: "Deploy preview to Firebase"
+        run: firebase hosting:channel:deploy PR-${{ github.event.number }} --expires 1d
