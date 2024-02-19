@@ -4,14 +4,19 @@
 name: Deploy to Firebase Hosting on PR
 'on': pull_request
 jobs:
-  build_and_preview:
+  preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: python -m venv venv; source venv/bin/activate
-      - uses: FirebaseExtended/action-hosting-deploy@v0
+#      Run any tests
+      - name: Deploy preview to Firebase
+        uses: joinflux/firebase-tools@v9.16.0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_AGENTS_AS_A_SERVICE }}'
-          projectId: agents-as-a-service
+          args: hosting:channel:deploy pr-${{ github.event.number }} --expires 1d
+        env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+#        with:
+#          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+#          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_AGENTS_AS_A_SERVICE }}'
+#          projectId: agents-as-a-service
