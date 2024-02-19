@@ -30,7 +30,7 @@ def list_skills(user: FirebaseUser = Depends(user_scope)) -> list[SavedSkillSpec
 def create_skill(skill: SkillSpecification, user: FirebaseUser = Depends(user_scope)) -> SavedSkillSpecification:
     print("Create skill: {0}".format(skill))
     skill.name = skill.name.strip()
-    document = db().collection(f"v1/public/users/{user.uid}/agents").document()
+    document = db().collection(f"v1/public/users/{user.uid}/skills").document()
     document.set(skill.model_dump())
     return SavedSkillSpecification(id=document.id, **skill.model_dump())
 

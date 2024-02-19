@@ -14,8 +14,8 @@ import {
     AgentSpecification,
     SavedAgentSpecification,
     SavedMessageModel,
-    SavedSessionSpecification,
-    SessionSpecification
+    SavedSessionSpecification, SavedSkillSpecification,
+    SessionSpecification, SkillSpecification
 } from "restClient";
 import type {User} from "firebase/auth";
 import {type Readable, type Writable, writable} from "svelte/store";
@@ -145,5 +145,31 @@ export class MessagesRepository extends Repository<SavedMessageModel, String> {
         message.sender = data.sender;
         message.sentAt = data.sent_at;
         return message;
+    }
+}
+
+export class SkillRepository extends Repository<SavedSkillSpecification, SkillSpecification> {
+    readonly user: User;
+    readonly org: string;
+
+    constructor(user: User, org?: string) {
+        super();
+        this.user = user;
+        this.org = org ?? "public";
+    }
+
+    get collection(): string {
+        return `v1/${this.org}/users/${this.user.uid}/skills`;
+    }
+
+
+    factory(doc: DocumentData): SavedSkillSpecification {
+        const skill = new SavedSkillSpecification();
+        const data = doc.data();
+        skill.id = doc.id;
+        skill.name = data.name;
+        skill.requirements = data.requirements;
+        skill.code = data.code;
+        return skill;
     }
 }

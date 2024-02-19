@@ -1,36 +1,22 @@
 <script lang="ts">
-    // import {agentsStore, refreshAgents, workshopStore} from "$lib/services/workshop-service";
     import CreateSkillCard from "./skills/create-skill-card.svelte";
-    import Editor from "./skills/editor.svelte";
-    // $: ({agentsStore} = $workshopStore);
-    // $: agents = $agentsStore;
+    import SkillCard from "./skills/skill-card.svelte";
+    import {workshopStore} from "$lib/services";
+
+    $: ({skillsStore} = $workshopStore);
+    $: skills = $skillsStore;
 
 </script>
 
 <h2 class="text-2xl font-semibold mb-2">Skills</h2>
 <!--{#if agents.isLoaded ?? true }-->
-    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
-        <CreateSkillCard/>
-        <!--{#each agents.value as agent}-->
-        <!--    <AgentCard {agent}/>-->
-        <!--{/each}-->
-        <div class="w-[300px] h-[300px]">
-            <!--            <CodeMirror-->
-            <!--                    value={code}-->
-            <!--                    options={{-->
-            <!--                        mode: 'python',-->
-            <!--                        theme: 'vscode-dark',-->
-            <!--                        lineNumbers: true,-->
-            <!--                    }}-->
-            <!--            />-->
-            <Editor/>
+<div class="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+    <CreateSkillCard/>
+    {#each skills.value as skill}
+        <SkillCard {skill}/>
+    {/each}
 
-            <!--                    lang={python()}-->
-            <!--                    theme={vscodeDark}-->
-            <!--                    class="h-[10rem] w-[20rem]"-->
-        </div>
-
-    </div>
+</div>
 <!--{:else if agents.error}-->
 <!--    <div class="flex h-[450px] shrink-0 items-center justify-center">-->
 <!--        <div class="mx-auto flex max-w-[420px] flex-col items-center justify-center text-center">-->

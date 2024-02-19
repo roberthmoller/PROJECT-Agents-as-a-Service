@@ -1,8 +1,11 @@
 import {derived, get, readable, type Readable, type Writable, writable} from "svelte/store";
-import {type SavedAgentSpecification} from "api-client";
+import {type SavedAgentSpecification, SavedSkillSpecification, SkillSpecification} from "api-client";
 import {authenticatedState} from "$lib/firebase";
-import {AgentRepository} from "$lib/services/repositories";
+import {AgentRepository, SkillRepository} from "$lib/services/repositories";
 import type {ApiValue} from "$lib/services/util";
+import {toast} from "svelte-sonner";
+import type {User} from "firebase/auth";
+import {skillsApi} from "$lib/api";
 
 
 export enum WorkshopTab {
@@ -10,12 +13,36 @@ export enum WorkshopTab {
 }
 
 class WorkshopState {
+    private user: User;
     tabStore: Writable<WorkshopTab> = writable(WorkshopTab.AGENTS);
     agentsStore: Readable<ApiValue<SavedAgentSpecification[]>>;
+    skillsStore: Readable<ApiValue<SavedSkillSpecification[]>>;
 
 
-    constructor(agents: Readable<ApiValue<SavedAgentSpecification[]>>) {
+    constructor(user: User, agents: Readable<ApiValue<SavedAgentSpecification[]>>, skills: Readable<ApiValue<SavedSkillSpecification[]>>) {
+        this.user = user;
         this.agentsStore = agents;
+        this.skillsStore = skills
+    }
+
+
+    setTab(tab: WorkshopTab) {
+        this.tabStore.set(tab);
+    }
+
+
+   public async creteSkill(skill: SkillSpecification) {
+        console.log('create skill');
+        const promise = skillsApi.createSkillSkillsPost(skill);
+        toast.promise(
+            promise,
+            {
+                loading: "Creating skill...",
+                success: "Skill created!",
+                error: "Failed to create skill."
+            }
+        );
+        return await promise;
     }
 }
 
@@ -23,9 +50,11 @@ export const activeTab: Writable<WorkshopTab> = writable(WorkshopTab.AGENTS);
 // export const agentsStore: Writable<ApiValue<SavedAgentSpecification[]>> = writable({value: [], isLoaded: false});
 export const workshopStore: Readable<WorkshopState> = derived(
     authenticatedState, (user) => {
-        const repository = new AgentRepository(user);
-        return new WorkshopState(
-            derived(repository.streamList(), (agents) => ({value: agents, isLoaded: true}))
+        const agents = new AgentRepository(user);
+        const skills = new SkillRepository(user);
+        return new WorkshopState(user,
+            derived(agents.streamList(), (agents) => ({value: agents, isLoaded: true})),
+            derived(skills.streamList(), (skills) => ({value: skills, isLoaded: true}))
         );
     }
 );

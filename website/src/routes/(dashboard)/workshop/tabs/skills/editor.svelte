@@ -1,9 +1,9 @@
 <script lang="ts">
     import {onMount} from 'svelte';
     import {EditorState} from '@codemirror/state';
-    import {EditorView, lineNumbers, keymap, hasHoverTooltips} from '@codemirror/view';
+    import {EditorView, lineNumbers, keymap} from '@codemirror/view';
     import {defaultKeymap} from '@codemirror/commands';
-    import {python, pythonLanguage} from '@codemirror/lang-python';
+    import {python} from '@codemirror/lang-python';
     import {oneDark} from '@codemirror/theme-one-dark';
     import {autocompletion, completionKeymap} from '@codemirror/autocomplete';
 

@@ -8,7 +8,7 @@ import {
     type RequestContext,
     type ResponseContext,
     server1,
-    SessionApi,
+    SessionApi, SkillsApi,
 } from 'api-client';
 import moment from "moment";
 
@@ -47,3 +47,4 @@ const config = createConfiguration(configurationParameters);
 export const agentApi = new AgentApi(config);
 export const authApi = new AuthApi(config);
 export const sessionApi = new SessionApi(config);
+export const skillsApi = new SkillsApi(config);
