@@ -57,6 +57,7 @@
                 </div>
                 <div class="grid gap-2">
                     <Label for="url">Requirements</Label>
+<!--                    Todo: Make a select box where you can delete/add reqs and change their version-->
                     <Input
                             id="requirements"
                             placeholder="A list of requirements that the skill needs to be able to run. E.g. pip install wikipedia."
@@ -64,21 +65,9 @@
                             bind:value={requirement}
                     />
                 </div>
-                <div class="grid gap-2 max-h-[30rem] overflow-y-scroll">
-                    <Label for="code" class="flex-shrink">Code</Label>
-                    <Editor bind:value={code}/>
-                    <!--                    <CodeMirror-->
-                    <!--                            bind:value={code}-->
-                    <!--                            lang={python()}-->
-                    <!--                            theme={vscodeDark}-->
-                    <!--                            class="h-[10rem] w-[20rem]"-->
-                    <!--                    />-->
-                    <!--                    <Input-->
-                    <!--                            id="code"-->
-                    <!--                            placeholder="import wikipedia"-->
-                    <!--                            autocorrect="on"-->
-                    <!--                            bind:value={skillCode}-->
-                    <!--                    />-->
+                <div class=" h-[25rem] flex space-y-2 flex-col">
+                    <Label for="code">Code</Label>
+                    <Editor bind:code={code} class="flex-grow h-100 justify-stretch flex overflow-y-scroll"/>
                 </div>
             </div>
         </form>

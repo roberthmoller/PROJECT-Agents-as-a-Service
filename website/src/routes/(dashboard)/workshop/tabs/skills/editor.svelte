@@ -1,37 +1,60 @@
 <script lang="ts">
-    import {CodeJar} from "@novacbn/svelte-codejar"
-    import 'highlight.js/styles/base16/dracula.css';
+    import {onMount} from 'svelte';
+    import {EditorState} from '@codemirror/state';
+    import {EditorView, lineNumbers, keymap, hasHoverTooltips} from '@codemirror/view';
+    import {defaultKeymap} from '@codemirror/commands';
+    import {python, pythonLanguage} from '@codemirror/lang-python';
+    import {oneDark} from '@codemirror/theme-one-dark';
+    import {autocompletion, completionKeymap} from '@codemirror/autocomplete';
 
-    let value = `# Python
-print("Hello, World!")
-print("")`;
 
+    export let code = '';
+    let editor: Element;
 
-    function highlight(code: string, language?: string): string {
-        return code;
-        // return '<pre class="prism-live language-python"><code >' + code + '</code></pre>';
-    }
+    const customTheme = EditorView.theme({
+            "&": {
+                flexGrow: 1,
+                backgroundColor: "transparent",
+                border: "1px solid #333",
+                borderRadius: "0.25rem",
+
+            },
+            ".cm-gutters": {
+                backgroundColor: "transparent",
+                color: "#ddd",
+                borderRight: "1px solid #333",
+                width: "2.5em",
+                paddingLeft: "0.5em",
+            }
+
+        },
+        {dark: true}
+    );
+
+    onMount(() => {
+        const state = EditorState.create({
+            doc: code,
+            extensions: [
+                keymap.of([...defaultKeymap, ...completionKeymap]),
+                customTheme,
+                oneDark,
+                python(),
+                lineNumbers(),
+                autocompletion(),
+                EditorView.updateListener.of(update => {
+                    if (update.docChanged) {
+                        code = update.state.doc.toString();
+                    }
+                }),
+
+            ],
+        });
+        new EditorView({
+            state: state,
+            parent: editor,
+        });
+    });
 </script>
 
-<svelte:head>
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
-    <!--    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/plugins/line-numbers/prism-line-numbers.min.js"></script>-->
-    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"/>
-    <!--        <script src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.js"></script>-->
-    <!--    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" rel="stylesheet">-->
-    <link href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism-okaidia.min.css" rel="stylesheet">
-    <script src="https://raw.githubusercontent.com/PrismJS/live/master/index.js"/>
-    <link href="https://live.prismjs.com/prism-live.css" rel="stylesheet">
-</svelte:head>
 
-
-<CodeJar
-        tab={"\t"}
-        {highlight}
-        withLineNumbers={true}
-
-        onUpdate={(code) => {
-            value = code;
-        }}
-        value={value}
-/>
+<div bind:this={editor} class="border-1 border-b-red-50 {$$restProps.class || ''}"></div>
