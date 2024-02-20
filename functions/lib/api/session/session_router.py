@@ -1,10 +1,12 @@
+from typing import Tuple, Dict
+
 from fastapi import APIRouter, Body, HTTPException, Depends, Path
 
 from fastapi import APIRouter, Body, HTTPException, Depends, Path
 
 from lib.api.agent.agent_model import SavedAgentSpecification
 from lib.api.auth.auth_model import FirebaseUser
-from lib.api.session.assistant_utils import initialize_chat
+from lib.api.session.assistant_utils import initialize_chat, get_usage
 from lib.api.session.message_model import SavedMessageModel, MessageContentModel
 from lib.api.session.session_model import SessionSpecification, SavedSessionSpecification, Session
 from lib.utils.auth_utils import user_scope
@@ -73,11 +75,16 @@ def get_summary(
 
 
 @router.post("/{session_id}")
-def send_message(session_id: str = Path(),
-                 message: MessageContentModel = Body(),
-                 user: FirebaseUser = Depends(user_scope)
-                 ) -> Session:
+def send_message(
+        session_id: str = Path(),
+        message: MessageContentModel = Body(),
+        user: FirebaseUser = Depends(user_scope)
+) -> str:
     summary = get_summary(session_id, user=user)
-    user, recipient = initialize_chat(user, summary)
-    user.send(message=message.content, recipient=recipient, request_reply=True)
-    return summary
+    proxy, recipient = initialize_chat(user, summary)
+    message.role = message.role or proxy.name
+    proxy.initiate_chat(recipient, message=message.model_dump(), clear_history=False)
+    # proxy.send(message=message.model_dump(), recipient=recipient, request_reply=True)
+
+    return str(get_usage(proxy, recipient))
+

@@ -12,22 +12,28 @@ Content-Type: application/json
 
 {
   "agents": [
-    "5BQYLmwIxTmgn09f85zn"
+    "3IbwmnpOyQ3mWW4cMOfd"
   ]
 }
 
 
 ### Get session
-GET {{host}}/api/sessions/CLYdq0WcIcpeYz26moCb
+GET {{host}}/api/sessions/WIgr32TlTnNha7tUQx2C
 Authorization: Bearer {{access_token}}
 
 
 ### Send message in session
 ### Todo change this message to a json object with the message, this way it can be used by ChatGPT as well
-POST {{host}}/api/sessions/CLYdq0WcIcpeYz26moCb
+POST {{host}}/api/sessions/WIgr32TlTnNha7tUQx2C
 Authorization: Bearer {{access_token}}
 Content-Type: application/json
 
 {
-  "content": "Can you write and run a python script to get the stock price of Tesla (TSLA)?"
+  "content": ""
 }
+
+### Test
+### Todo change this message to a json object with the message, this way it can be used by ChatGPT as well
+GET {{host}}/api/sessions/123/test
+Authorization: Bearer {{access_token}}
+Content-Type: application/json

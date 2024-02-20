@@ -1,8 +1,11 @@
+from typing import Optional, Dict
+
 from pydantic import BaseModel, Field
 
 
 class MessageContentModel(BaseModel):
     content: str = Field(description="The content of the message.")
+    role: Optional[str] = Field(None, description="The role of the sender of the message.")  # defaults to user
 
 
 class MessageModel(MessageContentModel):
