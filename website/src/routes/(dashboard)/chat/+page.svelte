@@ -1,8 +1,9 @@
 <script lang="ts">
     import {ChatSidebar, ChatWindow, NoChatWindow} from "./";
-    import {activeSession} from "$lib/services";
+    import {ActiveSessionState, chatStore, NoSessionState} from "$lib/services";
 
-    $: session = $activeSession;
+    $: ({activeSessionStore} = $chatStore);
+    $: state = $activeSessionStore;
 </script>
 
 <div class="bg-background h-full">
@@ -16,10 +17,10 @@
         </div>
 
         <div class="col-span-3 lg:col-span-4 lg:border-l">
-            {#if session}
-                <ChatWindow/>
-            {:else}
-                <NoChatWindow/>
+            {#if state instanceof ActiveSessionState}
+                <ChatWindow {state}/>
+            {:else if state instanceof NoSessionState}
+                <NoChatWindow {state}/>
             {/if}
         </div>
     </div>

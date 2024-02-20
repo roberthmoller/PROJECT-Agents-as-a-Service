@@ -44,7 +44,8 @@
             <Dialog.Title>Create an agent</Dialog.Title>
             <Dialog.Description>Define a new agent and its capabilities.</Dialog.Description>
         </Dialog.Header>
-        <form on:submit|preventDefault>
+        <!--        TODO: Submit on return -->
+        <form on:submit|preventDefault={createAgent}>
             <div class="grid gap-4 py-4">
                 <div class="grid gap-2">
                     <Label for="url">Name</Label>

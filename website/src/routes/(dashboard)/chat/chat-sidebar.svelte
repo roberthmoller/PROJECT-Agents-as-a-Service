@@ -1,30 +1,31 @@
 <script lang="ts">
-    import {activeSession, agentsMapStore, refreshSessions, sessionsStore} from "$lib/services";
+    import {ActiveSessionState, chatStore, workshopStore} from "$lib/services";
     import {PlusCircled, Reload} from "radix-icons-svelte";
     import * as Sheet from "$lib/components/ui/sheet";
     import {Input} from "$lib/components/ui/input";
     import {Label} from "$lib/components/ui/label";
     import {Button} from "$lib/components/ui/button";
-    import {onMount} from "svelte";
 
+    $: state = $chatStore;
+    $: activeSessionStateStore = state.activeSessionStore;
+    $: sessionsStore = state.sessionsStore;
     $: sessions = $sessionsStore;
-    $: agents = $agentsMapStore;
-    onMount(refreshSessions);
-    // onMount(refreshAgents);
-
+    $: activeSessionState = $activeSessionStateStore instanceof ActiveSessionState ? $activeSessionStateStore : null;
+    $:({agentsStoreAsMap} = $workshopStore);
+    $: agents = $agentsStoreAsMap;
 
 </script>
 
 <!--<div class="grid grid-cols-2 gap-2">-->
 <Sheet.Root>
-    <Sheet.Trigger asChild let:builder>
+    <Sheet.Trigger asChild>
         <!--        <Button builders={[builder]} variant="outline">Left</Button>-->
 
         <div class="space-y-4 py-4">
             <div class="px-3 py-2">
                 <div class="flex justify-between align-top w-full">
                     <h1 class="mb-2 px-4 text-2xl font-semibold tracking-tight">Chats</h1>
-                    <Button variant="outline" on:click={() =>activeSession.set(null)}>
+                    <Button variant="outline" on:click={() => state.startNewSession()}>
                         <PlusCircled class="mr-2 h-4 w-4"/>
                         Create
                     </Button>
@@ -33,11 +34,11 @@
                     {#if sessions.isLoaded}
                         {#each sessions.value as session}
                             <Button
-                                    variant={$activeSession?.id === session.id
+                                    variant={activeSessionState?.session.id === session.id
                                         ? "secondary"
                                         : "ghost"}
                                     class="w-full justify-start"
-                                    on:click={() => activeSession.set(session)}>
+                                    on:click={()=> state.setActiveSession(session)}>
                                 <!--                                    <Icons.logo/>-->
                                 <span class="text-sm text-gray-400">
                                         {session.agents

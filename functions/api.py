@@ -11,11 +11,10 @@ from lib.utils.env import env
 app = FastAPI(
     title="Agents as a Service",
     description="API for the Agents as a Service project",
-    version="0.0.1",
+    version="0.0.2",
     root_path="/api",
     redoc_url="/redoc",
     docs_url="/docs",
-    openapi_url="/openapi.json",
     swagger_ui_parameters={
         "persistAuthorization": True,
     },

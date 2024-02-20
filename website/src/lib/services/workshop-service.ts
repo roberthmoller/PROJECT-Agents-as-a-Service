@@ -30,8 +30,20 @@ class WorkshopState {
         this.tabStore.set(tab);
     }
 
+    get agentsStoreAsMap(): Readable<ApiValue<Map<string, SavedAgentSpecification>>> {
+        return derived(
+            this.agentsStore,
+            (store) => {
+                const map = new Map<string, SavedAgentSpecification>();
+                for (const agent of store.value) {
+                    map.set(agent.id, agent);
+                }
+                return {value: map, isLoaded: store.isLoaded, error: store.error};
+            }
+        );
+    }
 
-   public async creteSkill(skill: SkillSpecification) {
+    public async creteSkill(skill: SkillSpecification) {
         console.log('create skill');
         const promise = skillsApi.createSkillSkillsPost(skill);
         toast.promise(
@@ -58,7 +70,6 @@ export const workshopStore: Readable<WorkshopState> = derived(
         );
     }
 );
-export const agentsMapStore: Readable<ApiValue<Map<string, SavedAgentSpecification>>> = readable();
 // export const agentsMapStore: Readable<ApiValue<Map<string, SavedAgentSpecification>>> = derived(
 //     derived(workshopStore, (store) => store.agentsStore),
 //     (store) => {

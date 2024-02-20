@@ -7,7 +7,7 @@ import {
     type Middleware,
     type RequestContext,
     type ResponseContext,
-    server1,
+    server1, ServerConfiguration,
     SessionApi, SkillsApi,
 } from 'api-client';
 import moment from "moment";
@@ -35,8 +35,8 @@ class FirebaseAuthenticationMiddleware implements Middleware {
 
 // Create configuration parameter object
 const configurationParameters = {
-    baseServer: server1,
-    // baseServer: new ServerConfiguration<{  }>("/api", {  }),
+    // baseServer: server1,
+    baseServer: new ServerConfiguration<{  }>("/api", {  }),
     authMethods: {},
 
     promiseMiddleware: [new FirebaseAuthenticationMiddleware()],

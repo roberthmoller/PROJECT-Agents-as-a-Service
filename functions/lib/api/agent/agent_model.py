@@ -2,7 +2,6 @@ from typing import Union
 
 from pydantic import Field, BaseModel
 
-from lib.utils.env import env
 from lib.utils.now import now
 from .llm_model import OpenAILlmModel, LocalLlmModel
 
@@ -17,7 +16,7 @@ class AgentSpecification(BaseModel):
         description="The message that the agent will send to the user when it is first connected"
     )
     models: list[Union[LocalLlmModel, OpenAILlmModel]] = Field(
-        [LocalLlmModel.mixtral if env.is_local else OpenAILlmModel.gpt_3_5_turbo],
+        [OpenAILlmModel.gpt_3_5_turbo],
         title="Model",
         description="The list of models that the agent can use to generate responses",
         min_items=1,
