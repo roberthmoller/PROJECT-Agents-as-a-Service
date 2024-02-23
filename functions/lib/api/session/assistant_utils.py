@@ -107,3 +107,8 @@ def initialize_chat(
 # def get_stock_info(company_name: str) -> dict:
 #     stock = yf.Ticker(company_name)
 #     return stock.info
+
+# from  lib.utils.env import ENV
+#
+# def print_secret():
+#     return str(ENV.openai_api_key)
