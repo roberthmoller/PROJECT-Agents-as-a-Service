@@ -3,15 +3,17 @@ import { Configuration} from '../configuration'
 import { Observable, of, from } from '../rxjsStub';
 import {mergeMap, map} from  '../rxjsStub';
 import { AgentSpecification } from '../models/AgentSpecification';
-import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
-import { CodeAndIgnore } from '../models/CodeAndIgnore';
+import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
-import { HasRequirements } from '../models/HasRequirements';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
+import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
-import { PipRequirement } from '../models/PipRequirement';
+import { PhoneNumber } from '../models/PhoneNumber';
+import { PhotoUrl } from '../models/PhotoUrl';
+import { Requirements } from '../models/Requirements';
+import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
@@ -20,7 +22,6 @@ import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
 import { ValidationError } from '../models/ValidationError';
-import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
 export class ObservableAgentApi {
@@ -423,7 +424,7 @@ export class ObservableSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: string, _options?: Configuration): Observable<HttpInfo<Session>> {
+    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: any, _options?: Configuration): Observable<HttpInfo<Session>> {
         const requestContextPromise = this.requestFactory.getSummarySessionsSessionIdGet(sessionId, _options);
 
         // build promise chain
@@ -446,14 +447,14 @@ export class ObservableSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionsSessionIdGet(sessionId: string, _options?: Configuration): Observable<Session> {
+    public getSummarySessionsSessionIdGet(sessionId: any, _options?: Configuration): Observable<Session> {
         return this.getSummarySessionsSessionIdGetWithHttpInfo(sessionId, _options).pipe(map((apiResponse: HttpInfo<Session>) => apiResponse.data));
     }
 
     /**
      * List Sessions
      */
-    public listSessionsSessionsGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<Array<Session>>> {
+    public listSessionsSessionsGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<any>> {
         const requestContextPromise = this.requestFactory.listSessionsSessionsGet(_options);
 
         // build promise chain
@@ -475,8 +476,8 @@ export class ObservableSessionApi {
     /**
      * List Sessions
      */
-    public listSessionsSessionsGet(_options?: Configuration): Observable<Array<Session>> {
-        return this.listSessionsSessionsGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<Array<Session>>) => apiResponse.data));
+    public listSessionsSessionsGet(_options?: Configuration): Observable<any> {
+        return this.listSessionsSessionsGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
     }
 
     /**
@@ -484,7 +485,7 @@ export class ObservableSessionApi {
      * @param sessionId 
      * @param messageContentModel 
      */
-    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: string, messageContentModel: MessageContentModel, _options?: Configuration): Observable<HttpInfo<Session>> {
+    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Observable<HttpInfo<Session>> {
         const requestContextPromise = this.requestFactory.sendMessageSessionsSessionIdPost(sessionId, messageContentModel, _options);
 
         // build promise chain
@@ -508,7 +509,7 @@ export class ObservableSessionApi {
      * @param sessionId 
      * @param messageContentModel 
      */
-    public sendMessageSessionsSessionIdPost(sessionId: string, messageContentModel: MessageContentModel, _options?: Configuration): Observable<Session> {
+    public sendMessageSessionsSessionIdPost(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Observable<Session> {
         return this.sendMessageSessionsSessionIdPostWithHttpInfo(sessionId, messageContentModel, _options).pipe(map((apiResponse: HttpInfo<Session>) => apiResponse.data));
     }
 
@@ -528,6 +529,41 @@ export class ObservableSkillsApi {
         this.configuration = configuration;
         this.requestFactory = requestFactory || new SkillsApiRequestFactory(configuration);
         this.responseProcessor = responseProcessor || new SkillsApiResponseProcessor();
+    }
+
+    /**
+     * Call Skill
+     * @param skillId 
+     * @param method 
+     * @param body 
+     */
+    public callSkillSkillsSkillIdPostWithHttpInfo(skillId: string, method: string, body: any, _options?: Configuration): Observable<HttpInfo<string>> {
+        const requestContextPromise = this.requestFactory.callSkillSkillsSkillIdPost(skillId, method, body, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.callSkillSkillsSkillIdPostWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Call Skill
+     * @param skillId 
+     * @param method 
+     * @param body 
+     */
+    public callSkillSkillsSkillIdPost(skillId: string, method: string, body: any, _options?: Configuration): Observable<string> {
+        return this.callSkillSkillsSkillIdPostWithHttpInfo(skillId, method, body, _options).pipe(map((apiResponse: HttpInfo<string>) => apiResponse.data));
     }
 
     /**
@@ -564,6 +600,72 @@ export class ObservableSkillsApi {
     }
 
     /**
+     * Delete a specific skill by its ID
+     * Delete Skill
+     * @param skillId 
+     */
+    public deleteSkillSkillsSkillIdDeleteWithHttpInfo(skillId: string, _options?: Configuration): Observable<HttpInfo<any>> {
+        const requestContextPromise = this.requestFactory.deleteSkillSkillsSkillIdDelete(skillId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deleteSkillSkillsSkillIdDeleteWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Delete a specific skill by its ID
+     * Delete Skill
+     * @param skillId 
+     */
+    public deleteSkillSkillsSkillIdDelete(skillId: string, _options?: Configuration): Observable<any> {
+        return this.deleteSkillSkillsSkillIdDeleteWithHttpInfo(skillId, _options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
+    }
+
+    /**
+     * Get a specific agent by its ID
+     * Get Skill
+     * @param skillId 
+     */
+    public getSkillSkillsSkillIdGetWithHttpInfo(skillId: string, _options?: Configuration): Observable<HttpInfo<SavedSkillSpecification>> {
+        const requestContextPromise = this.requestFactory.getSkillSkillsSkillIdGet(skillId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getSkillSkillsSkillIdGetWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Get a specific agent by its ID
+     * Get Skill
+     * @param skillId 
+     */
+    public getSkillSkillsSkillIdGet(skillId: string, _options?: Configuration): Observable<SavedSkillSpecification> {
+        return this.getSkillSkillsSkillIdGetWithHttpInfo(skillId, _options).pipe(map((apiResponse: HttpInfo<SavedSkillSpecification>) => apiResponse.data));
+    }
+
+    /**
      * List all skills you have access to
      * List Skills
      */
@@ -597,10 +699,10 @@ export class ObservableSkillsApi {
     /**
      * Create a new skill
      * Skill Requirements
-     * @param codeAndIgnore 
+     * @param code 
      */
-    public skillRequirementsSkillsRequirementsPostWithHttpInfo(codeAndIgnore: CodeAndIgnore, _options?: Configuration): Observable<HttpInfo<HasRequirements>> {
-        const requestContextPromise = this.requestFactory.skillRequirementsSkillsRequirementsPost(codeAndIgnore, _options);
+    public skillRequirementsSkillsRequirementsPostWithHttpInfo(code: Code, _options?: Configuration): Observable<HttpInfo<Requirements>> {
+        const requestContextPromise = this.requestFactory.skillRequirementsSkillsRequirementsPost(code, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -621,10 +723,45 @@ export class ObservableSkillsApi {
     /**
      * Create a new skill
      * Skill Requirements
-     * @param codeAndIgnore 
+     * @param code 
      */
-    public skillRequirementsSkillsRequirementsPost(codeAndIgnore: CodeAndIgnore, _options?: Configuration): Observable<HasRequirements> {
-        return this.skillRequirementsSkillsRequirementsPostWithHttpInfo(codeAndIgnore, _options).pipe(map((apiResponse: HttpInfo<HasRequirements>) => apiResponse.data));
+    public skillRequirementsSkillsRequirementsPost(code: Code, _options?: Configuration): Observable<Requirements> {
+        return this.skillRequirementsSkillsRequirementsPostWithHttpInfo(code, _options).pipe(map((apiResponse: HttpInfo<Requirements>) => apiResponse.data));
+    }
+
+    /**
+     * Update a specific skill by its ID
+     * Update Skill
+     * @param skillId 
+     * @param skillSpecification 
+     */
+    public updateSkillSkillsSkillIdPutWithHttpInfo(skillId: string, skillSpecification: SkillSpecification, _options?: Configuration): Observable<HttpInfo<SavedSkillSpecification>> {
+        const requestContextPromise = this.requestFactory.updateSkillSkillsSkillIdPut(skillId, skillSpecification, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.updateSkillSkillsSkillIdPutWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Update a specific skill by its ID
+     * Update Skill
+     * @param skillId 
+     * @param skillSpecification 
+     */
+    public updateSkillSkillsSkillIdPut(skillId: string, skillSpecification: SkillSpecification, _options?: Configuration): Observable<SavedSkillSpecification> {
+        return this.updateSkillSkillsSkillIdPutWithHttpInfo(skillId, skillSpecification, _options).pipe(map((apiResponse: HttpInfo<SavedSkillSpecification>) => apiResponse.data));
     }
 
 }

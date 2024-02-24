@@ -16,7 +16,7 @@ import {
     SavedMessageModel,
     SavedSessionSpecification, SavedSkillSpecification,
     SessionSpecification, SkillSpecification
-} from "restClient";
+} from "api-client";
 import type {User} from "firebase/auth";
 import {type Readable, type Writable, writable} from "svelte/store";
 

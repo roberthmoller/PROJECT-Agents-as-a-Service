@@ -1,13 +1,15 @@
 export * from '../models/AgentSpecification';
-export * from '../models/AgentSpecificationModelsInner';
-export * from '../models/CodeAndIgnore';
+export * from '../models/Code';
 export * from '../models/FirebaseUser';
 export * from '../models/HTTPValidationError';
-export * from '../models/HasRequirements';
 export * from '../models/LocalLlmModel';
 export * from '../models/MessageContentModel';
+export * from '../models/Name';
 export * from '../models/OpenAILlmModel';
-export * from '../models/PipRequirement';
+export * from '../models/PhoneNumber';
+export * from '../models/PhotoUrl';
+export * from '../models/Requirements';
+export * from '../models/Role';
 export * from '../models/SavedAgentSpecification';
 export * from '../models/SavedMessageModel';
 export * from '../models/SavedSessionSpecification';
@@ -16,18 +18,19 @@ export * from '../models/Session';
 export * from '../models/SessionSpecification';
 export * from '../models/SkillSpecification';
 export * from '../models/ValidationError';
-export * from '../models/ValidationErrorLocInner';
 
 import { AgentSpecification } from '../models/AgentSpecification';
-import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
-import { CodeAndIgnore } from '../models/CodeAndIgnore';
+import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
-import { HasRequirements } from '../models/HasRequirements';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
+import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
-import { PipRequirement } from '../models/PipRequirement';
+import { PhoneNumber } from '../models/PhoneNumber';
+import { PhotoUrl } from '../models/PhotoUrl';
+import { Requirements } from '../models/Requirements';
+import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
@@ -36,7 +39,6 @@ import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
 import { ValidationError } from '../models/ValidationError';
-import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
@@ -51,19 +53,21 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
-    "LocalLlmModel",
-    "OpenAILlmModel",
 ]);
 
 let typeMap: {[index: string]: any} = {
     "AgentSpecification": AgentSpecification,
-    "AgentSpecificationModelsInner": AgentSpecificationModelsInner,
-    "CodeAndIgnore": CodeAndIgnore,
+    "Code": Code,
     "FirebaseUser": FirebaseUser,
     "HTTPValidationError": HTTPValidationError,
-    "HasRequirements": HasRequirements,
+    "LocalLlmModel": LocalLlmModel,
     "MessageContentModel": MessageContentModel,
-    "PipRequirement": PipRequirement,
+    "Name": Name,
+    "OpenAILlmModel": OpenAILlmModel,
+    "PhoneNumber": PhoneNumber,
+    "PhotoUrl": PhotoUrl,
+    "Requirements": Requirements,
+    "Role": Role,
     "SavedAgentSpecification": SavedAgentSpecification,
     "SavedMessageModel": SavedMessageModel,
     "SavedSessionSpecification": SavedSessionSpecification,
@@ -72,7 +76,6 @@ let typeMap: {[index: string]: any} = {
     "SessionSpecification": SessionSpecification,
     "SkillSpecification": SkillSpecification,
     "ValidationError": ValidationError,
-    "ValidationErrorLocInner": ValidationErrorLocInner,
 }
 
 type MimeTypeDescriptor = {

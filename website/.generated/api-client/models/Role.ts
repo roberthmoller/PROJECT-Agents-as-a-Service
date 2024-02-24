@@ -12,28 +12,18 @@
 
 import { HttpFile } from '../http/http';
 
-export class SavedSessionSpecification {
-    'agents': any | null;
-    'id': any | null;
+/**
+* The role of the sender of the message.
+*/
+export class Role {
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-        {
-            "name": "agents",
-            "baseName": "agents",
-            "type": "any",
-            "format": ""
-        },
-        {
-            "name": "id",
-            "baseName": "id",
-            "type": "any",
-            "format": ""
-        }    ];
+    ];
 
     static getAttributeTypeMap() {
-        return SavedSessionSpecification.attributeTypeMap;
+        return Role.attributeTypeMap;
     }
 
     public constructor() {

@@ -6,49 +6,49 @@ from pydantic import Field, BaseModel
 from lib.utils.now import now
 
 
-class HasName(BaseModel):
-    name: str = Field(title="Name")
 
-
-class HasVersion(BaseModel):
-    version: str = Field(title="version")
-
-
-class PipRequirement(HasName, HasVersion):
-    name: str = Field(title="Name of the requirement")
-    version: str = Field(title="Version of the requirement")
-
-
-class HasCode(BaseModel):
+class Code(BaseModel):
     code: str = Field(
         title="Code",
         description="The code that will be used to execute the agent."
     )
 
 
-class HasIgnore(BaseModel):
-    ignore: list[str] = Field([], title="Ignore")
 
 
-class HasRequirements(BaseModel):
-    requirements: list[PipRequirement] = Field(
+class Requirements(BaseModel):
+    requirements: str = Field(
+        "",
         title="Requirements",
-        description="The list of requirements that the agent must satisfy in order to be used."
+        description="The list of requirements that the skill must satisfy in order to be used."
     )
 
 
-class CodeAndIgnore(HasCode, HasIgnore):
-    ...
 
 
-class SkillSpecification(HasCode, HasRequirements):
+class SkillSpecification(BaseModel):
     name: str = Field(
         title="Name",
-        description="The name of the agent that will be used to identify it in the system."
+        description="The name of the skill that will be used to identify it in the system."
+    )
+    description: str = Field(
+        "",
+        title="Description",
+        description="The description of the skill that will be used to describe it in the system."
+    )
+    requirements: str = Field(
+        "",
+        title="Requirements",
+        description="The list of requirements that the skill must satisfy in order to be used."
+    )
+    code: str = Field(
+        title="Code",
+        description="The code that will be used to execute the agent."
     )
 
+
     class Config:
-        description = "The specification of an agent that can be used to interact with the user."
+        description = "The specification of an skill that can be used to interact with the user."
         json_schema_extra = {
             "example": {
 
@@ -58,7 +58,6 @@ class SkillSpecification(HasCode, HasRequirements):
 
 class SavedSkillSpecification(SkillSpecification):
     id: str = Field(title="The unique identifier of the skill")
-
     updated_at: str = Field(
         default_factory=now,
         title="The date and time when the agent was last updated"

@@ -12,28 +12,24 @@
 
 import { HttpFile } from '../http/http';
 
-export class SavedSessionSpecification {
-    'agents': any | null;
-    'id': any | null;
+export class HasRequirements {
+    /**
+    * The list of requirements that the agent must satisfy in order to be used.
+    */
+    'requirements': any | null;
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "agents",
-            "baseName": "agents",
-            "type": "any",
-            "format": ""
-        },
-        {
-            "name": "id",
-            "baseName": "id",
+            "name": "requirements",
+            "baseName": "requirements",
             "type": "any",
             "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return SavedSessionSpecification.attributeTypeMap;
+        return HasRequirements.attributeTypeMap;
     }
 
     public constructor() {

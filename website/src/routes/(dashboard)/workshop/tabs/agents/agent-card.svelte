@@ -2,18 +2,16 @@
     import * as Dialog from "$lib/components/ui/dialog";
     import * as Card from "$lib/components/ui/card";
     import {Button} from "$lib/components/ui/button";
-    import {SavedAgentSpecification} from "restClient";
+    import {SavedAgentSpecification} from "api-client";
     import {agentApi} from "$lib/api";
-    import EditAgentDialog from "./edit-agent-dialog.svelte";
+    import AgentDialog from "./agent-dialog.svelte";
+    import {workshopStore} from "$lib/services";
+    import DeleteDialog from "../delete-dialog.svelte";
+
     export let agent: SavedAgentSpecification;
-    let deleteDialogOpen = false;
+    $: state = $workshopStore;
 
-    const deleteAgent = async () => {
-        await agentApi.deleteAgentAgentsAgentIdDelete(agent.id)
-        closeDeleteDialog();
-    }
 
-    const closeDeleteDialog = () => deleteDialogOpen = false;
 </script>
 
 <Card.Root class="relative">
@@ -27,28 +25,10 @@
     </Card.Content>
     <Card.Footer>
         <div class="flex w-full justify-end space-x-2">
-<!--            <Button variant="ghost">Edit</Button>-->
-            <EditAgentDialog {agent}/>
-            <Dialog.Root bind:open={deleteDialogOpen}>
-                <Dialog.Trigger>
-                    <Button variant="destructive">Delete</Button>
-                </Dialog.Trigger>
-                <Dialog.Content>
-                    <Dialog.Header>
-                        <Dialog.Title>Are you sure absolutely sure?</Dialog.Title>
-                        <Dialog.Description>
-                            This action cannot be undone. This will
-                            permanently delete your account and remove your
-                            data from our servers.
-                        </Dialog.Description>
-                        <Dialog.Footer>
-                            <Button type="submit" variant="destructive" on:click={deleteAgent}>Delete</Button>
-                            <Button type="submit"  on:click={closeDeleteDialog}>Cancel
-                            </Button>
-                        </Dialog.Footer>
-                    </Dialog.Header>
-                </Dialog.Content>
-            </Dialog.Root>
+            <AgentDialog {agent}/>
+            <DeleteDialog on:delete={() => state.deleteAgent(agent)}>
+                {agent.name}
+            </DeleteDialog>
         </div>
     </Card.Footer>
 </Card.Root>

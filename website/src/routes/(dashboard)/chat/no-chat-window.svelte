@@ -14,7 +14,7 @@
 
     $: ({agentsStoreAsMap} = $workshopStore);
     $: agents = $agentsStoreAsMap;
-    $: input = state.initialMessage;
+    $: input = state.inputStore;
     $: isAgentPickerOpen = state.isAgentPickerOpen;
     $: selectedAgentsStore = state.selectedAgents;
     $: canInstantiateSession = state.canInstantiateSession;

@@ -2,15 +2,17 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 
 import { AgentSpecification } from '../models/AgentSpecification';
-import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
-import { CodeAndIgnore } from '../models/CodeAndIgnore';
+import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
-import { HasRequirements } from '../models/HasRequirements';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
+import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
-import { PipRequirement } from '../models/PipRequirement';
+import { PhoneNumber } from '../models/PhoneNumber';
+import { PhotoUrl } from '../models/PhotoUrl';
+import { Requirements } from '../models/Requirements';
+import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
@@ -19,7 +21,6 @@ import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
 import { ValidationError } from '../models/ValidationError';
-import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 import { ObservableAgentApi } from './ObservableAPI';
 
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
@@ -278,7 +279,7 @@ export class PromiseSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: string, _options?: Configuration): Promise<HttpInfo<Session>> {
+    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: any, _options?: Configuration): Promise<HttpInfo<Session>> {
         const result = this.api.getSummarySessionsSessionIdGetWithHttpInfo(sessionId, _options);
         return result.toPromise();
     }
@@ -287,7 +288,7 @@ export class PromiseSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionsSessionIdGet(sessionId: string, _options?: Configuration): Promise<Session> {
+    public getSummarySessionsSessionIdGet(sessionId: any, _options?: Configuration): Promise<Session> {
         const result = this.api.getSummarySessionsSessionIdGet(sessionId, _options);
         return result.toPromise();
     }
@@ -295,7 +296,7 @@ export class PromiseSessionApi {
     /**
      * List Sessions
      */
-    public listSessionsSessionsGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<Session>>> {
+    public listSessionsSessionsGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
         const result = this.api.listSessionsSessionsGetWithHttpInfo(_options);
         return result.toPromise();
     }
@@ -303,7 +304,7 @@ export class PromiseSessionApi {
     /**
      * List Sessions
      */
-    public listSessionsSessionsGet(_options?: Configuration): Promise<Array<Session>> {
+    public listSessionsSessionsGet(_options?: Configuration): Promise<any> {
         const result = this.api.listSessionsSessionsGet(_options);
         return result.toPromise();
     }
@@ -313,7 +314,7 @@ export class PromiseSessionApi {
      * @param sessionId 
      * @param messageContentModel 
      */
-    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: string, messageContentModel: MessageContentModel, _options?: Configuration): Promise<HttpInfo<Session>> {
+    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Promise<HttpInfo<Session>> {
         const result = this.api.sendMessageSessionsSessionIdPostWithHttpInfo(sessionId, messageContentModel, _options);
         return result.toPromise();
     }
@@ -323,7 +324,7 @@ export class PromiseSessionApi {
      * @param sessionId 
      * @param messageContentModel 
      */
-    public sendMessageSessionsSessionIdPost(sessionId: string, messageContentModel: MessageContentModel, _options?: Configuration): Promise<Session> {
+    public sendMessageSessionsSessionIdPost(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Promise<Session> {
         const result = this.api.sendMessageSessionsSessionIdPost(sessionId, messageContentModel, _options);
         return result.toPromise();
     }
@@ -348,6 +349,28 @@ export class PromiseSkillsApi {
     }
 
     /**
+     * Call Skill
+     * @param skillId 
+     * @param method 
+     * @param body 
+     */
+    public callSkillSkillsSkillIdPostWithHttpInfo(skillId: string, method: string, body: any, _options?: Configuration): Promise<HttpInfo<string>> {
+        const result = this.api.callSkillSkillsSkillIdPostWithHttpInfo(skillId, method, body, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Call Skill
+     * @param skillId 
+     * @param method 
+     * @param body 
+     */
+    public callSkillSkillsSkillIdPost(skillId: string, method: string, body: any, _options?: Configuration): Promise<string> {
+        const result = this.api.callSkillSkillsSkillIdPost(skillId, method, body, _options);
+        return result.toPromise();
+    }
+
+    /**
      * Create a new skill
      * Create Skill
      * @param skillSpecification 
@@ -364,6 +387,46 @@ export class PromiseSkillsApi {
      */
     public createSkillSkillsPost(skillSpecification: SkillSpecification, _options?: Configuration): Promise<SavedSkillSpecification> {
         const result = this.api.createSkillSkillsPost(skillSpecification, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete a specific skill by its ID
+     * Delete Skill
+     * @param skillId 
+     */
+    public deleteSkillSkillsSkillIdDeleteWithHttpInfo(skillId: string, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.deleteSkillSkillsSkillIdDeleteWithHttpInfo(skillId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Delete a specific skill by its ID
+     * Delete Skill
+     * @param skillId 
+     */
+    public deleteSkillSkillsSkillIdDelete(skillId: string, _options?: Configuration): Promise<any> {
+        const result = this.api.deleteSkillSkillsSkillIdDelete(skillId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a specific agent by its ID
+     * Get Skill
+     * @param skillId 
+     */
+    public getSkillSkillsSkillIdGetWithHttpInfo(skillId: string, _options?: Configuration): Promise<HttpInfo<SavedSkillSpecification>> {
+        const result = this.api.getSkillSkillsSkillIdGetWithHttpInfo(skillId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get a specific agent by its ID
+     * Get Skill
+     * @param skillId 
+     */
+    public getSkillSkillsSkillIdGet(skillId: string, _options?: Configuration): Promise<SavedSkillSpecification> {
+        const result = this.api.getSkillSkillsSkillIdGet(skillId, _options);
         return result.toPromise();
     }
 
@@ -388,20 +451,42 @@ export class PromiseSkillsApi {
     /**
      * Create a new skill
      * Skill Requirements
-     * @param codeAndIgnore 
+     * @param code 
      */
-    public skillRequirementsSkillsRequirementsPostWithHttpInfo(codeAndIgnore: CodeAndIgnore, _options?: Configuration): Promise<HttpInfo<HasRequirements>> {
-        const result = this.api.skillRequirementsSkillsRequirementsPostWithHttpInfo(codeAndIgnore, _options);
+    public skillRequirementsSkillsRequirementsPostWithHttpInfo(code: Code, _options?: Configuration): Promise<HttpInfo<Requirements>> {
+        const result = this.api.skillRequirementsSkillsRequirementsPostWithHttpInfo(code, _options);
         return result.toPromise();
     }
 
     /**
      * Create a new skill
      * Skill Requirements
-     * @param codeAndIgnore 
+     * @param code 
      */
-    public skillRequirementsSkillsRequirementsPost(codeAndIgnore: CodeAndIgnore, _options?: Configuration): Promise<HasRequirements> {
-        const result = this.api.skillRequirementsSkillsRequirementsPost(codeAndIgnore, _options);
+    public skillRequirementsSkillsRequirementsPost(code: Code, _options?: Configuration): Promise<Requirements> {
+        const result = this.api.skillRequirementsSkillsRequirementsPost(code, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Update a specific skill by its ID
+     * Update Skill
+     * @param skillId 
+     * @param skillSpecification 
+     */
+    public updateSkillSkillsSkillIdPutWithHttpInfo(skillId: string, skillSpecification: SkillSpecification, _options?: Configuration): Promise<HttpInfo<SavedSkillSpecification>> {
+        const result = this.api.updateSkillSkillsSkillIdPutWithHttpInfo(skillId, skillSpecification, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Update a specific skill by its ID
+     * Update Skill
+     * @param skillId 
+     * @param skillSpecification 
+     */
+    public updateSkillSkillsSkillIdPut(skillId: string, skillSpecification: SkillSpecification, _options?: Configuration): Promise<SavedSkillSpecification> {
+        const result = this.api.updateSkillSkillsSkillIdPut(skillId, skillSpecification, _options);
         return result.toPromise();
     }
 

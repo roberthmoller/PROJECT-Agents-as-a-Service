@@ -10,64 +10,56 @@
  * Do not edit the class manually.
  */
 
-import { Role } from '../models/Role';
 import { HttpFile } from '../http/http';
 
-export class SavedMessageModel {
+export class SkillSpecification {
     /**
-    * The content of the message.
+    * The name of the skill that will be used to identify it in the system.
     */
-    'content': any | null;
-    'role'?: Role;
+    'name': any | null;
     /**
-    * The identifier of the sender of the message.
+    * The description of the skill that will be used to describe it in the system.
     */
-    'sender': any | null;
+    'description'?: any | null;
     /**
-    * The date and time the message was sent.
+    * The list of requirements that the skill must satisfy in order to be used.
     */
-    'sentAt': any | null;
+    'requirements'?: any | null;
     /**
-    * The unique identifier of the message.
+    * The code that will be used to execute the agent.
     */
-    'id': any | null;
+    'code': any | null;
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "content",
-            "baseName": "content",
+            "name": "name",
+            "baseName": "name",
             "type": "any",
             "format": ""
         },
         {
-            "name": "role",
-            "baseName": "role",
-            "type": "Role",
-            "format": ""
-        },
-        {
-            "name": "sender",
-            "baseName": "sender",
+            "name": "description",
+            "baseName": "description",
             "type": "any",
             "format": ""
         },
         {
-            "name": "sentAt",
-            "baseName": "sent_at",
+            "name": "requirements",
+            "baseName": "requirements",
             "type": "any",
             "format": ""
         },
         {
-            "name": "id",
-            "baseName": "id",
+            "name": "code",
+            "baseName": "code",
             "type": "any",
             "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return SavedMessageModel.attributeTypeMap;
+        return SkillSpecification.attributeTypeMap;
     }
 
     public constructor() {

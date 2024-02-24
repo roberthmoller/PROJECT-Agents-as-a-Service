@@ -2,15 +2,17 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 
 import { AgentSpecification } from '../models/AgentSpecification';
-import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
-import { CodeAndIgnore } from '../models/CodeAndIgnore';
+import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
-import { HasRequirements } from '../models/HasRequirements';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
+import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
-import { PipRequirement } from '../models/PipRequirement';
+import { PhoneNumber } from '../models/PhoneNumber';
+import { PhotoUrl } from '../models/PhotoUrl';
+import { Requirements } from '../models/Requirements';
+import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
@@ -19,7 +21,6 @@ import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
 import { ValidationError } from '../models/ValidationError';
-import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 
 import { ObservableAgentApi } from "./ObservableAPI";
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
@@ -302,10 +303,10 @@ export interface SessionApiCreateSessionSessionsPostRequest {
 export interface SessionApiGetSummarySessionsSessionIdGetRequest {
     /**
      * 
-     * @type string
+     * @type any
      * @memberof SessionApigetSummarySessionsSessionIdGet
      */
-    sessionId: string
+    sessionId: any
 }
 
 export interface SessionApiListSessionsSessionsGetRequest {
@@ -314,10 +315,10 @@ export interface SessionApiListSessionsSessionsGetRequest {
 export interface SessionApiSendMessageSessionsSessionIdPostRequest {
     /**
      * 
-     * @type string
+     * @type any
      * @memberof SessionApisendMessageSessionsSessionIdPost
      */
-    sessionId: string
+    sessionId: any
     /**
      * 
      * @type MessageContentModel
@@ -369,7 +370,7 @@ export class ObjectSessionApi {
      * List Sessions
      * @param param the request object
      */
-    public listSessionsSessionsGetWithHttpInfo(param: SessionApiListSessionsSessionsGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<Session>>> {
+    public listSessionsSessionsGetWithHttpInfo(param: SessionApiListSessionsSessionsGetRequest = {}, options?: Configuration): Promise<HttpInfo<any>> {
         return this.api.listSessionsSessionsGetWithHttpInfo( options).toPromise();
     }
 
@@ -377,7 +378,7 @@ export class ObjectSessionApi {
      * List Sessions
      * @param param the request object
      */
-    public listSessionsSessionsGet(param: SessionApiListSessionsSessionsGetRequest = {}, options?: Configuration): Promise<Array<Session>> {
+    public listSessionsSessionsGet(param: SessionApiListSessionsSessionsGetRequest = {}, options?: Configuration): Promise<any> {
         return this.api.listSessionsSessionsGet( options).toPromise();
     }
 
@@ -402,6 +403,27 @@ export class ObjectSessionApi {
 import { ObservableSkillsApi } from "./ObservableAPI";
 import { SkillsApiRequestFactory, SkillsApiResponseProcessor} from "../apis/SkillsApi";
 
+export interface SkillsApiCallSkillSkillsSkillIdPostRequest {
+    /**
+     * 
+     * @type string
+     * @memberof SkillsApicallSkillSkillsSkillIdPost
+     */
+    skillId: string
+    /**
+     * 
+     * @type string
+     * @memberof SkillsApicallSkillSkillsSkillIdPost
+     */
+    method: string
+    /**
+     * 
+     * @type any
+     * @memberof SkillsApicallSkillSkillsSkillIdPost
+     */
+    body: any
+}
+
 export interface SkillsApiCreateSkillSkillsPostRequest {
     /**
      * 
@@ -411,16 +433,49 @@ export interface SkillsApiCreateSkillSkillsPostRequest {
     skillSpecification: SkillSpecification
 }
 
+export interface SkillsApiDeleteSkillSkillsSkillIdDeleteRequest {
+    /**
+     * 
+     * @type string
+     * @memberof SkillsApideleteSkillSkillsSkillIdDelete
+     */
+    skillId: string
+}
+
+export interface SkillsApiGetSkillSkillsSkillIdGetRequest {
+    /**
+     * 
+     * @type string
+     * @memberof SkillsApigetSkillSkillsSkillIdGet
+     */
+    skillId: string
+}
+
 export interface SkillsApiListSkillsSkillsGetRequest {
 }
 
 export interface SkillsApiSkillRequirementsSkillsRequirementsPostRequest {
     /**
      * 
-     * @type CodeAndIgnore
+     * @type Code
      * @memberof SkillsApiskillRequirementsSkillsRequirementsPost
      */
-    codeAndIgnore: CodeAndIgnore
+    code: Code
+}
+
+export interface SkillsApiUpdateSkillSkillsSkillIdPutRequest {
+    /**
+     * 
+     * @type string
+     * @memberof SkillsApiupdateSkillSkillsSkillIdPut
+     */
+    skillId: string
+    /**
+     * 
+     * @type SkillSpecification
+     * @memberof SkillsApiupdateSkillSkillsSkillIdPut
+     */
+    skillSpecification: SkillSpecification
 }
 
 export class ObjectSkillsApi {
@@ -428,6 +483,22 @@ export class ObjectSkillsApi {
 
     public constructor(configuration: Configuration, requestFactory?: SkillsApiRequestFactory, responseProcessor?: SkillsApiResponseProcessor) {
         this.api = new ObservableSkillsApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Call Skill
+     * @param param the request object
+     */
+    public callSkillSkillsSkillIdPostWithHttpInfo(param: SkillsApiCallSkillSkillsSkillIdPostRequest, options?: Configuration): Promise<HttpInfo<string>> {
+        return this.api.callSkillSkillsSkillIdPostWithHttpInfo(param.skillId, param.method, param.body,  options).toPromise();
+    }
+
+    /**
+     * Call Skill
+     * @param param the request object
+     */
+    public callSkillSkillsSkillIdPost(param: SkillsApiCallSkillSkillsSkillIdPostRequest, options?: Configuration): Promise<string> {
+        return this.api.callSkillSkillsSkillIdPost(param.skillId, param.method, param.body,  options).toPromise();
     }
 
     /**
@@ -446,6 +517,42 @@ export class ObjectSkillsApi {
      */
     public createSkillSkillsPost(param: SkillsApiCreateSkillSkillsPostRequest, options?: Configuration): Promise<SavedSkillSpecification> {
         return this.api.createSkillSkillsPost(param.skillSpecification,  options).toPromise();
+    }
+
+    /**
+     * Delete a specific skill by its ID
+     * Delete Skill
+     * @param param the request object
+     */
+    public deleteSkillSkillsSkillIdDeleteWithHttpInfo(param: SkillsApiDeleteSkillSkillsSkillIdDeleteRequest, options?: Configuration): Promise<HttpInfo<any>> {
+        return this.api.deleteSkillSkillsSkillIdDeleteWithHttpInfo(param.skillId,  options).toPromise();
+    }
+
+    /**
+     * Delete a specific skill by its ID
+     * Delete Skill
+     * @param param the request object
+     */
+    public deleteSkillSkillsSkillIdDelete(param: SkillsApiDeleteSkillSkillsSkillIdDeleteRequest, options?: Configuration): Promise<any> {
+        return this.api.deleteSkillSkillsSkillIdDelete(param.skillId,  options).toPromise();
+    }
+
+    /**
+     * Get a specific agent by its ID
+     * Get Skill
+     * @param param the request object
+     */
+    public getSkillSkillsSkillIdGetWithHttpInfo(param: SkillsApiGetSkillSkillsSkillIdGetRequest, options?: Configuration): Promise<HttpInfo<SavedSkillSpecification>> {
+        return this.api.getSkillSkillsSkillIdGetWithHttpInfo(param.skillId,  options).toPromise();
+    }
+
+    /**
+     * Get a specific agent by its ID
+     * Get Skill
+     * @param param the request object
+     */
+    public getSkillSkillsSkillIdGet(param: SkillsApiGetSkillSkillsSkillIdGetRequest, options?: Configuration): Promise<SavedSkillSpecification> {
+        return this.api.getSkillSkillsSkillIdGet(param.skillId,  options).toPromise();
     }
 
     /**
@@ -471,8 +578,8 @@ export class ObjectSkillsApi {
      * Skill Requirements
      * @param param the request object
      */
-    public skillRequirementsSkillsRequirementsPostWithHttpInfo(param: SkillsApiSkillRequirementsSkillsRequirementsPostRequest, options?: Configuration): Promise<HttpInfo<HasRequirements>> {
-        return this.api.skillRequirementsSkillsRequirementsPostWithHttpInfo(param.codeAndIgnore,  options).toPromise();
+    public skillRequirementsSkillsRequirementsPostWithHttpInfo(param: SkillsApiSkillRequirementsSkillsRequirementsPostRequest, options?: Configuration): Promise<HttpInfo<Requirements>> {
+        return this.api.skillRequirementsSkillsRequirementsPostWithHttpInfo(param.code,  options).toPromise();
     }
 
     /**
@@ -480,8 +587,26 @@ export class ObjectSkillsApi {
      * Skill Requirements
      * @param param the request object
      */
-    public skillRequirementsSkillsRequirementsPost(param: SkillsApiSkillRequirementsSkillsRequirementsPostRequest, options?: Configuration): Promise<HasRequirements> {
-        return this.api.skillRequirementsSkillsRequirementsPost(param.codeAndIgnore,  options).toPromise();
+    public skillRequirementsSkillsRequirementsPost(param: SkillsApiSkillRequirementsSkillsRequirementsPostRequest, options?: Configuration): Promise<Requirements> {
+        return this.api.skillRequirementsSkillsRequirementsPost(param.code,  options).toPromise();
+    }
+
+    /**
+     * Update a specific skill by its ID
+     * Update Skill
+     * @param param the request object
+     */
+    public updateSkillSkillsSkillIdPutWithHttpInfo(param: SkillsApiUpdateSkillSkillsSkillIdPutRequest, options?: Configuration): Promise<HttpInfo<SavedSkillSpecification>> {
+        return this.api.updateSkillSkillsSkillIdPutWithHttpInfo(param.skillId, param.skillSpecification,  options).toPromise();
+    }
+
+    /**
+     * Update a specific skill by its ID
+     * Update Skill
+     * @param param the request object
+     */
+    public updateSkillSkillsSkillIdPut(param: SkillsApiUpdateSkillSkillsSkillIdPutRequest, options?: Configuration): Promise<SavedSkillSpecification> {
+        return this.api.updateSkillSkillsSkillIdPut(param.skillId, param.skillSpecification,  options).toPromise();
     }
 
 }

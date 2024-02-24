@@ -1,4 +1,4 @@
-## restClient@6.9.0
+## api-client@6.9.0
 
 This generator creates TypeScript/JavaScript client that utilizes fetch-api.
 
@@ -21,7 +21,7 @@ Navigate to the folder of your consuming project and run one of the following co
 _published:_
 
 ```
-npm install restClient@6.9.0 --save
+npm install api-client@6.9.0 --save
 ```
 
 _unPublished (not recommended):_

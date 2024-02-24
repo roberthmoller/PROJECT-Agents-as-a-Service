@@ -7,18 +7,16 @@ export default defineConfig({
     test: {
         include: ['src/**/*.{test,spec}.{js,ts}']
     },
-    // optimizeDeps: {
-    //     exclude: ["codemirror"],
-    // },
     server: {
         proxy: {
             '/api': 'http://127.0.0.1:5001/agents-as-a-service/us-central1/api',
-
-            // '/api': 'http://127.0.0.1:5002/',
         },
         fs: {
             allow: [
+                "file:.generated/api-client",
+                ".generated/api-client",
                 searchForWorkspaceRoot(process.cwd()) + "/.generated",
+                "/Users/robert/Developer/Robert/PROJECT-Agents-as-a-Service/website/.generated/api-client/dist/index.js",
             ],
         },
     },

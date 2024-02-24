@@ -12,28 +12,28 @@
 
 import { HttpFile } from '../http/http';
 
-export class SavedSessionSpecification {
-    'agents': any | null;
-    'id': any | null;
+export class PipRequirement {
+    'version': any | null;
+    'name': any | null;
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "agents",
-            "baseName": "agents",
+            "name": "version",
+            "baseName": "version",
             "type": "any",
             "format": ""
         },
         {
-            "name": "id",
-            "baseName": "id",
+            "name": "name",
+            "baseName": "name",
             "type": "any",
             "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return SavedSessionSpecification.attributeTypeMap;
+        return PipRequirement.attributeTypeMap;
     }
 
     public constructor() {

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {Button} from "$lib/components/ui/button/index.js";
+    import {Button} from "$lib/components/ui/button";
     import * as Dialog from "$lib/components/ui/dialog";
     import {createEventDispatcher} from 'svelte'
 
@@ -24,7 +24,9 @@
         <Dialog.Header>
             <Dialog.Title>Are you sure absolutely sure?</Dialog.Title>
             <Dialog.Description>
-                <p class="line-through bg-red-950 text-red-800 rounded-sm my-2 px-1"><slot/></p>
+                <p class="line-through bg-red-950 text-red-700 rounded-sm my-2 px-1">
+                    <slot/>
+                </p>
                 <p>
                     This action cannot be undone. This will
                     permanently delete your account and remove your

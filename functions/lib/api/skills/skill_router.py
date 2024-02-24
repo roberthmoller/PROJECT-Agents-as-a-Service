@@ -2,8 +2,8 @@ from fastapi import APIRouter, Depends, HTTPException, Body, Query, Path
 from pipreqs import pipreqs
 
 from lib.api.auth.auth_model import FirebaseUser
-from lib.api.skills.skill_model import SkillSpecification, SavedSkillSpecification, HasRequirements, CodeAndIgnore
-from lib.api.skills.skill_utils import imports_from_code
+from lib.api.skills.skill_model import SkillSpecification, SavedSkillSpecification, Requirements, Code
+from lib.api.skills.skill_utils import imports_from_code, extract_methods
 from lib.utils.auth_utils import user_scope
 from lib.utils.firebase.admin import db
 
@@ -41,22 +41,23 @@ def options():
 
 
 @router.post("/requirements", description="Create a new skill", dependencies=[Depends(user_scope)])
-def skill_requirements(codeAndIgnore: CodeAndIgnore) -> HasRequirements:
-    print("find requirements for code:\n{0}".format(codeAndIgnore))
+def skill_requirements(code: Code) -> Requirements:
+    print("find requirements for code:\n{0}".format(code))
     try:
-        imports = imports_from_code(codeAndIgnore.code)
+        imports = imports_from_code(code.code)
         print("imports:\n{0}".format(imports))
-        imports = list(filter(lambda x: x not in codeAndIgnore.ignore, imports))
-        print("filtered imports:\n{0}".format(imports))
         requirements = pipreqs.get_imports_info(imports)
         print("requirements:\n{0}".format(requirements))
-        return HasRequirements(requirements=requirements)
+        return Requirements(
+            requirements="\n".join(map(lambda r: f'{r.name}={r.version}', requirements))
+        )
+
     except Exception as e:
         print("Error: {0}".format(e))
         raise HTTPException(status_code=400, detail="Could not find requirements for the given code")
 
 
-@router.options("/{skill_id}")
+@router.options("/{skill_id}", include_in_schema=False)
 def options(skill_id: str):
     return {"methods": ["GET", "PUT", "DELETE", "POST"]}
 
@@ -88,11 +89,8 @@ def delete_skill(skill_id: str, user: FirebaseUser = Depends(user_scope)) -> Non
     document.delete()
 
 
-from .skill_utils import extract_methods
-
-
 @router.post("/{skill_id}")
-def options(
+def call_skill(
         skill_id: str = Path(),
         method: str = Query(),
         params: dict = Body(),

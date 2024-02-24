@@ -5,7 +5,7 @@ import {
     SavedMessageModel,
     SavedSessionSpecification,
     SessionSpecification
-} from "restClient";
+} from "api-client";
 import {sessionApi} from "$lib/api";
 import type {ApiValue} from "$lib/services/util";
 import {MessagesRepository, SessionRepository} from "$lib/services/repositories";
@@ -84,7 +84,7 @@ export class ActiveSessionState {
 
 export class NoSessionState {
     selectedAgents: Writable<SavedAgentSpecification[]> = writable([]);
-    initialMessage: Writable<string> = writable("");
+    inputStore: Writable<string> = writable("");
     isAgentPickerOpen: Writable<boolean> = writable(false);
 
 
@@ -93,7 +93,7 @@ export class NoSessionState {
     }
 
     get hasEnteredInitialMessage() {
-        return derived(this.initialMessage, message => message.length > 0);
+        return derived(this.inputStore, message => message.length > 0);
     }
 
     get canInstantiateSession() {
@@ -129,7 +129,25 @@ export class NoSessionState {
         spec.agents = get(this.selectedAgents).map(agent => agent.id);
         const session = await sessionApi.createSessionSessionsPost(spec);
         get(chatStore).setActiveSession(session);
+
+        // send message
+        const message = new MessageContentModel();
+        message.content = get(this.inputStore);
+        this.inputStore.set("");
+
+        toast.promise(
+            sessionApi.sendMessageSessionsSessionIdPost(session.id, message),
+            {
+                loading: "Sending message...",
+                success: "Message sent!",
+                error: "Failed to send message."
+            }
+        );
+
         return session;
+    }
+    async sendMessage() {
+
     }
 }
 

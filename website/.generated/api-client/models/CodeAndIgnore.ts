@@ -12,28 +12,31 @@
 
 import { HttpFile } from '../http/http';
 
-export class SavedSessionSpecification {
-    'agents': any | null;
-    'id': any | null;
+export class CodeAndIgnore {
+    'ignore'?: any | null;
+    /**
+    * The code that will be used to execute the agent.
+    */
+    'code': any | null;
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "agents",
-            "baseName": "agents",
+            "name": "ignore",
+            "baseName": "ignore",
             "type": "any",
             "format": ""
         },
         {
-            "name": "id",
-            "baseName": "id",
+            "name": "code",
+            "baseName": "code",
             "type": "any",
             "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return SavedSessionSpecification.attributeTypeMap;
+        return CodeAndIgnore.attributeTypeMap;
     }
 
     public constructor() {

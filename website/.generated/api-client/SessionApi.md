@@ -79,8 +79,8 @@ const configuration = .createConfiguration();
 const apiInstance = new .SessionApi(configuration);
 
 let body:.SessionApiGetSummarySessionsSessionIdGetRequest = {
-  // string
-  sessionId: "session_id_example",
+  // any
+  sessionId: null,
 };
 
 apiInstance.getSummarySessionsSessionIdGet(body).then((data:any) => {
@@ -93,7 +93,7 @@ apiInstance.getSummarySessionsSessionIdGet(body).then((data:any) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **sessionId** | [**string**] |  | defaults to undefined
+ **sessionId** | **any** |  | defaults to undefined
 
 
 ### Return type
@@ -119,7 +119,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **listSessionsSessionsGet**
-> Array<Session> listSessionsSessionsGet()
+> any listSessionsSessionsGet()
 
 
 ### Example
@@ -146,7 +146,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**Array<Session>**
+**any**
 
 ### Authorization
 
@@ -180,8 +180,8 @@ const configuration = .createConfiguration();
 const apiInstance = new .SessionApi(configuration);
 
 let body:.SessionApiSendMessageSessionsSessionIdPostRequest = {
-  // string
-  sessionId: "session_id_example",
+  // any
+  sessionId: null,
   // MessageContentModel
   messageContentModel: null,
 };
@@ -197,7 +197,7 @@ apiInstance.sendMessageSessionsSessionIdPost(body).then((data:any) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **messageContentModel** | **MessageContentModel**|  |
- **sessionId** | [**string**] |  | defaults to undefined
+ **sessionId** | **any** |  | defaults to undefined
 
 
 ### Return type

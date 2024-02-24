@@ -1,11 +1,15 @@
 <script lang="ts">
     import * as Dialog from "$lib/components/ui/dialog";
     import * as Card from "$lib/components/ui/card";
-    import {SavedSkillSpecification} from "restClient";
     import {Button} from "$lib/components/ui/button";
-    import EditSkillDialog from "./edit-skill-dialog.svelte";
-    import DeleteSkillDialog from "./delete-skill-dialog.svelte";
+    import SkillDialog from "./skill-dialog.svelte";
+    import DeleteDialog from "../delete-dialog.svelte";
+    import {SavedSkillSpecification} from "api-client";
+    import {workshopStore} from "$lib/services";
+
     export let skill: SavedSkillSpecification;
+    $: state = $workshopStore;
+
 </script>
 
 <Card.Root class="relative">
@@ -19,9 +23,10 @@
     </Card.Content>
     <Card.Footer>
         <div class="flex w-full justify-end space-x-2">
-            <!--            <Button variant="ghost">Edit</Button>-->
-            <EditSkillDialog {skill}/>
-            <DeleteSkillDialog on:delete={() => console.log("delete skill", skill.name)}>{skill.name}</DeleteSkillDialog>
+            <SkillDialog {skill}/>
+            <DeleteDialog on:delete={() => state.deleteSkill(skill)}>
+                {skill.name}
+            </DeleteDialog>
         </div>
     </Card.Footer>
 </Card.Root>

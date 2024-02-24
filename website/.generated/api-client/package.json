@@ -1,7 +1,7 @@
 {
-  "name": "restClient",
+  "name": "api-client",
   "version": "6.9.0",
-  "description": "OpenAPI client for restClient",
+  "description": "OpenAPI client for api-client",
   "author": "OpenAPI-Generator Contributors",
   "repository": {
     "type": "git",

@@ -3,3 +3,4 @@ export type ApiValue<T> = {
     isLoaded: boolean;
     error?: any;
 }
+

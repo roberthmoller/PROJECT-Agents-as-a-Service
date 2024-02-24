@@ -10,30 +10,34 @@
  * Do not edit the class manually.
  */
 
+import { Role } from '../models/Role';
 import { HttpFile } from '../http/http';
 
-export class SavedSessionSpecification {
-    'agents': any | null;
-    'id': any | null;
+export class MessageContentModel {
+    /**
+    * The content of the message.
+    */
+    'content': any | null;
+    'role'?: Role;
 
     static readonly discriminator: string | undefined = undefined;
 
     static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
         {
-            "name": "agents",
-            "baseName": "agents",
+            "name": "content",
+            "baseName": "content",
             "type": "any",
             "format": ""
         },
         {
-            "name": "id",
-            "baseName": "id",
-            "type": "any",
+            "name": "role",
+            "baseName": "role",
+            "type": "Role",
             "format": ""
         }    ];
 
     static getAttributeTypeMap() {
-        return SavedSessionSpecification.attributeTypeMap;
+        return MessageContentModel.attributeTypeMap;
     }
 
     public constructor() {
