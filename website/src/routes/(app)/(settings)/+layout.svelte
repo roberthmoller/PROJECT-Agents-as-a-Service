@@ -8,10 +8,12 @@
     import {page} from "$app/stores";
 
     const tabs = [
-        {name: "Account", href: "/account"},
-        // {name: "Api Tokens", href: "/settings/api-tokens"},
-        // {name: "Billing", href: "/settings/billing"},
+        {name: "Account", href: "/account", description: "This is how others will see you on the site."},
+        {name: "API Keys", href: "/api-keys"},
+        // {name: "Billing", href: "/billing"},
     ];
+
+    $: activeTab = tabs.find(tab => tab.href === $page.url.pathname);
 </script>
 
 
@@ -42,6 +44,13 @@
             </aside>
             <!--Main-->
             <main class="flex-grow">
+                <div class="mb-2">
+                    <h3 class="text-lg font-medium">{activeTab.name}</h3>
+                    {#if activeTab.description}
+                        <p class="text-sm text-muted-foreground">{activeTab.description}</p>
+                    {/if}
+                </div>
+                <Separator/>
                 <slot/>
             </main>
         </section>

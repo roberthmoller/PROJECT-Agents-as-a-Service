@@ -1,49 +1,67 @@
 import os
 
 from fastapi import APIRouter, Depends, Body
-from fastapi.security import HTTPBasicCredentials
+from fastapi.security import HTTPBasicCredentials, HTTPAuthorizationCredentials
 from firebase_admin import auth
 from fastapi import HTTPException
-from lib.api.auth.auth_model import FirebaseUser
-from lib.api.auth.auth_scheme import basic_scheme
-from lib.utils.auth_utils import authenticated, admin_scope, user_scope
+from lib.api.auth.auth_model import FirebaseUser, SavedApiKey, ApiKey
+from lib.api.auth.auth_scheme import username_password_scheme, access_token_scheme, api_key_scheme
+from lib.utils.auth_utils import authenticated_access_token, admin_scope, user_scope, authenticated_api_key, \
+    authenticated, invalid_credentials_exception
 from lib.utils.firebase.client import client_auth
+from lib.utils.firebase.admin import db
+from uuid import uuid4
 
-os.environ["FIREBASE_AUTH_EMULATOR_HOST"] = ""
-# os.environ["FIREBASE_AUTH_EMULATOR_HOST"] = "127.0.0.1:9099"
+from lib.utils.now import now
 
 router = APIRouter(
     tags=["Auth"],
 )
 
 
-@router.post("/auth")
-def create_access_token(cred: HTTPBasicCredentials = Depends(basic_scheme)) -> str:
-    print("Credentials: {0}".format(cred))
-    try:
+# Create keys
 
-        authorization = client_auth.sign_in_with_email_and_password(email=cred.username, password=cred.password)
-        print("Authorization: {0}".format(authorization))
-        token = authorization["idToken"]
-        print("Token: {0}".format(token))
-        return token
+# @router.post("/auth/access-token")
+# def create_access_token(cred: HTTPBasicCredentials = Depends(username_password_scheme)) -> str:
+#     print("Credentials: {0}".format(cred))
+#     try:
+#         authorization = client_auth.sign_in_with_email_and_password(email=cred.username, password=cred.password)
+#         token = authorization["idToken"]
+#         return token
+#     except Exception as e:
+#         print("Error creating token: {0}".format(e))
+#         raise invalid_credentials_exception
+
+
+@router.post("/auth/api-key", include_in_schema=False)
+def create_api_key(details: ApiKey, user: FirebaseUser = Depends(authenticated_access_token)) -> SavedApiKey:
+    try:
+        key = str(uuid4())
+        key_name = details.name.strip()
+        api_key_doc = db().collection(f"v1/public/users/{user.uid}/api-keys").document()
+        api_key = SavedApiKey(id=api_key_doc.id, key=key, name=key_name, created_at=now())
+        api_key_doc.set(api_key.model_dump())
+        return api_key
     except Exception as e:
         print("Error creating token: {0}".format(e))
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
 
+# USER AUTH
+
 @router.get("/auth")
 def get_authenticated_user(user=Depends(authenticated)) -> FirebaseUser:
-    print("get_authenticated_user: {0}".format(user))
     return user
 
 
-@router.get("/auth/scopes")
+# SCOPES
+
+@router.get("/auth/scopes", include_in_schema=False)
 def get_scopes(user=Depends(user_scope)) -> list[str]:
     return list(dict(user.custom_claims).keys())
 
 
-@router.put("/auth/scopes")
+@router.put("/auth/scopes", include_in_schema=False)
 def grant_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_scope)) -> list[str]:
     claims: dict = user.custom_claims
     for scope in scopes:
@@ -52,7 +70,7 @@ def grant_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_
     return list(claims.keys())
 
 
-@router.delete("/auth/scopes")
+@router.delete("/auth/scopes", include_in_schema=False)
 def delete_scopes(scopes: list[str] = Body(example=["user"]), user=Depends(admin_scope)) -> list[str]:
     claims: dict = user.custom_claims
     for scope in scopes:
