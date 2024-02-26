@@ -39,9 +39,8 @@ def create_api_key(details: ApiKey, user: FirebaseUser = Depends(authenticated_a
         key = str(uuid4())
         key_name = details.name.strip()
         api_key_doc = db().collection(f"v1/public/users/{user.uid}/api-keys").document()
-        api_key = SavedApiKey(id=api_key_doc.id, key=key, name=key_name, created_at=now())
-        api_key_doc.set(api_key.model_dump())
-        return api_key
+        api_key_doc.set({"name": key_name, "key": key, "created_at": now()})
+        return SavedApiKey(id=api_key_doc.id, key=key, name=key_name, created_at=now())
     except Exception as e:
         print("Error creating token: {0}".format(e))
         raise HTTPException(status_code=401, detail="Invalid credentials")
