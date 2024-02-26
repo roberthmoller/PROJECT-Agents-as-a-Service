@@ -16,7 +16,7 @@ DEFAULT_LLM_CONFIG = {
     "cache_seed": 42,
     "temperature": 0,
     "config_list": [
-        {"model": "gpt-3.5-turbo-125", "api_key": os.environ["OPENAI_API_KEY"]}
+        {"model": "gpt-3.5-turbo-0125", "api_key": os.environ["OPENAI_API_KEY"]}
     ]
 }
 
@@ -29,7 +29,6 @@ class FirebaseAgent(ABC):
     should_record: bool = False
 
     def record_message(self, message: Union[Dict, str]):
-        print("record_message", message)
         if isinstance(message, Dict) and ("tool_calls" in message or "function_call" in message):
             # Todo: In the future record the function call request to see it loading and see params in the ui
             return
@@ -51,6 +50,14 @@ class FirebaseAgent(ABC):
                 .rstrip("TERMINATE") \
                 .rstrip("TERMINATE.") \
                 .strip()
+
+            if len(stripped_content) == 0:
+                return
+
+            stripped_content = (stripped_content
+                                .replace(self.user.name.replace(" ", "_"), self.user.name)
+                                .replace(self.display_name, self.display_name.replace("_", " ")))
+            
             message_data = SavedMessageModel(
                 id=message_document.id,
                 content=stripped_content,
@@ -66,8 +73,7 @@ class FirebaseUserProxyAgent(UserProxyAgent, FirebaseAgent):
         self.session = session
         self.id = user.uid
         self.user = user
-        self.display_name = user.name or "User"
-        # self.display_name = ((user.name or "User").replace(" ", "_"))
+        self.display_name = ((user.name or "User").replace(" ", "_"))
         super().__init__(
             name=self.display_name,
             human_input_mode="NEVER",
@@ -103,7 +109,7 @@ class FirebaseAssistantAgent(AssistantAgent, FirebaseAgent):
         self.specification = agent
         self.id = agent.id
         self.user = proxy.user
-        self.display_name = agent.name
+        self.display_name = agent.name.replace(" ", "_")
         super().__init__(
             llm_config={
                 "cache_seed": agent.cache_seed,

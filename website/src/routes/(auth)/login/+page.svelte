@@ -1,11 +1,11 @@
 <script lang="ts">
     import {Icons} from "$lib/icons";
-    import {Button} from "$lib/components/ui/button";
-    import {Input} from "$lib/components/ui/input";
-    import {Label} from "$lib/components/ui/label";
+    import {Button} from "$components/button";
+    import {Input} from "$components/input";
+    import {Label} from "$components/label";
     import {signInWithGithub, signInWithEmailAndPassword, authState, signInWithGoogle} from '$lib/firebase';
     import {goto} from "$app/navigation";
-    import * as Tooltip from "$lib/components/ui/tooltip";
+    import * as Tooltip from "$components/tooltip";
     import {gotoChat} from "$lib/routing";
 
     let isLoading = false;

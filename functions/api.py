@@ -1,4 +1,3 @@
-import os
 
 from fastapi import FastAPI
 
@@ -29,6 +28,12 @@ app.include_router(auth_router)
 app.include_router(agent_router)
 app.include_router(skills_router)
 app.include_router(session_router)
+
+
+@app.get("/env")
+def get_env():
+    return env.name
+
 
 if __name__ == '__main__':
     import uvicorn

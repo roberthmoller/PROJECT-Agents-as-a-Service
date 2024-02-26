@@ -2,10 +2,13 @@ import os
 from enum import Enum
 
 from dotenv import load_dotenv
+from firebase_functions.params import StringParam
 
+ENVIRONMENT = StringParam("ENVIRONMENT", default="LOCAL")
 load_dotenv(".env")
-load_dotenv(".env.default")
-load_dotenv(".env.local")
+
+
+# load_dotenv(".env.local")
 
 
 class ENV(Enum):
@@ -34,4 +37,4 @@ class ENV(Enum):
             raise ValueError(f"Invalid environment: {value}")
 
 
-env = ENV.of(os.environ["ENV"])
+env = ENV.of(ENVIRONMENT.value)

@@ -169,6 +169,7 @@ export class SkillRepository extends Repository<SavedSkillSpecification, SkillSp
         skill.id = doc.id;
         skill.name = data.name;
         skill.requirements = data.requirements;
+        skill.description = data.description;
         skill.code = data.code;
         return skill;
     }

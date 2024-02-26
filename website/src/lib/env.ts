@@ -1,4 +1,4 @@
-import {PUBLIC_ENV} from "$env/static/public"
+import {PUBLIC_ENVIRONMENT} from "$env/static/public"
 
 export enum Env {
     LOCAL = "LOCAL",
@@ -22,5 +22,5 @@ export namespace Env {
     }
 }
 
-export const env = Env.of(PUBLIC_ENV);
+export const env = Env.of(PUBLIC_ENVIRONMENT);
 
