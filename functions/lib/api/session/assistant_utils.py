@@ -43,7 +43,7 @@ def initialize_chat(
 
     # Register all skills
     for agent in agents.values():
-        if isinstance(agent, FirebaseAssistantAgent):
+        if isinstance(agent, FirebaseAssistantAgent) and agent.specification.can_call_skills:
             skill_specs = [get_skill(skill_id=skill_id, user=user) for skill_id in agent.specification.skills or []]
             for skill in skill_specs:
                 methods = extract_methods(skill.code)

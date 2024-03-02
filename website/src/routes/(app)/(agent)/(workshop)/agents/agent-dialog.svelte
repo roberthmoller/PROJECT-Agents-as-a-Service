@@ -11,12 +11,17 @@
     import {Textarea} from "$components/textarea";
     import {HelpCircle} from 'lucide-svelte';
     import {Checkbox} from "$components/checkbox";
+    import {Hammer} from 'lucide-svelte';
+    import ModelSelector from "./model-selector.svelte";
+    import {models, types} from "./models";
+    import * as Tooltip from "$components/tooltip";
 
     export let agent: SavedAgentSpecification | AgentSpecification = new AgentSpecification();
 
     let agentName = agent.name ?? "";
     let agentInstructions = agent.systemMessage ?? "";
     let agentDescription = agent.description ?? "";
+    let agentModels: string[] = agent.models ?? [];
     let agentSkills: string[] = agent.skills ?? [];
     let open = false;
 
@@ -25,14 +30,17 @@
     $: skills = $skillsStore;
     $: isMissingName = agentName?.trim().length === 0;
     $: isMissingInstructions = agentInstructions?.trim().length === 0;
-    $: hasErrors = isMissingName || isMissingInstructions;
+    $: isModelsEmpty = agentModels.length == 0;
+    $: hasErrors = isMissingName || isMissingInstructions || isModelsEmpty;
+    $: canCallSkills = models.filter(model => agentModels.includes(model.id)).every(model => model.canCallSkills);
 
     const saveAgent = async () => {
         if (hasErrors) return;
         agent.name = agentName;
         agent.description = agentDescription;
         agent.systemMessage = agentInstructions;
-        agent.skills = agentSkills;
+        agent.skills = canCallSkills ? agentSkills : [];
+        agent.models = agentModels;
         await state.saveAgent(agent);
         open = false;
     }
@@ -43,6 +51,10 @@
             agentSkills = [...agentSkills, skillId];
         }
         // skills = skills;
+    }
+
+    function modelsChanged(models: string[]) {
+        agentModels = models;
     }
 </script>
 
@@ -67,10 +79,23 @@
             {/if}
         </Dialog.Header>
         <div class="flex-grow">
-            <Tabs.Root >
+            <Tabs.Root>
                 <Tabs.List class="grid w-full grid-cols-2">
                     <Tabs.Trigger value="details">Details<span class="text-red-700">*</span></Tabs.Trigger>
-                    <Tabs.Trigger value="skills">Capabilities</Tabs.Trigger>
+                    {#if canCallSkills}
+                        <Tabs.Trigger value="skills">Skills</Tabs.Trigger>
+                    {:else}
+                        <Tooltip.Root>
+                            <Tooltip.Trigger>
+                                <Tabs.Trigger value="skills" disabled>
+                                    <span>Skills</span>
+                                </Tabs.Trigger>
+                            </Tooltip.Trigger>
+                            <Tooltip.Content>
+                                <span class="text-muted text-sm">The selected models must all support function calling</span>
+                            </Tooltip.Content>
+                        </Tooltip.Root>
+                    {/if}
                 </Tabs.List>
 
                 <form on:submit|preventDefault={saveAgent}>
@@ -98,6 +123,12 @@
                                         bind:value={agentDescription}
                                 />
                             </div>
+                            <div class="grid gap-2 w-full">
+                                <Label for="url">Models<span class="text-red-700">*</span></Label>
+                                <span class="text-muted-foreground text-sm">Select which models can the agent use.</span>
+                                <ModelSelector selected={agentModels} models={models} types={types}
+                                               on:change={event =>modelsChanged(event.detail)}/>
+                            </div>
                             <div class="flex flex-col gap-2 flex-grow">
                                 <Label for="url">Instructions<span class="text-red-700">*</span></Label>
                                 <span class="text-muted-foreground text-sm">
@@ -112,17 +143,27 @@
                                         placeholder="You are a pirate called Paul and you talk like a pirate that has been at sea for 20 years."
                                         autocorrect="on"
                                         required
-                                        class="h-[22rem]"
+                                        class="h-[14rem]"
                                         bind:value={agentInstructions}
                                 />
                             </div>
                         </div>
                     </Tabs.Content>
                     <Tabs.Content value="skills">
-                        <div class="grid gap-4 py-4">
-                            <div class="grid gap-2">
+                        {#if skills.value.length === 0}
+                            <div class="flex flex-col justify-center items-center flex-grow h-[20rem]">
+                                <Hammer class="w-6 h-6 text-muted-foreground"/>
+                                <p class="text-sm text-center">No skills available</p>
+                                <Button href="/skills" variant="link" class="text-sm text-blue-400">Click here
+                                    to go create skills
+                                </Button>
+                            </div>
+                        {:else}
+                            <div class="flex flex-col space-y-2">
                                 <Label for="url">Skills</Label>
-                                <span class="text-muted-foreground text-sm">The skills the agent has and can use to complete tasks.</span>
+                                <span class="text-muted-foreground text-sm">
+                                    The skills the agent has and can use to complete tasks.
+                                </span>
                                 {#each skills.value as skill}
                                     {@const isSelected = agentSkills.includes(skill.id)}
                                     <Button variant="ghost"
@@ -145,7 +186,7 @@
                                     </Button>
                                 {/each}
                             </div>
-                        </div>
+                        {/if}
                     </Tabs.Content>
                 </form>
             </Tabs.Root>

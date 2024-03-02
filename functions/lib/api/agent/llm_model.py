@@ -6,6 +6,10 @@ from pydantic import model_serializer
 
 
 class LlmModel(str, Enum):
+    @property
+    def can_call_skills(self):
+        return False
+
     @abstractmethod
     def config(self) -> dict[str, str]:
         ...
@@ -31,6 +35,10 @@ class OpenAILlmModel(LlmModel):
     gpt_3_5_turbo = "gpt-3.5-turbo"
     gpt_3_5_turbo_1106 = "gpt-3.5-turbo-1106"
     gpt_3_5_turbo_instruct = "gpt-3.5-turbo-instruct"
+
+    @property
+    def can_call_skills(self):
+        return True
 
     def config(self):
         return {"model": self.value, "api_key": os.environ["OPENAI_API_KEY"]}

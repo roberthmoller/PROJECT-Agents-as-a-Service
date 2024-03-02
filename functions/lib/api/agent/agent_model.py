@@ -3,7 +3,7 @@ from typing import Union
 from pydantic import Field, BaseModel
 
 from lib.utils.now import now
-from .llm_model import OpenAILlmModel, LocalLlmModel
+from .llm_model import OpenAILlmModel, LocalLlmModel, GroqLlmModel
 
 
 class AgentSpecification(BaseModel):
@@ -15,7 +15,7 @@ class AgentSpecification(BaseModel):
         title="System message",
         description="The message that the agent will send to the user when it is first connected"
     )
-    models: list[Union[LocalLlmModel, OpenAILlmModel]] = Field(
+    models: list[Union[LocalLlmModel, OpenAILlmModel, GroqLlmModel]] = Field(
         [OpenAILlmModel.gpt_3_5_turbo],
         title="Model",
         description="The list of models that the agent can use to generate responses",
@@ -67,6 +67,10 @@ class SavedAgentSpecification(AgentSpecification):
         default_factory=now,
         title="The date and time when the agent was last updated"
     )
+
+    @property
+    def can_call_skills(self):
+        return any(model.can_call_skills for model in self.models)
 
     @staticmethod
     def from_ref(ref):
