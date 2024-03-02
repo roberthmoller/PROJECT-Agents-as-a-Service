@@ -7,7 +7,7 @@ from pydantic import model_serializer
 
 class LlmModel(str, Enum):
     @abstractmethod
-    def config(self) -> str:
+    def config(self) -> dict[str, str]:
         ...
 
     @model_serializer
@@ -34,6 +34,15 @@ class OpenAILlmModel(LlmModel):
 
     def config(self):
         return {"model": self.value, "api_key": os.environ["OPENAI_API_KEY"]}
+
+
+class GroqLlmModel(LlmModel):
+    mixtral_8x7b_32768 = "mixtral-8x7b-32768"
+    llama2_70b_4096 = "llama2-70b-4096"
+
+    def config(self) -> dict[str, str]:
+        return {"model": self.value, "api_key": os.environ["GROQ_API_KEY"],
+                "base_url": "https://api.groq.com/openai/v1"}
 
 
 class LocalLlmModel(LlmModel):

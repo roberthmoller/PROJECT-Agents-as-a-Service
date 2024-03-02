@@ -3,7 +3,7 @@
     import * as Card from "$components/card";
     import {Button} from "$components/button";
     import SkillDialog from "./skill-dialog.svelte";
-    import DeleteDialog from "../delete-dialog.svelte";
+    import DeleteDialog from "$lib/delete-dialog.svelte";
     import {SavedSkillSpecification} from "api-client";
     import {workshopStore} from "$lib/services";
 

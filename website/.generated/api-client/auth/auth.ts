@@ -24,31 +24,6 @@ export interface TokenProvider {
 /**
  * Applies http authentication to the request context.
  */
-export class HTTPBasicAuthentication implements SecurityAuthentication {
-    /**
-     * Configures the http authentication with the required details.
-     *
-     * @param username username for http basic authentication
-     * @param password password for http basic authentication
-     */
-    public constructor(
-        private username: string,
-        private password: string
-    ) {}
-
-    public getName(): string {
-        return "HTTPBasic";
-    }
-
-    public applySecurityAuthentication(context: RequestContext) {
-        let comb = Buffer.from(this.username + ":" + this.password, 'binary').toString('base64');
-        context.setHeaderParam("Authorization", "Basic " + comb);
-    }
-}
-
-/**
- * Applies http authentication to the request context.
- */
 export class HTTPBearerAuthentication implements SecurityAuthentication {
     /**
      * Configures the http authentication with the required details.
@@ -66,11 +41,31 @@ export class HTTPBearerAuthentication implements SecurityAuthentication {
     }
 }
 
+/**
+ * Applies apiKey authentication to the request context.
+ */
+export class APIKeyHeaderAuthentication implements SecurityAuthentication {
+    /**
+     * Configures this api key authentication with the necessary properties
+     *
+     * @param apiKey: The api key to be used for every request
+     */
+    public constructor(private apiKey: string) {}
+
+    public getName(): string {
+        return "APIKeyHeader";
+    }
+
+    public applySecurityAuthentication(context: RequestContext) {
+        context.setHeaderParam("X-API-Key", this.apiKey);
+    }
+}
+
 
 export type AuthMethods = {
     "default"?: SecurityAuthentication,
-    "HTTPBasic"?: SecurityAuthentication,
-    "HTTPBearer"?: SecurityAuthentication
+    "HTTPBearer"?: SecurityAuthentication,
+    "APIKeyHeader"?: SecurityAuthentication
 }
 
 export type ApiKeyConfiguration = string;
@@ -80,8 +75,8 @@ export type OAuth2Configuration = { accessToken: string };
 
 export type AuthMethodsConfiguration = {
     "default"?: SecurityAuthentication,
-    "HTTPBasic"?: HttpBasicConfiguration,
-    "HTTPBearer"?: HttpBearerConfiguration
+    "HTTPBearer"?: HttpBearerConfiguration,
+    "APIKeyHeader"?: ApiKeyConfiguration
 }
 
 /**
@@ -96,16 +91,15 @@ export function configureAuthMethods(config: AuthMethodsConfiguration | undefine
     }
     authMethods["default"] = config["default"]
 
-    if (config["HTTPBasic"]) {
-        authMethods["HTTPBasic"] = new HTTPBasicAuthentication(
-            config["HTTPBasic"]["username"],
-            config["HTTPBasic"]["password"]
-        );
-    }
-
     if (config["HTTPBearer"]) {
         authMethods["HTTPBearer"] = new HTTPBearerAuthentication(
             config["HTTPBearer"]["tokenProvider"]
+        );
+    }
+
+    if (config["APIKeyHeader"]) {
+        authMethods["APIKeyHeader"] = new APIKeyHeaderAuthentication(
+            config["APIKeyHeader"]
         );
     }
 

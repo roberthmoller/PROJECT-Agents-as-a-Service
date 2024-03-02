@@ -11,8 +11,8 @@ import {
 } from "firebase/firestore";
 import {db} from "$lib/firebase";
 import {
-    AgentSpecification,
-    SavedAgentSpecification,
+    AgentSpecification, ApiKey,
+    SavedAgentSpecification, SavedApiKey,
     SavedMessageModel,
     SavedSessionSpecification, SavedSkillSpecification,
     SessionSpecification, SkillSpecification
@@ -172,5 +172,32 @@ export class SkillRepository extends Repository<SavedSkillSpecification, SkillSp
         skill.description = data.description;
         skill.code = data.code;
         return skill;
+    }
+}
+
+export class ApiKeyRepository extends Repository<SavedApiKey, ApiKey> {
+    readonly user: User;
+    readonly org: string;
+
+    constructor(user: User, org: string = "public") {
+        super();
+        this.user = user;
+        this.org = org;
+    }
+
+    get collection(): string {
+        return `v1/${this.org}/users/${this.user.uid}/api-keys`;
+    }
+
+
+    factory(doc: DocumentData): SavedApiKey {
+        const apiKey = new SavedApiKey();
+        const data = doc.data();
+        apiKey.id = doc.id;
+        apiKey.name = data.name;
+        apiKey.publicKey = data.public_key;
+        apiKey.secretSuffix = data.secret_suffix;
+        apiKey.createdAt = data.created_at;
+        return apiKey;
     }
 }

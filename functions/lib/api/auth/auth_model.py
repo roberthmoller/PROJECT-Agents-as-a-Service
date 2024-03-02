@@ -10,14 +10,20 @@ def sanitize_name(display_name: str) -> str:
         .replace("å", "aa").replace("Å", "AA")
 
 
-# TODO: api key (key[hashed], name, active, created_at)
 class ApiKey(BaseModel):
     name: str
 
+
 class SavedApiKey(ApiKey):
     id: str
-    key: str
+    public_key: str
     created_at: str
+    secret_suffix: str
+
+
+class SecretApiKey(SavedApiKey):
+    secret_key: str
+
 
 class FirebaseUser(BaseModel, BaseUser):
     uid: str = Field()

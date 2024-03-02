@@ -2,6 +2,7 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 
 import { AgentSpecification } from '../models/AgentSpecification';
+import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
@@ -14,9 +15,11 @@ import { PhotoUrl } from '../models/PhotoUrl';
 import { Requirements } from '../models/Requirements';
 import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
+import { SavedApiKey } from '../models/SavedApiKey';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
 import { SavedSkillSpecification } from '../models/SavedSkillSpecification';
+import { SecretApiKey } from '../models/SecretApiKey';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
@@ -155,36 +158,56 @@ export class PromiseAuthApi {
     }
 
     /**
-     * Create Access Token
+     * Create Api Key
+     * @param apiKey 
      */
-    public createAccessTokenAuthPostWithHttpInfo(_options?: Configuration): Promise<HttpInfo<string>> {
-        const result = this.api.createAccessTokenAuthPostWithHttpInfo(_options);
+    public createApiKeyAuthApiKeyPostWithHttpInfo(apiKey: ApiKey, _options?: Configuration): Promise<HttpInfo<SecretApiKey>> {
+        const result = this.api.createApiKeyAuthApiKeyPostWithHttpInfo(apiKey, _options);
         return result.toPromise();
     }
 
     /**
-     * Create Access Token
+     * Create Api Key
+     * @param apiKey 
      */
-    public createAccessTokenAuthPost(_options?: Configuration): Promise<string> {
-        const result = this.api.createAccessTokenAuthPost(_options);
+    public createApiKeyAuthApiKeyPost(apiKey: ApiKey, _options?: Configuration): Promise<SecretApiKey> {
+        const result = this.api.createApiKeyAuthApiKeyPost(apiKey, _options);
         return result.toPromise();
     }
 
     /**
-     * Delete Scopes
-     * @param requestBody 
+     * Delete Api Key
+     * @param keyId 
      */
-    public deleteScopesAuthScopesDeleteWithHttpInfo(requestBody: Array<string>, _options?: Configuration): Promise<HttpInfo<Array<string>>> {
-        const result = this.api.deleteScopesAuthScopesDeleteWithHttpInfo(requestBody, _options);
+    public deleteApiKeyAuthApiKeyKeyIdDeleteWithHttpInfo(keyId: string, _options?: Configuration): Promise<HttpInfo<string>> {
+        const result = this.api.deleteApiKeyAuthApiKeyKeyIdDeleteWithHttpInfo(keyId, _options);
         return result.toPromise();
     }
 
     /**
-     * Delete Scopes
-     * @param requestBody 
+     * Delete Api Key
+     * @param keyId 
      */
-    public deleteScopesAuthScopesDelete(requestBody: Array<string>, _options?: Configuration): Promise<Array<string>> {
-        const result = this.api.deleteScopesAuthScopesDelete(requestBody, _options);
+    public deleteApiKeyAuthApiKeyKeyIdDelete(keyId: string, _options?: Configuration): Promise<string> {
+        const result = this.api.deleteApiKeyAuthApiKeyKeyIdDelete(keyId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get Api Key
+     * @param keyId 
+     */
+    public getApiKeyAuthApiKeyKeyIdGetWithHttpInfo(keyId: string, _options?: Configuration): Promise<HttpInfo<SavedApiKey>> {
+        const result = this.api.getApiKeyAuthApiKeyKeyIdGetWithHttpInfo(keyId, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get Api Key
+     * @param keyId 
+     */
+    public getApiKeyAuthApiKeyKeyIdGet(keyId: string, _options?: Configuration): Promise<SavedApiKey> {
+        const result = this.api.getApiKeyAuthApiKeyKeyIdGet(keyId, _options);
         return result.toPromise();
     }
 
@@ -204,37 +227,38 @@ export class PromiseAuthApi {
         return result.toPromise();
     }
 
+
+}
+
+
+
+import { ObservableDefaultApi } from './ObservableAPI';
+
+import { DefaultApiRequestFactory, DefaultApiResponseProcessor} from "../apis/DefaultApi";
+export class PromiseDefaultApi {
+    private api: ObservableDefaultApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: DefaultApiRequestFactory,
+        responseProcessor?: DefaultApiResponseProcessor
+    ) {
+        this.api = new ObservableDefaultApi(configuration, requestFactory, responseProcessor);
+    }
+
     /**
-     * Get Scopes
+     * Get Env
      */
-    public getScopesAuthScopesGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<string>>> {
-        const result = this.api.getScopesAuthScopesGetWithHttpInfo(_options);
+    public getEnvEnvGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.getEnvEnvGetWithHttpInfo(_options);
         return result.toPromise();
     }
 
     /**
-     * Get Scopes
+     * Get Env
      */
-    public getScopesAuthScopesGet(_options?: Configuration): Promise<Array<string>> {
-        const result = this.api.getScopesAuthScopesGet(_options);
-        return result.toPromise();
-    }
-
-    /**
-     * Grant Scopes
-     * @param requestBody 
-     */
-    public grantScopesAuthScopesPutWithHttpInfo(requestBody: Array<string>, _options?: Configuration): Promise<HttpInfo<Array<string>>> {
-        const result = this.api.grantScopesAuthScopesPutWithHttpInfo(requestBody, _options);
-        return result.toPromise();
-    }
-
-    /**
-     * Grant Scopes
-     * @param requestBody 
-     */
-    public grantScopesAuthScopesPut(requestBody: Array<string>, _options?: Configuration): Promise<Array<string>> {
-        const result = this.api.grantScopesAuthScopesPut(requestBody, _options);
+    public getEnvEnvGet(_options?: Configuration): Promise<any> {
+        const result = this.api.getEnvEnvGet(_options);
         return result.toPromise();
     }
 

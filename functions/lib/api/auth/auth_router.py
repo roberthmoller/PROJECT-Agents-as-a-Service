@@ -1,18 +1,10 @@
-import os
-
 from fastapi import APIRouter, Depends, Body
-from fastapi.security import HTTPBasicCredentials, HTTPAuthorizationCredentials
-from firebase_admin import auth
 from fastapi import HTTPException
-from lib.api.auth.auth_model import FirebaseUser, SavedApiKey, ApiKey
-from lib.api.auth.auth_scheme import username_password_scheme, access_token_scheme, api_key_scheme
-from lib.utils.auth_utils import authenticated_access_token, admin_scope, user_scope, authenticated_api_key, \
-    authenticated, invalid_credentials_exception
-from lib.utils.firebase.client import client_auth
-from lib.utils.firebase.admin import db
-from uuid import uuid4
+from firebase_admin import auth
 
-from lib.utils.now import now
+from lib.api.auth.auth_model import FirebaseUser, SavedApiKey, ApiKey, SecretApiKey
+from lib.utils.auth_utils import authenticated_access_token, admin_scope, user_scope, authenticated, generate_api_key
+from lib.utils.firebase.admin import db
 
 router = APIRouter(
     tags=["Auth"],
@@ -33,16 +25,40 @@ router = APIRouter(
 #         raise invalid_credentials_exception
 
 
-@router.post("/auth/api-key", include_in_schema=False)
-def create_api_key(details: ApiKey, user: FirebaseUser = Depends(authenticated_access_token)) -> SavedApiKey:
+@router.post("/auth/api-key")
+def create_api_key(details: ApiKey, user: FirebaseUser = Depends(authenticated_access_token)) -> SecretApiKey:
     try:
-        key = str(uuid4())
-        key_name = details.name.strip()
         api_key_doc = db().collection(f"v1/public/users/{user.uid}/api-keys").document()
-        api_key_doc.set({"name": key_name, "key": key, "created_at": now()})
-        return SavedApiKey(id=api_key_doc.id, key=key, name=key_name, created_at=now())
+        key = generate_api_key(user, details, api_key_doc.id)
+        api_key_doc.set({
+            "name": key.name,
+            "public_key": key.public_key,
+            "secret_suffix": key.secret_suffix,
+            "created_at": key.created_at
+        })
+        return key
     except Exception as e:
         print("Error creating token: {0}".format(e))
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+
+@router.delete("/auth/api-key/{key_id}")
+def delete_api_key(key_id: str, user: FirebaseUser = Depends(authenticated_access_token)) -> str:
+    try:
+        db().collection(f"v1/public/users/{user.uid}/api-keys").document(key_id).delete()
+        return "Deleted"
+    except Exception as e:
+        print("Error deleting token: {0}".format(e))
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+
+
+@router.get("/auth/api-key/{key_id}")
+def get_api_key(key_id: str, user: FirebaseUser = Depends(authenticated_access_token)) -> SavedApiKey:
+    try:
+        document = db().collection(f"v1/public/users/{user.uid}/api-keys").document(key_id)
+        return SavedApiKey(id=document.id, **document.get().to_dict())
+    except Exception as e:
+        print("Error fetching token: {0}".format(e))
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
 

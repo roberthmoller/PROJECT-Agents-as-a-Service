@@ -27,6 +27,10 @@ class ENV(Enum):
     def openai_api_key(self):
         return os.environ["OPENAI_API_KEY"]
 
+    @property
+    def api_key_pepper(self):
+        return os.environ["API_KEY_PEPPER"]
+
     @staticmethod
     def of(value: str):
         if value == "LOCAL":

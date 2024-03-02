@@ -5,7 +5,7 @@
 </script>
 
 <ModeWatcher/>
-<Toaster/>
+<Toaster richColors/>
 <div class="h-full">
     <slot/>
 </div>

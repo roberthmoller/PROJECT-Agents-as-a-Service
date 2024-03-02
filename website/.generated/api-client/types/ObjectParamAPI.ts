@@ -2,6 +2,7 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 
 import { AgentSpecification } from '../models/AgentSpecification';
+import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
@@ -14,9 +15,11 @@ import { PhotoUrl } from '../models/PhotoUrl';
 import { Requirements } from '../models/Requirements';
 import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
+import { SavedApiKey } from '../models/SavedApiKey';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
 import { SavedSkillSpecification } from '../models/SavedSkillSpecification';
+import { SecretApiKey } from '../models/SecretApiKey';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
@@ -172,31 +175,34 @@ export class ObjectAgentApi {
 import { ObservableAuthApi } from "./ObservableAPI";
 import { AuthApiRequestFactory, AuthApiResponseProcessor} from "../apis/AuthApi";
 
-export interface AuthApiCreateAccessTokenAuthPostRequest {
-}
-
-export interface AuthApiDeleteScopesAuthScopesDeleteRequest {
+export interface AuthApiCreateApiKeyAuthApiKeyPostRequest {
     /**
      * 
-     * @type Array&lt;string&gt;
-     * @memberof AuthApideleteScopesAuthScopesDelete
+     * @type ApiKey
+     * @memberof AuthApicreateApiKeyAuthApiKeyPost
      */
-    requestBody: Array<string>
+    apiKey: ApiKey
+}
+
+export interface AuthApiDeleteApiKeyAuthApiKeyKeyIdDeleteRequest {
+    /**
+     * 
+     * @type string
+     * @memberof AuthApideleteApiKeyAuthApiKeyKeyIdDelete
+     */
+    keyId: string
+}
+
+export interface AuthApiGetApiKeyAuthApiKeyKeyIdGetRequest {
+    /**
+     * 
+     * @type string
+     * @memberof AuthApigetApiKeyAuthApiKeyKeyIdGet
+     */
+    keyId: string
 }
 
 export interface AuthApiGetAuthenticatedUserAuthGetRequest {
-}
-
-export interface AuthApiGetScopesAuthScopesGetRequest {
-}
-
-export interface AuthApiGrantScopesAuthScopesPutRequest {
-    /**
-     * 
-     * @type Array&lt;string&gt;
-     * @memberof AuthApigrantScopesAuthScopesPut
-     */
-    requestBody: Array<string>
 }
 
 export class ObjectAuthApi {
@@ -207,35 +213,51 @@ export class ObjectAuthApi {
     }
 
     /**
-     * Create Access Token
+     * Create Api Key
      * @param param the request object
      */
-    public createAccessTokenAuthPostWithHttpInfo(param: AuthApiCreateAccessTokenAuthPostRequest = {}, options?: Configuration): Promise<HttpInfo<string>> {
-        return this.api.createAccessTokenAuthPostWithHttpInfo( options).toPromise();
+    public createApiKeyAuthApiKeyPostWithHttpInfo(param: AuthApiCreateApiKeyAuthApiKeyPostRequest, options?: Configuration): Promise<HttpInfo<SecretApiKey>> {
+        return this.api.createApiKeyAuthApiKeyPostWithHttpInfo(param.apiKey,  options).toPromise();
     }
 
     /**
-     * Create Access Token
+     * Create Api Key
      * @param param the request object
      */
-    public createAccessTokenAuthPost(param: AuthApiCreateAccessTokenAuthPostRequest = {}, options?: Configuration): Promise<string> {
-        return this.api.createAccessTokenAuthPost( options).toPromise();
+    public createApiKeyAuthApiKeyPost(param: AuthApiCreateApiKeyAuthApiKeyPostRequest, options?: Configuration): Promise<SecretApiKey> {
+        return this.api.createApiKeyAuthApiKeyPost(param.apiKey,  options).toPromise();
     }
 
     /**
-     * Delete Scopes
+     * Delete Api Key
      * @param param the request object
      */
-    public deleteScopesAuthScopesDeleteWithHttpInfo(param: AuthApiDeleteScopesAuthScopesDeleteRequest, options?: Configuration): Promise<HttpInfo<Array<string>>> {
-        return this.api.deleteScopesAuthScopesDeleteWithHttpInfo(param.requestBody,  options).toPromise();
+    public deleteApiKeyAuthApiKeyKeyIdDeleteWithHttpInfo(param: AuthApiDeleteApiKeyAuthApiKeyKeyIdDeleteRequest, options?: Configuration): Promise<HttpInfo<string>> {
+        return this.api.deleteApiKeyAuthApiKeyKeyIdDeleteWithHttpInfo(param.keyId,  options).toPromise();
     }
 
     /**
-     * Delete Scopes
+     * Delete Api Key
      * @param param the request object
      */
-    public deleteScopesAuthScopesDelete(param: AuthApiDeleteScopesAuthScopesDeleteRequest, options?: Configuration): Promise<Array<string>> {
-        return this.api.deleteScopesAuthScopesDelete(param.requestBody,  options).toPromise();
+    public deleteApiKeyAuthApiKeyKeyIdDelete(param: AuthApiDeleteApiKeyAuthApiKeyKeyIdDeleteRequest, options?: Configuration): Promise<string> {
+        return this.api.deleteApiKeyAuthApiKeyKeyIdDelete(param.keyId,  options).toPromise();
+    }
+
+    /**
+     * Get Api Key
+     * @param param the request object
+     */
+    public getApiKeyAuthApiKeyKeyIdGetWithHttpInfo(param: AuthApiGetApiKeyAuthApiKeyKeyIdGetRequest, options?: Configuration): Promise<HttpInfo<SavedApiKey>> {
+        return this.api.getApiKeyAuthApiKeyKeyIdGetWithHttpInfo(param.keyId,  options).toPromise();
+    }
+
+    /**
+     * Get Api Key
+     * @param param the request object
+     */
+    public getApiKeyAuthApiKeyKeyIdGet(param: AuthApiGetApiKeyAuthApiKeyKeyIdGetRequest, options?: Configuration): Promise<SavedApiKey> {
+        return this.api.getApiKeyAuthApiKeyKeyIdGet(param.keyId,  options).toPromise();
     }
 
     /**
@@ -254,36 +276,35 @@ export class ObjectAuthApi {
         return this.api.getAuthenticatedUserAuthGet( options).toPromise();
     }
 
-    /**
-     * Get Scopes
-     * @param param the request object
-     */
-    public getScopesAuthScopesGetWithHttpInfo(param: AuthApiGetScopesAuthScopesGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<string>>> {
-        return this.api.getScopesAuthScopesGetWithHttpInfo( options).toPromise();
+}
+
+import { ObservableDefaultApi } from "./ObservableAPI";
+import { DefaultApiRequestFactory, DefaultApiResponseProcessor} from "../apis/DefaultApi";
+
+export interface DefaultApiGetEnvEnvGetRequest {
+}
+
+export class ObjectDefaultApi {
+    private api: ObservableDefaultApi
+
+    public constructor(configuration: Configuration, requestFactory?: DefaultApiRequestFactory, responseProcessor?: DefaultApiResponseProcessor) {
+        this.api = new ObservableDefaultApi(configuration, requestFactory, responseProcessor);
     }
 
     /**
-     * Get Scopes
+     * Get Env
      * @param param the request object
      */
-    public getScopesAuthScopesGet(param: AuthApiGetScopesAuthScopesGetRequest = {}, options?: Configuration): Promise<Array<string>> {
-        return this.api.getScopesAuthScopesGet( options).toPromise();
+    public getEnvEnvGetWithHttpInfo(param: DefaultApiGetEnvEnvGetRequest = {}, options?: Configuration): Promise<HttpInfo<any>> {
+        return this.api.getEnvEnvGetWithHttpInfo( options).toPromise();
     }
 
     /**
-     * Grant Scopes
+     * Get Env
      * @param param the request object
      */
-    public grantScopesAuthScopesPutWithHttpInfo(param: AuthApiGrantScopesAuthScopesPutRequest, options?: Configuration): Promise<HttpInfo<Array<string>>> {
-        return this.api.grantScopesAuthScopesPutWithHttpInfo(param.requestBody,  options).toPromise();
-    }
-
-    /**
-     * Grant Scopes
-     * @param param the request object
-     */
-    public grantScopesAuthScopesPut(param: AuthApiGrantScopesAuthScopesPutRequest, options?: Configuration): Promise<Array<string>> {
-        return this.api.grantScopesAuthScopesPut(param.requestBody,  options).toPromise();
+    public getEnvEnvGet(param: DefaultApiGetEnvEnvGetRequest = {}, options?: Configuration): Promise<any> {
+        return this.api.getEnvEnvGet( options).toPromise();
     }
 
 }

@@ -1,11 +1,13 @@
 .gitignore
 AgentApi.md
 AuthApi.md
+DefaultApi.md
 README.md
 SessionApi.md
 SkillsApi.md
 apis/AgentApi.ts
 apis/AuthApi.ts
+apis/DefaultApi.ts
 apis/SessionApi.ts
 apis/SkillsApi.ts
 apis/baseapi.ts
@@ -18,6 +20,7 @@ http/isomorphic-fetch.ts
 index.ts
 middleware.ts
 models/AgentSpecification.ts
+models/ApiKey.ts
 models/Code.ts
 models/FirebaseUser.ts
 models/HTTPValidationError.ts
@@ -31,9 +34,11 @@ models/PhotoUrl.ts
 models/Requirements.ts
 models/Role.ts
 models/SavedAgentSpecification.ts
+models/SavedApiKey.ts
 models/SavedMessageModel.ts
 models/SavedSessionSpecification.ts
 models/SavedSkillSpecification.ts
+models/SecretApiKey.ts
 models/Session.ts
 models/SessionSpecification.ts
 models/SkillSpecification.ts

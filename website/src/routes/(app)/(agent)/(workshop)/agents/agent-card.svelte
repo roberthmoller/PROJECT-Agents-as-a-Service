@@ -6,7 +6,7 @@
     import {agentApi} from "$lib/api";
     import AgentDialog from "./agent-dialog.svelte";
     import {workshopStore} from "$lib/services";
-    import DeleteDialog from "../delete-dialog.svelte";
+    import DeleteDialog from "$lib/delete-dialog.svelte";
 
     export let agent: SavedAgentSpecification;
     $: state = $workshopStore;

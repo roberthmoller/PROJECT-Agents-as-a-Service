@@ -3,6 +3,7 @@ import { Configuration} from '../configuration'
 import { Observable, of, from } from '../rxjsStub';
 import {mergeMap, map} from  '../rxjsStub';
 import { AgentSpecification } from '../models/AgentSpecification';
+import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
@@ -15,9 +16,11 @@ import { PhotoUrl } from '../models/PhotoUrl';
 import { Requirements } from '../models/Requirements';
 import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
+import { SavedApiKey } from '../models/SavedApiKey';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
 import { SavedSkillSpecification } from '../models/SavedSkillSpecification';
+import { SecretApiKey } from '../models/SecretApiKey';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
@@ -223,10 +226,11 @@ export class ObservableAuthApi {
     }
 
     /**
-     * Create Access Token
+     * Create Api Key
+     * @param apiKey 
      */
-    public createAccessTokenAuthPostWithHttpInfo(_options?: Configuration): Observable<HttpInfo<string>> {
-        const requestContextPromise = this.requestFactory.createAccessTokenAuthPost(_options);
+    public createApiKeyAuthApiKeyPostWithHttpInfo(apiKey: ApiKey, _options?: Configuration): Observable<HttpInfo<SecretApiKey>> {
+        const requestContextPromise = this.requestFactory.createApiKeyAuthApiKeyPost(apiKey, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -240,23 +244,24 @@ export class ObservableAuthApi {
                 for (let middleware of this.configuration.middleware) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.createAccessTokenAuthPostWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.createApiKeyAuthApiKeyPostWithHttpInfo(rsp)));
             }));
     }
 
     /**
-     * Create Access Token
+     * Create Api Key
+     * @param apiKey 
      */
-    public createAccessTokenAuthPost(_options?: Configuration): Observable<string> {
-        return this.createAccessTokenAuthPostWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<string>) => apiResponse.data));
+    public createApiKeyAuthApiKeyPost(apiKey: ApiKey, _options?: Configuration): Observable<SecretApiKey> {
+        return this.createApiKeyAuthApiKeyPostWithHttpInfo(apiKey, _options).pipe(map((apiResponse: HttpInfo<SecretApiKey>) => apiResponse.data));
     }
 
     /**
-     * Delete Scopes
-     * @param requestBody 
+     * Delete Api Key
+     * @param keyId 
      */
-    public deleteScopesAuthScopesDeleteWithHttpInfo(requestBody: Array<string>, _options?: Configuration): Observable<HttpInfo<Array<string>>> {
-        const requestContextPromise = this.requestFactory.deleteScopesAuthScopesDelete(requestBody, _options);
+    public deleteApiKeyAuthApiKeyKeyIdDeleteWithHttpInfo(keyId: string, _options?: Configuration): Observable<HttpInfo<string>> {
+        const requestContextPromise = this.requestFactory.deleteApiKeyAuthApiKeyKeyIdDelete(keyId, _options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -270,16 +275,47 @@ export class ObservableAuthApi {
                 for (let middleware of this.configuration.middleware) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deleteScopesAuthScopesDeleteWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.deleteApiKeyAuthApiKeyKeyIdDeleteWithHttpInfo(rsp)));
             }));
     }
 
     /**
-     * Delete Scopes
-     * @param requestBody 
+     * Delete Api Key
+     * @param keyId 
      */
-    public deleteScopesAuthScopesDelete(requestBody: Array<string>, _options?: Configuration): Observable<Array<string>> {
-        return this.deleteScopesAuthScopesDeleteWithHttpInfo(requestBody, _options).pipe(map((apiResponse: HttpInfo<Array<string>>) => apiResponse.data));
+    public deleteApiKeyAuthApiKeyKeyIdDelete(keyId: string, _options?: Configuration): Observable<string> {
+        return this.deleteApiKeyAuthApiKeyKeyIdDeleteWithHttpInfo(keyId, _options).pipe(map((apiResponse: HttpInfo<string>) => apiResponse.data));
+    }
+
+    /**
+     * Get Api Key
+     * @param keyId 
+     */
+    public getApiKeyAuthApiKeyKeyIdGetWithHttpInfo(keyId: string, _options?: Configuration): Observable<HttpInfo<SavedApiKey>> {
+        const requestContextPromise = this.requestFactory.getApiKeyAuthApiKeyKeyIdGet(keyId, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getApiKeyAuthApiKeyKeyIdGetWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Get Api Key
+     * @param keyId 
+     */
+    public getApiKeyAuthApiKeyKeyIdGet(keyId: string, _options?: Configuration): Observable<SavedApiKey> {
+        return this.getApiKeyAuthApiKeyKeyIdGetWithHttpInfo(keyId, _options).pipe(map((apiResponse: HttpInfo<SavedApiKey>) => apiResponse.data));
     }
 
     /**
@@ -311,11 +347,29 @@ export class ObservableAuthApi {
         return this.getAuthenticatedUserAuthGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<FirebaseUser>) => apiResponse.data));
     }
 
+}
+
+import { DefaultApiRequestFactory, DefaultApiResponseProcessor} from "../apis/DefaultApi";
+export class ObservableDefaultApi {
+    private requestFactory: DefaultApiRequestFactory;
+    private responseProcessor: DefaultApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: DefaultApiRequestFactory,
+        responseProcessor?: DefaultApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new DefaultApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new DefaultApiResponseProcessor();
+    }
+
     /**
-     * Get Scopes
+     * Get Env
      */
-    public getScopesAuthScopesGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<Array<string>>> {
-        const requestContextPromise = this.requestFactory.getScopesAuthScopesGet(_options);
+    public getEnvEnvGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<any>> {
+        const requestContextPromise = this.requestFactory.getEnvEnvGet(_options);
 
         // build promise chain
         let middlewarePreObservable = from<RequestContext>(requestContextPromise);
@@ -329,46 +383,15 @@ export class ObservableAuthApi {
                 for (let middleware of this.configuration.middleware) {
                     middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
                 }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getScopesAuthScopesGetWithHttpInfo(rsp)));
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getEnvEnvGetWithHttpInfo(rsp)));
             }));
     }
 
     /**
-     * Get Scopes
+     * Get Env
      */
-    public getScopesAuthScopesGet(_options?: Configuration): Observable<Array<string>> {
-        return this.getScopesAuthScopesGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<Array<string>>) => apiResponse.data));
-    }
-
-    /**
-     * Grant Scopes
-     * @param requestBody 
-     */
-    public grantScopesAuthScopesPutWithHttpInfo(requestBody: Array<string>, _options?: Configuration): Observable<HttpInfo<Array<string>>> {
-        const requestContextPromise = this.requestFactory.grantScopesAuthScopesPut(requestBody, _options);
-
-        // build promise chain
-        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
-        for (let middleware of this.configuration.middleware) {
-            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
-        }
-
-        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
-            pipe(mergeMap((response: ResponseContext) => {
-                let middlewarePostObservable = of(response);
-                for (let middleware of this.configuration.middleware) {
-                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
-                }
-                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.grantScopesAuthScopesPutWithHttpInfo(rsp)));
-            }));
-    }
-
-    /**
-     * Grant Scopes
-     * @param requestBody 
-     */
-    public grantScopesAuthScopesPut(requestBody: Array<string>, _options?: Configuration): Observable<Array<string>> {
-        return this.grantScopesAuthScopesPutWithHttpInfo(requestBody, _options).pipe(map((apiResponse: HttpInfo<Array<string>>) => apiResponse.data));
+    public getEnvEnvGet(_options?: Configuration): Observable<any> {
+        return this.getEnvEnvGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
     }
 
 }

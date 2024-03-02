@@ -1,4 +1,5 @@
 export * from '../models/AgentSpecification';
+export * from '../models/ApiKey';
 export * from '../models/Code';
 export * from '../models/FirebaseUser';
 export * from '../models/HTTPValidationError';
@@ -11,15 +12,18 @@ export * from '../models/PhotoUrl';
 export * from '../models/Requirements';
 export * from '../models/Role';
 export * from '../models/SavedAgentSpecification';
+export * from '../models/SavedApiKey';
 export * from '../models/SavedMessageModel';
 export * from '../models/SavedSessionSpecification';
 export * from '../models/SavedSkillSpecification';
+export * from '../models/SecretApiKey';
 export * from '../models/Session';
 export * from '../models/SessionSpecification';
 export * from '../models/SkillSpecification';
 export * from '../models/ValidationError';
 
 import { AgentSpecification } from '../models/AgentSpecification';
+import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
 import { HTTPValidationError } from '../models/HTTPValidationError';
@@ -32,9 +36,11 @@ import { PhotoUrl } from '../models/PhotoUrl';
 import { Requirements } from '../models/Requirements';
 import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
+import { SavedApiKey } from '../models/SavedApiKey';
 import { SavedMessageModel } from '../models/SavedMessageModel';
 import { SavedSessionSpecification } from '../models/SavedSessionSpecification';
 import { SavedSkillSpecification } from '../models/SavedSkillSpecification';
+import { SecretApiKey } from '../models/SecretApiKey';
 import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
@@ -57,6 +63,7 @@ let enumsMap: Set<string> = new Set<string>([
 
 let typeMap: {[index: string]: any} = {
     "AgentSpecification": AgentSpecification,
+    "ApiKey": ApiKey,
     "Code": Code,
     "FirebaseUser": FirebaseUser,
     "HTTPValidationError": HTTPValidationError,
@@ -69,9 +76,11 @@ let typeMap: {[index: string]: any} = {
     "Requirements": Requirements,
     "Role": Role,
     "SavedAgentSpecification": SavedAgentSpecification,
+    "SavedApiKey": SavedApiKey,
     "SavedMessageModel": SavedMessageModel,
     "SavedSessionSpecification": SavedSessionSpecification,
     "SavedSkillSpecification": SavedSkillSpecification,
+    "SecretApiKey": SecretApiKey,
     "Session": Session,
     "SessionSpecification": SessionSpecification,
     "SkillSpecification": SkillSpecification,

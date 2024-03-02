@@ -2,9 +2,12 @@
     import {Button} from "$components/button";
     import * as Dialog from "$components/dialog";
     import {createEventDispatcher} from 'svelte'
+    import {Delete} from "lucide-svelte";
+    import Reload from "svelte-radix/Reload.svelte";
 
     const dispatch = createEventDispatcher()
     let isOpen = false;
+    export let variant = 'destructive', size = 'md', showText = true, isLoading = false;
 
     function confirm() {
         isOpen = false;
@@ -18,13 +21,22 @@
 
 <Dialog.Root bind:open={isOpen}>
     <Dialog.Trigger>
-        <Button variant="destructive">Delete</Button>
+        <Button variant={variant} size={size} disabled={isLoading}>
+            {#if isLoading}
+                <Reload class="w-4 h-4 mr-2 animate-spin"/>
+            {:else}
+                <Delete class="w-4 h-4 mr-2"/>
+            {/if}
+            {#if showText}
+                Delete
+            {/if}
+        </Button>
     </Dialog.Trigger>
     <Dialog.Content>
         <Dialog.Header>
             <Dialog.Title>Are you sure absolutely sure?</Dialog.Title>
             <Dialog.Description>
-                <p class="line-through bg-red-950 text-red-700 rounded-sm my-2 px-1">
+                <p class="bg-red-950 text-red-700 rounded-sm my-2 px-1">
                     <slot/>
                 </p>
                 <p>
