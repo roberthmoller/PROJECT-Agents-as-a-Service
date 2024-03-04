@@ -23,7 +23,7 @@
     <Card.Footer>
         <div class="flex w-full justify-end space-x-2">
             <SkillDialog {skill}/>
-            <DeleteDialog on:delete={() => state.deleteSkill(skill)}>
+            <DeleteDialog on:delete={() => state.deleteSkill(skill)} showIcon={false}>
                 {skill.name}
             </DeleteDialog>
         </div>

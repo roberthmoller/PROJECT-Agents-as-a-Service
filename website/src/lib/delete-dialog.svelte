@@ -7,7 +7,7 @@
 
     const dispatch = createEventDispatcher()
     let isOpen = false;
-    export let variant = 'destructive', size = 'md', showText = true, isLoading = false;
+    export let variant = 'destructive', size = 'md', showText = true, isLoading = false, showIcon = true;
 
     function confirm() {
         isOpen = false;
@@ -22,10 +22,12 @@
 <Dialog.Root bind:open={isOpen}>
     <Dialog.Trigger>
         <Button variant={variant} size={size} disabled={isLoading}>
-            {#if isLoading}
-                <Reload class="w-4 h-4 mr-2 animate-spin"/>
-            {:else}
-                <Delete class="w-4 h-4 mr-2"/>
+            {#if showIcon}
+                {#if isLoading}
+                    <Reload class="w-4 h-4 mr-2 animate-spin"/>
+                {:else}
+                    <Delete class="w-4 h-4 mr-2"/>
+                {/if}
             {/if}
             {#if showText}
                 Delete

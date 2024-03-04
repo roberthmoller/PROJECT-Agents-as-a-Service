@@ -9,7 +9,7 @@
     import {tick} from "svelte";
     import ModelItem from "./model-item.svelte";
     import {Badge} from "$components/badge";
-    import { createEventDispatcher } from 'svelte';
+    import {createEventDispatcher} from 'svelte';
 
     const dispatch = createEventDispatcher();
     export let types: ModelType[];
@@ -19,7 +19,7 @@
     let selectedModel = models[0];
     let peekedModel: Model | undefined = undefined;
     let open = false;
-    $: selectedValues  = selected ?? [];
+    $: selectedValues = selected ?? [];
 
     function onPopoverOpenChange(open: boolean) {
         if (open) {
@@ -67,18 +67,18 @@
                 variant="outline"
                 role="combobox"
                 aria-expanded={open}
-                class=" justify-between "
+                class="justify-between overflow-fade-parent"
         >
             {#if selectedValues.length === 0}
                 <span class="text-muted-foreground text-sm">Select a model...</span>
             {:else}
-                <div class="flex space-x-1 max-w-[32rem] overflow-hidden">
-                {#each selectedValues as value}
-                    {@const model = models.find((f) => f.id === value)}
-                    <Badge class="mr-2" variant="primary" size="sm">
-                        {model.name}
-                    </Badge>
-                {/each}
+                <div class="flex space-x-1 max-w-[32rem] w-full overflow-hidden overflow-fade">
+                    {#each selectedValues as value}
+                        {@const model = models.find((f) => f.id === value)}
+                        <Badge variant="primary" size="sm">
+                            {model.name}
+                        </Badge>
+                    {/each}
                 </div>
             {/if}
             <CaretSort class="ml-2 h-4 w-4 shrink-0 opacity-50"/>
@@ -141,3 +141,33 @@
         </HoverCard.Root>
     </Popover.Content>
 </Popover.Root>
+
+<style>
+    .overflow-fade {
+        position: relative;
+
+        &:after {
+            content: ' ';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 0;
+            width: 8rem;
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #09090b 100%);
+        }
+    }
+
+
+    :global(.overflow-fade-parent:hover:has(.overflow-fade)) {
+            /*background-color: red;*/
+        &>.overflow-fade:after {
+            background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #27272a 100%);
+
+        }
+
+        /*background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);*/
+        /*&:after {*/
+        /*    background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, rgba(39, 39, 42, 1) 100%) !important;*/
+        /*}*/
+    }
+</style>

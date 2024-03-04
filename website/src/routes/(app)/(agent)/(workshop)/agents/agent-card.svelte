@@ -26,7 +26,7 @@
     <Card.Footer>
         <div class="flex w-full justify-end space-x-2">
             <AgentDialog {agent}/>
-            <DeleteDialog on:delete={() => state.deleteAgent(agent)}>
+            <DeleteDialog on:delete={() => state.deleteAgent(agent)} showIcon={false}>
                 {agent.name}
             </DeleteDialog>
         </div>

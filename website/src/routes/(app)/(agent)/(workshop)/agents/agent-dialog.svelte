@@ -88,7 +88,7 @@
                         <Tooltip.Root>
                             <Tooltip.Trigger>
                                 <Tabs.Trigger value="skills" disabled>
-                                    <span>Skills</span>
+                                    <span class="line-through text-muted-foreground">Skills</span>
                                 </Tabs.Trigger>
                             </Tooltip.Trigger>
                             <Tooltip.Content>

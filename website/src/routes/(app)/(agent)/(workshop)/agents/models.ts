@@ -1,3 +1,5 @@
+import {Env, env} from "$lib/env";
+
 export const types = [
     "Groq",
     "OpenAI",
@@ -80,7 +82,7 @@ export const models: Model<ModelType>[] = [
         canCallSkills: true,
     },
     {
-        name: "GPT3.5-turbo-0125",
+        name: "GPT3.5-turbo",
         id: "gpt-3.5-turbo",
         description: "",
         type: "OpenAI",
@@ -88,7 +90,7 @@ export const models: Model<ModelType>[] = [
         canCallSkills: true,
     },
     {
-        name: "GPT3.5-turbo-0125",
+        name: "GPT3.5-turbo-1106",
         id: "gpt-3.5-turbo-1106",
         description: "",
         type: "OpenAI",
@@ -96,7 +98,7 @@ export const models: Model<ModelType>[] = [
         canCallSkills: true,
     },
     {
-        name: "GPT3.5-turbo-0125",
+        name: "GPT3.5-turbo-instruct",
         id: "gpt-3.5-turbo-instruct",
         description: "",
         type: "OpenAI",
@@ -120,4 +122,17 @@ export const models: Model<ModelType>[] = [
         strengths: "Complex intent, cause and effect, creative generation, search, summarization for audience",
         canCallSkills: false,
     },
+
+    // ... Env.isLocal(env) ? [
+    //     {
+    //         name: "llama2-70b-4096",
+    //         id: "llama2-70b-4096",
+    //         description: "",
+    //         type: "Groq",
+    //         strengths: "Complex intent, cause and effect, creative generation, search, summarization for audience",
+    //         canCallSkills: false,
+    //     },
+    //
+    // ] : [],
+
 ];
