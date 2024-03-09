@@ -3,7 +3,7 @@ from typing import Union
 from pydantic import Field, BaseModel
 
 from lib.utils.now import now
-from .llm_model import OpenAILlmModel, LocalLlmModel, GroqLlmModel
+from .llm_model import OpenAILlmModel, LocalLlmModel, GroqLlmModel, GemeniLlmModel, HuggingFaceLlmModel
 
 
 class AgentSpecification(BaseModel):
@@ -16,6 +16,7 @@ class AgentSpecification(BaseModel):
         description="The message that the agent will send to the user when it is first connected"
     )
     models: list[Union[LocalLlmModel, OpenAILlmModel, GroqLlmModel]] = Field(
+        # todo: Also add GemeniLlmModel, HuggingFaceLlmModel when they are supported
         [OpenAILlmModel.gpt_3_5_turbo],
         title="Model",
         description="The list of models that the agent can use to generate responses",

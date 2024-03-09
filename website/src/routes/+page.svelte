@@ -184,7 +184,7 @@
 <!--</section>-->
 
 
-<section id="contact" class="w-full py-12 md:py-24 lg:py-32">
+<section id="contact" class="w-full py-12 md:py-24 lg:py-32 pb-28">
     <div class="container px-4 md:px-6">
         <div class="grid gap-10 sm:px-10 md:gap-16 md:grid-cols-2">
             <div class="space-y-4">
@@ -200,7 +200,7 @@
                         class="inline-flex h-9 items-center justify-center rounded-md bg-gray-900 px-4 py-2 text-sm font-medium text-gray-50 shadow transition-colors hover:bg-gray-900/90 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950 disabled:pointer-events-none disabled:opacity-50 dark:bg-gray-50 dark:text-gray-900 dark:hover:bg-gray-50/90 dark:focus-visible:ring-gray-300"
                         href="#"
                 >
-                    Get Started
+                    Get started
                 </a>
             </div>
         </div>
@@ -217,23 +217,23 @@
 
 
 <nav class="fixed bottom-0 left-0 w-full py-8 px-6 z-10 flex justify-around">
-    <div class="container flex justify-center gap-6 w-fit rounded-3xl py-2 backdrop-blur-md border">
-        <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" href="#home">
+    <div class="container flex justify-center gap-6 w-fit rounded-3xl py-2 backdrop-blur-xl border">
+        <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" href="#">
             <Command class="w-4"/>
         </a>
-        <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" href="#features">
+        <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 md:block hidden" href="#features">
             Features
         </a>
-        <!--        <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" href="#pricing">-->
+        <!--        <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 md:block hidden" href="#pricing">-->
         <!--            Pricing-->
         <!--        </a>-->
 
-        <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" href="#contact">
+        <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 md:block hidden" href="#contact">
             Contact
         </a>
 
 
-        <span class="text-border">|</span>
+        <span class="text-border md:block hidden">|</span>
 
 
         {#if isLoggedIn}
@@ -243,15 +243,15 @@
             <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" href="/skills">
                 Workshop
             </a>
-            <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" href="/account">
+            <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 md:block hidden" href="/account">
                 <UserCog class="w-4"/>
             </a>
         {:else}
-            <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" href="#">
-                Get started
+            <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" href="/login">
+                Get Started
             </a>
 
-            <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50" href="/login">
+            <a class="text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-50 md:block hidden" href="/login">
                 <LogIn class="w-4"/>
             </a>
         {/if}

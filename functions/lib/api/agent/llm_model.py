@@ -53,6 +53,36 @@ class GroqLlmModel(LlmModel):
                 "base_url": "https://api.groq.com/openai/v1"}
 
 
+class GemeniLlmModel(LlmModel):
+    gemini_pro_vision = "gemini-pro-vision"
+    gemini_pro = "gemini-pro"
+
+    def config(self) -> dict[str, str]:
+        return {"model": self.value, "api_key": os.environ["GEMENI_API_KEY"], "api_type": "google"}
+
+
+class AnthropicLlmModel(LlmModel):
+    claude_3_opus_20240229 = "claude-3-opus-20240229"
+    claude_3_sonnet_20240229 = "claude-3-sonnet-20240229"
+    claude_2_1 = "claude-2.1"
+    claude_2_0 = "claude-2.0"
+    claude_instant_1_2 = "claude-instant-1.2"
+
+    def config(self) -> dict[str, str]:
+        return {"model": self.value, "api_key": os.environ["ANTHROPIC_API_KEY"],
+                "base_url": "https://api.anthropic.com/v1"}
+
+
+class HuggingFaceLlmModel(LlmModel):
+    gemma_7b = "gemma-7b"
+    mistral_7B_instruct_v0_2 = "Mistral-7B-Instruct-v0.2"
+
+    def config(self) -> dict[str, str]:
+        endpoint = "vlzz10eq3fol3429.us-east-1.aws"  # get this from user env variables
+        return {"model": self.value, "api_key": os.environ["HUGGING_FACE_API_KEY"],
+                "base_url": f"https://{endpoint}.endpoints.huggingface.cloud/v1/"}
+
+
 class LocalLlmModel(LlmModel):
     mixtral = "mixtral"
     orca_mini = "orca-mini"
