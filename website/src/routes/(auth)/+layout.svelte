@@ -14,20 +14,20 @@
              alt="A person working on a computer"
              src="https://unsplash.com/photos/7JX0-bfiuxQ/download?ixid=M3wxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNzA4MTg2MTQ3fA&force=true&w=1920"
         />
-        <div class="relative z-20 flex items-center text-lg font-medium">
+        <a class="relative z-20 flex items-center text-lg font-medium" href="/">
             <Command class="h-5 mr-2"/>
             Agents as a Service
-        </div>
-        <div class="relative z-20 mt-auto">
-            <blockquote class="space-y-2">
-                <p class="text-lg">
-                    &ldquo;This library has saved me countless hours of work and helped me deliver
-                    stunning designs to my clients faster than ever before. Highly
-                    recommended!&rdquo;
-                </p>
-                <footer class="text-sm">Sofia Davis</footer>
-            </blockquote>
-        </div>
+        </a>
+<!--        <div class="relative z-20 mt-auto">-->
+<!--            <blockquote class="space-y-2">-->
+<!--                <p class="text-lg">-->
+<!--                    &ldquo;This library has saved me countless hours of work and helped me deliver-->
+<!--                    stunning designs to my clients faster than ever before. Highly-->
+<!--                    recommended!&rdquo;-->
+<!--                </p>-->
+<!--                <footer class="text-sm">Sofia Davis</footer>-->
+<!--            </blockquote>-->
+<!--        </div>-->
     </div>
     <slot/>
 </div>

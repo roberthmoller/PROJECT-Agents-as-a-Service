@@ -17,7 +17,9 @@
             <!--Navigation-->
             <div class="border-b h-[4rem]">
                 <div class="flex h-16 items-center px-4">
-                    <Command class="h-5 mr-4"/>
+                    <a href="/">
+                        <Command class="h-5 mr-4"/>
+                    </a>
                     <DashboardMainNav/>
                     <div class="ml-auto flex items-center space-x-4">
                         <ThemeToggle/>
