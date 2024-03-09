@@ -1,4 +1,4 @@
-from typing import Tuple, Dict, Callable
+from typing import Tuple, Dict, Callable, List
 
 from autogen import Agent, AssistantAgent, UserProxyAgent, GroupChatManager
 from autogen.agentchat import register_function
@@ -14,7 +14,7 @@ from lib.api.skills.skill_utils import extract_methods, imports_from_code, impor
 def initialize_chat(
         user: FirebaseUser,
         session: Session
-) -> Tuple[UserProxyAgent, AssistantAgent | GroupChatManager]:
+) -> Tuple[UserProxyAgent, AssistantAgent | GroupChatManager, List[AssistantAgent]]:
     # Create the agents
     proxy = FirebaseUserProxyAgent(session, user)
     agents: dict[str, FirebaseAssistantAgent] = {
@@ -64,7 +64,7 @@ def initialize_chat(
                         f=function,
                         # f=import_and_run(imports, function),
                     )
-    return proxy, chat
+    return proxy, chat, list(agents.values())
 
 
 # def get_usage(

@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from fastapi import APIRouter, Body, HTTPException, Depends, Path
 
 from lib.api.agent.agent_model import SavedAgentSpecification
@@ -5,6 +7,7 @@ from lib.api.auth.auth_model import FirebaseUser
 from lib.api.session.assistant_utils import initialize_chat
 from lib.api.session.message_model import SavedMessageModel, MessageContentModel
 from lib.api.session.session_model import SessionSpecification, SavedSessionSpecification, Session
+from lib.api.session.usage_utils import calculate_and_record_usage, UsageModel
 from lib.utils.auth_utils import user_scope
 from lib.utils.firebase.admin import db
 
@@ -75,10 +78,21 @@ def send_message(
         session_id: str = Path(),
         message: MessageContentModel = Body(),
         user: FirebaseUser = Depends(user_scope)
-) -> Session:
+) -> UsageModel:
+    start_time = datetime.now()
     summary = get_summary(session_id, user=user)
-    proxy, recipient = initialize_chat(user, summary)
+    proxy, recipient, remaining_agents = initialize_chat(user, summary)
     message.role = message.role or proxy.name
-    proxy.initiate_chat(recipient, message=message.model_dump(), clear_history=False)
-    return summary
+    try:
+        proxy.initiate_chat(recipient, message=message.model_dump(), clear_history=False)
+    except Exception as e:
+        print("Error sending message")
+        print(e)
+        end_time = datetime.now()
+        calculate_and_record_usage(user,session_id, [proxy, recipient, *remaining_agents], start_time, end_time)
+        raise HTTPException(status_code=500, detail="Failed to send message")
 
+    end_time = datetime.now()
+    usage_summary = calculate_and_record_usage(user,session_id, [proxy, recipient, *remaining_agents], start_time, end_time)
+    print(usage_summary)
+    return usage_summary
