@@ -5,9 +5,12 @@ import { AgentSpecification } from '../models/AgentSpecification';
 import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
+import { GroqLlmModel } from '../models/GroqLlmModel';
 import { HTTPValidationError } from '../models/HTTPValidationError';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
+import { ModelConnection } from '../models/ModelConnection';
+import { ModelProviderConnection } from '../models/ModelProviderConnection';
 import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
 import { PhoneNumber } from '../models/PhoneNumber';
@@ -259,6 +262,131 @@ export class PromiseDefaultApi {
      */
     public getEnvEnvGet(_options?: Configuration): Promise<any> {
         const result = this.api.getEnvEnvGet(_options);
+        return result.toPromise();
+    }
+
+
+}
+
+
+
+import { ObservableProvidersApi } from './ObservableAPI';
+
+import { ProvidersApiRequestFactory, ProvidersApiResponseProcessor} from "../apis/ProvidersApi";
+export class PromiseProvidersApi {
+    private api: ObservableProvidersApi
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: ProvidersApiRequestFactory,
+        responseProcessor?: ProvidersApiResponseProcessor
+    ) {
+        this.api = new ObservableProvidersApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Connect Provider
+     * @param provider 
+     * @param modelConnection 
+     */
+    public connectProviderProvidersProviderPostWithHttpInfo(provider: any, modelConnection: ModelConnection, _options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
+        const result = this.api.connectProviderProvidersProviderPostWithHttpInfo(provider, modelConnection, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Connect Provider
+     * @param provider 
+     * @param modelConnection 
+     */
+    public connectProviderProvidersProviderPost(provider: any, modelConnection: ModelConnection, _options?: Configuration): Promise<ModelProviderConnection> {
+        const result = this.api.connectProviderProvidersProviderPost(provider, modelConnection, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Disconnect Provider
+     * @param provider 
+     */
+    public disconnectProviderProvidersProviderDeleteWithHttpInfo(provider: any, _options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
+        const result = this.api.disconnectProviderProvidersProviderDeleteWithHttpInfo(provider, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Disconnect Provider
+     * @param provider 
+     */
+    public disconnectProviderProvidersProviderDelete(provider: any, _options?: Configuration): Promise<ModelProviderConnection> {
+        const result = this.api.disconnectProviderProvidersProviderDelete(provider, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get Provider
+     * @param provider 
+     */
+    public getProviderProvidersProviderGetWithHttpInfo(provider: any, _options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
+        const result = this.api.getProviderProvidersProviderGetWithHttpInfo(provider, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Get Provider
+     * @param provider 
+     */
+    public getProviderProvidersProviderGet(provider: any, _options?: Configuration): Promise<ModelProviderConnection> {
+        const result = this.api.getProviderProvidersProviderGet(provider, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * List Providers
+     */
+    public listProvidersProvidersGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.listProvidersProvidersGetWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     * List Providers
+     */
+    public listProvidersProvidersGet(_options?: Configuration): Promise<any> {
+        const result = this.api.listProvidersProvidersGet(_options);
+        return result.toPromise();
+    }
+
+    /**
+     * Options
+     */
+    public optionsProvidersOptionsWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.optionsProvidersOptionsWithHttpInfo(_options);
+        return result.toPromise();
+    }
+
+    /**
+     * Options
+     */
+    public optionsProvidersOptions(_options?: Configuration): Promise<any> {
+        const result = this.api.optionsProvidersOptions(_options);
+        return result.toPromise();
+    }
+
+    /**
+     * Options
+     * @param provider 
+     */
+    public optionsProvidersProviderOptionsWithHttpInfo(provider: any, _options?: Configuration): Promise<HttpInfo<any>> {
+        const result = this.api.optionsProvidersProviderOptionsWithHttpInfo(provider, _options);
+        return result.toPromise();
+    }
+
+    /**
+     * Options
+     * @param provider 
+     */
+    public optionsProvidersProviderOptions(provider: any, _options?: Configuration): Promise<any> {
+        const result = this.api.optionsProvidersProviderOptions(provider, _options);
         return result.toPromise();
     }
 

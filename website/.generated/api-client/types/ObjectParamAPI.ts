@@ -5,9 +5,12 @@ import { AgentSpecification } from '../models/AgentSpecification';
 import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
+import { GroqLlmModel } from '../models/GroqLlmModel';
 import { HTTPValidationError } from '../models/HTTPValidationError';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
+import { ModelConnection } from '../models/ModelConnection';
+import { ModelProviderConnection } from '../models/ModelProviderConnection';
 import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
 import { PhoneNumber } from '../models/PhoneNumber';
@@ -305,6 +308,162 @@ export class ObjectDefaultApi {
      */
     public getEnvEnvGet(param: DefaultApiGetEnvEnvGetRequest = {}, options?: Configuration): Promise<any> {
         return this.api.getEnvEnvGet( options).toPromise();
+    }
+
+}
+
+import { ObservableProvidersApi } from "./ObservableAPI";
+import { ProvidersApiRequestFactory, ProvidersApiResponseProcessor} from "../apis/ProvidersApi";
+
+export interface ProvidersApiConnectProviderProvidersProviderPostRequest {
+    /**
+     * 
+     * @type any
+     * @memberof ProvidersApiconnectProviderProvidersProviderPost
+     */
+    provider: any
+    /**
+     * 
+     * @type ModelConnection
+     * @memberof ProvidersApiconnectProviderProvidersProviderPost
+     */
+    modelConnection: ModelConnection
+}
+
+export interface ProvidersApiDisconnectProviderProvidersProviderDeleteRequest {
+    /**
+     * 
+     * @type any
+     * @memberof ProvidersApidisconnectProviderProvidersProviderDelete
+     */
+    provider: any
+}
+
+export interface ProvidersApiGetProviderProvidersProviderGetRequest {
+    /**
+     * 
+     * @type any
+     * @memberof ProvidersApigetProviderProvidersProviderGet
+     */
+    provider: any
+}
+
+export interface ProvidersApiListProvidersProvidersGetRequest {
+}
+
+export interface ProvidersApiOptionsProvidersOptionsRequest {
+}
+
+export interface ProvidersApiOptionsProvidersProviderOptionsRequest {
+    /**
+     * 
+     * @type any
+     * @memberof ProvidersApioptionsProvidersProviderOptions
+     */
+    provider: any
+}
+
+export class ObjectProvidersApi {
+    private api: ObservableProvidersApi
+
+    public constructor(configuration: Configuration, requestFactory?: ProvidersApiRequestFactory, responseProcessor?: ProvidersApiResponseProcessor) {
+        this.api = new ObservableProvidersApi(configuration, requestFactory, responseProcessor);
+    }
+
+    /**
+     * Connect Provider
+     * @param param the request object
+     */
+    public connectProviderProvidersProviderPostWithHttpInfo(param: ProvidersApiConnectProviderProvidersProviderPostRequest, options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
+        return this.api.connectProviderProvidersProviderPostWithHttpInfo(param.provider, param.modelConnection,  options).toPromise();
+    }
+
+    /**
+     * Connect Provider
+     * @param param the request object
+     */
+    public connectProviderProvidersProviderPost(param: ProvidersApiConnectProviderProvidersProviderPostRequest, options?: Configuration): Promise<ModelProviderConnection> {
+        return this.api.connectProviderProvidersProviderPost(param.provider, param.modelConnection,  options).toPromise();
+    }
+
+    /**
+     * Disconnect Provider
+     * @param param the request object
+     */
+    public disconnectProviderProvidersProviderDeleteWithHttpInfo(param: ProvidersApiDisconnectProviderProvidersProviderDeleteRequest, options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
+        return this.api.disconnectProviderProvidersProviderDeleteWithHttpInfo(param.provider,  options).toPromise();
+    }
+
+    /**
+     * Disconnect Provider
+     * @param param the request object
+     */
+    public disconnectProviderProvidersProviderDelete(param: ProvidersApiDisconnectProviderProvidersProviderDeleteRequest, options?: Configuration): Promise<ModelProviderConnection> {
+        return this.api.disconnectProviderProvidersProviderDelete(param.provider,  options).toPromise();
+    }
+
+    /**
+     * Get Provider
+     * @param param the request object
+     */
+    public getProviderProvidersProviderGetWithHttpInfo(param: ProvidersApiGetProviderProvidersProviderGetRequest, options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
+        return this.api.getProviderProvidersProviderGetWithHttpInfo(param.provider,  options).toPromise();
+    }
+
+    /**
+     * Get Provider
+     * @param param the request object
+     */
+    public getProviderProvidersProviderGet(param: ProvidersApiGetProviderProvidersProviderGetRequest, options?: Configuration): Promise<ModelProviderConnection> {
+        return this.api.getProviderProvidersProviderGet(param.provider,  options).toPromise();
+    }
+
+    /**
+     * List Providers
+     * @param param the request object
+     */
+    public listProvidersProvidersGetWithHttpInfo(param: ProvidersApiListProvidersProvidersGetRequest = {}, options?: Configuration): Promise<HttpInfo<any>> {
+        return this.api.listProvidersProvidersGetWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * List Providers
+     * @param param the request object
+     */
+    public listProvidersProvidersGet(param: ProvidersApiListProvidersProvidersGetRequest = {}, options?: Configuration): Promise<any> {
+        return this.api.listProvidersProvidersGet( options).toPromise();
+    }
+
+    /**
+     * Options
+     * @param param the request object
+     */
+    public optionsProvidersOptionsWithHttpInfo(param: ProvidersApiOptionsProvidersOptionsRequest = {}, options?: Configuration): Promise<HttpInfo<any>> {
+        return this.api.optionsProvidersOptionsWithHttpInfo( options).toPromise();
+    }
+
+    /**
+     * Options
+     * @param param the request object
+     */
+    public optionsProvidersOptions(param: ProvidersApiOptionsProvidersOptionsRequest = {}, options?: Configuration): Promise<any> {
+        return this.api.optionsProvidersOptions( options).toPromise();
+    }
+
+    /**
+     * Options
+     * @param param the request object
+     */
+    public optionsProvidersProviderOptionsWithHttpInfo(param: ProvidersApiOptionsProvidersProviderOptionsRequest, options?: Configuration): Promise<HttpInfo<any>> {
+        return this.api.optionsProvidersProviderOptionsWithHttpInfo(param.provider,  options).toPromise();
+    }
+
+    /**
+     * Options
+     * @param param the request object
+     */
+    public optionsProvidersProviderOptions(param: ProvidersApiOptionsProvidersProviderOptionsRequest, options?: Configuration): Promise<any> {
+        return this.api.optionsProvidersProviderOptions(param.provider,  options).toPromise();
     }
 
 }

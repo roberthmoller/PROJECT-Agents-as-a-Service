@@ -2,9 +2,12 @@ export * from '../models/AgentSpecification';
 export * from '../models/ApiKey';
 export * from '../models/Code';
 export * from '../models/FirebaseUser';
+export * from '../models/GroqLlmModel';
 export * from '../models/HTTPValidationError';
 export * from '../models/LocalLlmModel';
 export * from '../models/MessageContentModel';
+export * from '../models/ModelConnection';
+export * from '../models/ModelProviderConnection';
 export * from '../models/Name';
 export * from '../models/OpenAILlmModel';
 export * from '../models/PhoneNumber';
@@ -26,9 +29,12 @@ import { AgentSpecification } from '../models/AgentSpecification';
 import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
+import { GroqLlmModel } from '../models/GroqLlmModel';
 import { HTTPValidationError } from '../models/HTTPValidationError';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
+import { ModelConnection } from '../models/ModelConnection';
+import { ModelProviderConnection } from '../models/ModelProviderConnection';
 import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
 import { PhoneNumber } from '../models/PhoneNumber';
@@ -66,9 +72,12 @@ let typeMap: {[index: string]: any} = {
     "ApiKey": ApiKey,
     "Code": Code,
     "FirebaseUser": FirebaseUser,
+    "GroqLlmModel": GroqLlmModel,
     "HTTPValidationError": HTTPValidationError,
     "LocalLlmModel": LocalLlmModel,
     "MessageContentModel": MessageContentModel,
+    "ModelConnection": ModelConnection,
+    "ModelProviderConnection": ModelProviderConnection,
     "Name": Name,
     "OpenAILlmModel": OpenAILlmModel,
     "PhoneNumber": PhoneNumber,

@@ -6,9 +6,12 @@ import { AgentSpecification } from '../models/AgentSpecification';
 import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
+import { GroqLlmModel } from '../models/GroqLlmModel';
 import { HTTPValidationError } from '../models/HTTPValidationError';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
+import { ModelConnection } from '../models/ModelConnection';
+import { ModelProviderConnection } from '../models/ModelProviderConnection';
 import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
 import { PhoneNumber } from '../models/PhoneNumber';
@@ -392,6 +395,208 @@ export class ObservableDefaultApi {
      */
     public getEnvEnvGet(_options?: Configuration): Observable<any> {
         return this.getEnvEnvGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
+    }
+
+}
+
+import { ProvidersApiRequestFactory, ProvidersApiResponseProcessor} from "../apis/ProvidersApi";
+export class ObservableProvidersApi {
+    private requestFactory: ProvidersApiRequestFactory;
+    private responseProcessor: ProvidersApiResponseProcessor;
+    private configuration: Configuration;
+
+    public constructor(
+        configuration: Configuration,
+        requestFactory?: ProvidersApiRequestFactory,
+        responseProcessor?: ProvidersApiResponseProcessor
+    ) {
+        this.configuration = configuration;
+        this.requestFactory = requestFactory || new ProvidersApiRequestFactory(configuration);
+        this.responseProcessor = responseProcessor || new ProvidersApiResponseProcessor();
+    }
+
+    /**
+     * Connect Provider
+     * @param provider 
+     * @param modelConnection 
+     */
+    public connectProviderProvidersProviderPostWithHttpInfo(provider: any, modelConnection: ModelConnection, _options?: Configuration): Observable<HttpInfo<ModelProviderConnection>> {
+        const requestContextPromise = this.requestFactory.connectProviderProvidersProviderPost(provider, modelConnection, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.connectProviderProvidersProviderPostWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Connect Provider
+     * @param provider 
+     * @param modelConnection 
+     */
+    public connectProviderProvidersProviderPost(provider: any, modelConnection: ModelConnection, _options?: Configuration): Observable<ModelProviderConnection> {
+        return this.connectProviderProvidersProviderPostWithHttpInfo(provider, modelConnection, _options).pipe(map((apiResponse: HttpInfo<ModelProviderConnection>) => apiResponse.data));
+    }
+
+    /**
+     * Disconnect Provider
+     * @param provider 
+     */
+    public disconnectProviderProvidersProviderDeleteWithHttpInfo(provider: any, _options?: Configuration): Observable<HttpInfo<ModelProviderConnection>> {
+        const requestContextPromise = this.requestFactory.disconnectProviderProvidersProviderDelete(provider, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.disconnectProviderProvidersProviderDeleteWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Disconnect Provider
+     * @param provider 
+     */
+    public disconnectProviderProvidersProviderDelete(provider: any, _options?: Configuration): Observable<ModelProviderConnection> {
+        return this.disconnectProviderProvidersProviderDeleteWithHttpInfo(provider, _options).pipe(map((apiResponse: HttpInfo<ModelProviderConnection>) => apiResponse.data));
+    }
+
+    /**
+     * Get Provider
+     * @param provider 
+     */
+    public getProviderProvidersProviderGetWithHttpInfo(provider: any, _options?: Configuration): Observable<HttpInfo<ModelProviderConnection>> {
+        const requestContextPromise = this.requestFactory.getProviderProvidersProviderGet(provider, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.getProviderProvidersProviderGetWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Get Provider
+     * @param provider 
+     */
+    public getProviderProvidersProviderGet(provider: any, _options?: Configuration): Observable<ModelProviderConnection> {
+        return this.getProviderProvidersProviderGetWithHttpInfo(provider, _options).pipe(map((apiResponse: HttpInfo<ModelProviderConnection>) => apiResponse.data));
+    }
+
+    /**
+     * List Providers
+     */
+    public listProvidersProvidersGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<any>> {
+        const requestContextPromise = this.requestFactory.listProvidersProvidersGet(_options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.listProvidersProvidersGetWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * List Providers
+     */
+    public listProvidersProvidersGet(_options?: Configuration): Observable<any> {
+        return this.listProvidersProvidersGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
+    }
+
+    /**
+     * Options
+     */
+    public optionsProvidersOptionsWithHttpInfo(_options?: Configuration): Observable<HttpInfo<any>> {
+        const requestContextPromise = this.requestFactory.optionsProvidersOptions(_options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.optionsProvidersOptionsWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Options
+     */
+    public optionsProvidersOptions(_options?: Configuration): Observable<any> {
+        return this.optionsProvidersOptionsWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
+    }
+
+    /**
+     * Options
+     * @param provider 
+     */
+    public optionsProvidersProviderOptionsWithHttpInfo(provider: any, _options?: Configuration): Observable<HttpInfo<any>> {
+        const requestContextPromise = this.requestFactory.optionsProvidersProviderOptions(provider, _options);
+
+        // build promise chain
+        let middlewarePreObservable = from<RequestContext>(requestContextPromise);
+        for (let middleware of this.configuration.middleware) {
+            middlewarePreObservable = middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => middleware.pre(ctx)));
+        }
+
+        return middlewarePreObservable.pipe(mergeMap((ctx: RequestContext) => this.configuration.httpApi.send(ctx))).
+            pipe(mergeMap((response: ResponseContext) => {
+                let middlewarePostObservable = of(response);
+                for (let middleware of this.configuration.middleware) {
+                    middlewarePostObservable = middlewarePostObservable.pipe(mergeMap((rsp: ResponseContext) => middleware.post(rsp)));
+                }
+                return middlewarePostObservable.pipe(map((rsp: ResponseContext) => this.responseProcessor.optionsProvidersProviderOptionsWithHttpInfo(rsp)));
+            }));
+    }
+
+    /**
+     * Options
+     * @param provider 
+     */
+    public optionsProvidersProviderOptions(provider: any, _options?: Configuration): Observable<any> {
+        return this.optionsProvidersProviderOptionsWithHttpInfo(provider, _options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
     }
 
 }

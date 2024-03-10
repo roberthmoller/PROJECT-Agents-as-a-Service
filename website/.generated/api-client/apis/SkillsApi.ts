@@ -73,6 +73,11 @@ export class SkillsApiRequestFactory extends BaseAPIRequestFactory {
 
         let authMethod: SecurityAuthentication | undefined;
         // Apply auth methods
+        authMethod = _config.authMethods["APIKeyHeader"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        // Apply auth methods
         authMethod = _config.authMethods["HTTPBearer"]
         if (authMethod?.applySecurityAuthentication) {
             await authMethod?.applySecurityAuthentication(requestContext);
@@ -121,6 +126,11 @@ export class SkillsApiRequestFactory extends BaseAPIRequestFactory {
 
         let authMethod: SecurityAuthentication | undefined;
         // Apply auth methods
+        authMethod = _config.authMethods["APIKeyHeader"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        // Apply auth methods
         authMethod = _config.authMethods["HTTPBearer"]
         if (authMethod?.applySecurityAuthentication) {
             await authMethod?.applySecurityAuthentication(requestContext);
@@ -158,6 +168,11 @@ export class SkillsApiRequestFactory extends BaseAPIRequestFactory {
 
 
         let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["APIKeyHeader"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
         // Apply auth methods
         authMethod = _config.authMethods["HTTPBearer"]
         if (authMethod?.applySecurityAuthentication) {
@@ -197,6 +212,11 @@ export class SkillsApiRequestFactory extends BaseAPIRequestFactory {
 
         let authMethod: SecurityAuthentication | undefined;
         // Apply auth methods
+        authMethod = _config.authMethods["APIKeyHeader"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
+        // Apply auth methods
         authMethod = _config.authMethods["HTTPBearer"]
         if (authMethod?.applySecurityAuthentication) {
             await authMethod?.applySecurityAuthentication(requestContext);
@@ -226,6 +246,11 @@ export class SkillsApiRequestFactory extends BaseAPIRequestFactory {
 
 
         let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["APIKeyHeader"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
         // Apply auth methods
         authMethod = _config.authMethods["HTTPBearer"]
         if (authMethod?.applySecurityAuthentication) {
@@ -274,6 +299,11 @@ export class SkillsApiRequestFactory extends BaseAPIRequestFactory {
         requestContext.setBody(serializedBody);
 
         let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["APIKeyHeader"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
         // Apply auth methods
         authMethod = _config.authMethods["HTTPBearer"]
         if (authMethod?.applySecurityAuthentication) {
@@ -330,6 +360,11 @@ export class SkillsApiRequestFactory extends BaseAPIRequestFactory {
         requestContext.setBody(serializedBody);
 
         let authMethod: SecurityAuthentication | undefined;
+        // Apply auth methods
+        authMethod = _config.authMethods["APIKeyHeader"]
+        if (authMethod?.applySecurityAuthentication) {
+            await authMethod?.applySecurityAuthentication(requestContext);
+        }
         // Apply auth methods
         authMethod = _config.authMethods["HTTPBearer"]
         if (authMethod?.applySecurityAuthentication) {

@@ -2,12 +2,14 @@
 AgentApi.md
 AuthApi.md
 DefaultApi.md
+ProvidersApi.md
 README.md
 SessionApi.md
 SkillsApi.md
 apis/AgentApi.ts
 apis/AuthApi.ts
 apis/DefaultApi.ts
+apis/ProvidersApi.ts
 apis/SessionApi.ts
 apis/SkillsApi.ts
 apis/baseapi.ts
@@ -23,9 +25,12 @@ models/AgentSpecification.ts
 models/ApiKey.ts
 models/Code.ts
 models/FirebaseUser.ts
+models/GroqLlmModel.ts
 models/HTTPValidationError.ts
 models/LocalLlmModel.ts
 models/MessageContentModel.ts
+models/ModelConnection.ts
+models/ModelProviderConnection.ts
 models/Name.ts
 models/ObjectSerializer.ts
 models/OpenAILlmModel.ts
