@@ -1,7 +1,5 @@
 from datetime import datetime
-
-from autogen import Agent
-from autogen.agent_utils import gather_usage_summary
+from autogen.agentchat import Agent, gather_usage_summary
 from firebase_admin.firestore import firestore as Firestore
 from pydantic import BaseModel, Field
 from typing import Tuple, Dict
@@ -54,7 +52,7 @@ class ModelsUsage(BaseModel):
 
 class FunctionUsage(BaseModel):
     cost: float
-    time_spent: datetime
+    time_spent: str
 
 
 class DatabaseUsage(BaseModel):
@@ -63,7 +61,7 @@ class DatabaseUsage(BaseModel):
 
 
 class UsageModel(BaseModel):
-    created_at: str = Field(factory=now, description="The date and time the usage was recorded.")
+    created_at: str = Field(factory=now)
     total_cost: float
     models: ModelsUsage
     function: FunctionUsage
@@ -120,8 +118,13 @@ def calculate_database_usage(session_id: str, start_time: datetime, end_time: da
     return DatabaseUsage(cost=cost, records_written=records_written)
 
 
-def calculate_and_record_usage(user:FirebaseUser,session_id: str, agents: list[Agent], start_time: datetime,
-                               end_time: datetime) -> UsageModel:
+def calculate_and_record_usage(
+        user: FirebaseUser,
+        session_id: str,
+        agents: list[Agent],
+        start_time: datetime,
+        end_time: datetime
+) -> UsageModel:
     # Calculate model usage
     model_usage_summary = gather_usage_summary(agents)
     model_usage = calculate_model_usage(model_usage_summary)

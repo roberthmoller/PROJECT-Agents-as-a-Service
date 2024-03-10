@@ -9,6 +9,7 @@
 
     const tabs = [
         {name: "Account", href: "/account", description: "This is how others will see you on the site."},
+        {name: "Models", href: "/models", description: "Manage your models"},
         {name: "API Keys", href: "/api-keys"},
         // {name: "Billing", href: "/billing"},
     ];

@@ -13,48 +13,54 @@
     import {Checkbox} from "$components/checkbox";
     import {Hammer} from 'lucide-svelte';
     import ModelSelector from "./model-selector.svelte";
-    import {models, types} from "./models";
     import * as Tooltip from "$components/tooltip";
+    import {providerService} from "$lib/services/provider-service";
 
     export let agent: SavedAgentSpecification | AgentSpecification = new AgentSpecification();
 
     let agentName = agent.name ?? "";
     let agentInstructions = agent.systemMessage ?? "";
     let agentDescription = agent.description ?? "";
-    let agentModels: string[] = agent.models ?? [];
-    let agentSkills: string[] = agent.skills ?? [];
+    let selectedModels: string[] = agent.models ?? [];
+    let selectedSkills: string[] = agent.skills ?? [];
     let open = false;
 
+    $: providersServiceState = $providerService;
+    $: providers = providersServiceState.providers;
+    $: models = Array.from($providers ?? []).flatMap(f => f.models);
+
     $: state = $workshopStore;
+
     $: skillsStore = state.skillsStore;
     $: skills = $skillsStore;
     $: isMissingName = agentName?.trim().length === 0;
     $: isMissingInstructions = agentInstructions?.trim().length === 0;
-    $: isModelsEmpty = agentModels.length == 0;
+    $: isModelsEmpty = selectedModels.length == 0;
     $: hasErrors = isMissingName || isMissingInstructions || isModelsEmpty;
-    $: canCallSkills = models.filter(model => agentModels.includes(model.id)).every(model => model.canCallSkills);
+    $: console.log("models",models)
+    $: canCallSkills = selectedModels.every(model => models.find(m => m.id === model)?.canCallSkills)
 
     const saveAgent = async () => {
         if (hasErrors) return;
         agent.name = agentName;
         agent.description = agentDescription;
         agent.systemMessage = agentInstructions;
-        agent.skills = canCallSkills ? agentSkills : [];
-        agent.models = agentModels;
+        agent.skills = canCallSkills ? selectedSkills : [];
+        agent.models = selectedModels;
         await state.saveAgent(agent);
         open = false;
     }
     const toggleSkill = (skillId: String) => {
-        if (agentSkills.includes(skillId)) {
-            agentSkills = agentSkills.filter(id => skillId !== id);
+        if (selectedSkills.includes(skillId)) {
+            selectedSkills = selectedSkills.filter(id => skillId !== id);
         } else {
-            agentSkills = [...agentSkills, skillId];
+            selectedSkills = [...selectedSkills, skillId];
         }
         // skills = skills;
     }
 
     function modelsChanged(models: string[]) {
-        agentModels = models;
+        selectedModels = models;
     }
 </script>
 
@@ -126,7 +132,7 @@
                             <div class="grid gap-2 w-full">
                                 <Label for="url">Models<span class="text-red-700">*</span></Label>
                                 <span class="text-muted-foreground text-sm">Select which models can the agent use.</span>
-                                <ModelSelector selected={agentModels} models={models} types={types}
+                                <ModelSelector selected={selectedModels} providers={$providers}
                                                on:change={event =>modelsChanged(event.detail)}/>
                             </div>
                             <div class="flex flex-col gap-2 flex-grow">
@@ -165,7 +171,7 @@
                                     The skills the agent has and can use to complete tasks.
                                 </span>
                                 {#each skills.value as skill}
-                                    {@const isSelected = agentSkills.includes(skill.id)}
+                                    {@const isSelected = selectedSkills.includes(skill.id)}
                                     <Button variant="ghost"
                                             on:click={() => toggleSkill(skill.id)}>
                                         <div class="flex space-x-2 items-start justify-items-start w-full"

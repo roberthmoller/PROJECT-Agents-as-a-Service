@@ -1,7 +1,9 @@
 from datetime import datetime
+from typing import List
 
 from fastapi import APIRouter, Body, HTTPException, Depends, Path
 
+from lib.api.session.session_model import Session
 from lib.api.agent.agent_model import SavedAgentSpecification
 from lib.api.auth.auth_model import FirebaseUser
 from lib.api.session.assistant_utils import initialize_chat
@@ -23,7 +25,7 @@ def options():
 
 
 @router.get("")
-def list_sessions(user: FirebaseUser = Depends(user_scope)) -> list[Session]:
+def list_sessions(user: FirebaseUser = Depends(user_scope)) -> List[Session]:
     return list(map(
         lambda document: get_summary(document.id),
         db().collection(f"v1/public/users/{user.uid}/sessions").get()
@@ -75,10 +77,10 @@ def get_summary(
 
 @router.post("/{session_id}")
 def send_message(
-        session_id: str = Path(),
-        message: MessageContentModel = Body(),
+        session_id: str,
+        message: MessageContentModel,
         user: FirebaseUser = Depends(user_scope)
-) -> UsageModel:
+) -> Session:
     start_time = datetime.now()
     summary = get_summary(session_id, user=user)
     proxy, recipient, remaining_agents = initialize_chat(user, summary)
@@ -89,10 +91,15 @@ def send_message(
         print("Error sending message")
         print(e)
         end_time = datetime.now()
-        calculate_and_record_usage(user,session_id, [proxy, recipient, *remaining_agents], start_time, end_time)
+        calculate_and_record_usage(user, session_id, [proxy, recipient, *remaining_agents], start_time, end_time)
         raise HTTPException(status_code=500, detail="Failed to send message")
 
     end_time = datetime.now()
-    usage_summary = calculate_and_record_usage(user,session_id, [proxy, recipient, *remaining_agents], start_time, end_time)
-    print(usage_summary)
-    return usage_summary
+    calculate_and_record_usage(
+        user,
+        session_id,
+        [proxy, recipient, *remaining_agents],
+        start_time,
+        end_time
+    )
+    return summary

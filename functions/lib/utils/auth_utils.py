@@ -122,11 +122,11 @@ def scope(required_scope: str):
     return require_scope
 
 
-def user_scope(user: FirebaseUser = Depends(authenticated_access_token)) -> FirebaseUser:
+def user_scope(user: FirebaseUser = Depends(authenticated)) -> FirebaseUser:
     return user
 
 
-def admin_scope(user: FirebaseUser = Depends(authenticated_access_token)) -> FirebaseUser:
+def admin_scope(user: FirebaseUser = Depends(authenticated)) -> FirebaseUser:
     if user.custom_claims.get("admin"):
         return user
     else:
