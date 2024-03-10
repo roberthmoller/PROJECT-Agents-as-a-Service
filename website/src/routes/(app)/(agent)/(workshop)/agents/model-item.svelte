@@ -1,12 +1,15 @@
 <script lang="ts">
-    import type { Command as CommandPrimitive } from "cmdk-sv";
+    import type {Command as CommandPrimitive} from "cmdk-sv";
     import * as Command from "$components/command/index.js";
-    import type { Model } from "./models";
+    import * as Tooltip from "$components/tooltip";
+    import type {Model} from "./models";
     import Check from "svelte-radix/Check.svelte";
-    import { cn } from "$components/utils";
-    import { Checkbox } from "$components/checkbox";
+    import {cn} from "$components/utils";
+    import {Checkbox} from "$components/checkbox";
+
     type $$Props = {
         model: Model;
+        disabled: boolean;
         isSelected: boolean;
         onSelect: () => void;
         onPeek: (model: Model) => void;
@@ -16,6 +19,7 @@
     export let isSelected: $$Props["isSelected"];
     export let onSelect: $$Props["onSelect"];
     export let onPeek: $$Props["onPeek"];
+    export let disabled: $$Props["disabled"];
 
     function mutationObserverAction(node: HTMLElement) {
         const observer = new MutationObserver((mutations) => {
@@ -40,7 +44,8 @@
     }
 </script>
 
-<Command.Item value={model.name} asChild {onSelect} let:action let:attrs>
+
+<Command.Item value={model.name} asChild {onSelect} {disabled} let:action let:attrs>
     <div
             {...attrs}
             use:mutationObserverAction
@@ -50,7 +55,7 @@
             aria-selected:bg-primary aria-selected:text-primary-foreground data-[disabled]:pointer-events-none
             data-[disabled]:opacity-50"
     >
-        <Checkbox class="mr-2" checked={isSelected} />
+        <Checkbox class="mr-2" checked={isSelected}/>
         {model.name}
     </div>
 </Command.Item>

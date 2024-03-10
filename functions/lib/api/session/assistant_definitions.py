@@ -4,7 +4,7 @@ from abc import ABC
 from datetime import datetime
 from typing import Union, Dict, Optional
 
-from autogen import AssistantAgent, UserProxyAgent, Agent, GroupChat, GroupChatManager, ConversableAgent
+from autogen.agentchat import AssistantAgent, UserProxyAgent, Agent, GroupChat, GroupChatManager
 
 from lib.api.agent.agent_model import SavedAgentSpecification
 from lib.api.auth.auth_model import FirebaseUser

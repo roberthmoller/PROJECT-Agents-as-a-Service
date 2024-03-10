@@ -1,7 +1,6 @@
-from typing import Tuple, Dict, Callable, List
+from typing import Tuple, List
 
-from autogen import Agent, AssistantAgent, UserProxyAgent, GroupChatManager
-from autogen.agentchat import register_function
+from autogen.agentchat import register_function, AssistantAgent, UserProxyAgent, GroupChatManager
 
 from lib.api.auth.auth_model import FirebaseUser
 from lib.api.session.assistant_definitions import FirebaseUserProxyAgent, FirebaseAgent, FirebaseAssistantAgent, \
@@ -64,8 +63,7 @@ def initialize_chat(
                         f=function,
                         # f=import_and_run(imports, function),
                     )
-    return proxy, chat, list(agents.values())
-
+    return proxy, chat, [agent for agent in agents.values() if chat != agent]
 
 # def get_usage(
 #         proxy: UserProxyAgent,

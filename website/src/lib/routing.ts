@@ -23,6 +23,9 @@ export async function gotoLanding() {
 export async function gotoAccount() {
     await goto("/account", {replaceState: true})
 }
+export async function gotoModels() {
+    await goto("/models", {replaceState: true})
+}
 export async function gotoApiKeys() {
     await goto("/api-keys", {replaceState: true})
 }

@@ -7,7 +7,15 @@ from pydantic import model_serializer
 
 class LlmModel(str, Enum):
     @property
-    def can_call_skills(self):
+    def description(self) -> str:
+        return ""
+
+    @property
+    def strengths(self) -> str:
+        return ""
+
+    @property
+    def can_call_skills(self) -> bool:
         return False
 
     @abstractmethod
@@ -47,6 +55,14 @@ class OpenAILlmModel(LlmModel):
 class GroqLlmModel(LlmModel):
     mixtral_8x7b_32768 = "mixtral-8x7b-32768"
     llama2_70b_4096 = "llama2-70b-4096"
+
+    @property
+    def description(self) -> str:
+        match self:
+            case self.mixtral_8x7b_32768:
+                return "Mixtral 8x7b 32768"
+            case self.llama2_70b_4096:
+                return "Llama2 70b 4096"
 
     def config(self) -> dict[str, str]:
         return {"model": self.value, "api_key": os.environ["GROQ_API_KEY"],

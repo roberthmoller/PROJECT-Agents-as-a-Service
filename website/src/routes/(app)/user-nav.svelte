@@ -4,7 +4,7 @@
     import {Button} from "$components/button";
     import {signOut, type User} from "firebase/auth";
     import {auth} from "$lib/firebase";
-    import {gotoAccount, gotoApiKeys} from "$lib/routing";
+    import {gotoAccount, gotoApiKeys, gotoModels} from "$lib/routing";
     import {hotkey} from 'svelte-gh-hotkey'
 
     export let user: User
@@ -32,20 +32,16 @@
         </DropdownMenu.Label>
         <DropdownMenu.Separator/>
         <DropdownMenu.Group>
-            <!--            <DropdownMenu.Item>-->
-            <!--                Profile-->
-            <!--                <DropdownMenu.Shortcut>⇧⌘P</DropdownMenu.Shortcut>-->
-            <!--            </DropdownMenu.Item>-->
-            <!--            <DropdownMenu.Item>-->
-            <!--                Billing-->
-            <!--                <DropdownMenu.Shortcut>⌘B</DropdownMenu.Shortcut>-->
-            <!--            </DropdownMenu.Item>-->
-            <DropdownMenu.Item on:click={() => gotoAccount(auth)}>
+            <DropdownMenu.Item on:click={() => gotoAccount()}>
                 Account
                 <DropdownMenu.Shortcut hotkey={'Meta+a,Control+a'}>⌘A</DropdownMenu.Shortcut>
             </DropdownMenu.Item>
+            <DropdownMenu.Item on:click={() => gotoModels()}>
+                Models
+                <DropdownMenu.Shortcut hotkey={'Meta+b,Control+b'}>⌘B</DropdownMenu.Shortcut>
+            </DropdownMenu.Item>
 
-            <DropdownMenu.Item on:click={() => gotoApiKeys(auth)}>
+            <DropdownMenu.Item on:click={() => gotoApiKeys()}>
                 API Keys
                 <DropdownMenu.Shortcut hotkey={'Meta+k,Control+k'}>⌘K</DropdownMenu.Shortcut>
             </DropdownMenu.Item>

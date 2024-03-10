@@ -10,14 +10,23 @@
     import ModelItem from "./model-item.svelte";
     import {Badge} from "$components/badge";
     import {createEventDispatcher} from 'svelte';
+    import {ModelProviderConnection} from "api-client";
+    import {Check, Link, X} from "lucide-svelte";
 
     const dispatch = createEventDispatcher();
-    export let types: ModelType[];
-    export let models: Model[];
+    export let providers: ModelProviderConnection[];
     export let selected: string[];
 
-    let selectedModel = models[0];
-    let peekedModel: Model | undefined = undefined;
+    interface ModelDetails {
+        name: string;
+        description: string;
+        strengths: string;
+    }
+
+    const models = Array.from(providers).flatMap((f) => f.models);
+
+    let selectedModel = null;
+    let peekedModel: ModelDetails | undefined = undefined;
     let open = false;
     $: selectedValues = selected ?? [];
 
@@ -31,7 +40,7 @@
 
     $: hoverCardIsOpen = open && peekedModel !== undefined;
 
-    function handlePeek(model: Model) {
+    function handlePeek(model: ModelDetails) {
         if (peekedModel === undefined) {
             if (!open) return;
             peekedModel = model;
@@ -40,7 +49,7 @@
         peekedModel = model;
     }
 
-    function handleSelect(model_id: number) {
+    function handleSelect(model_id: string) {
         if (selectedValues.includes(model_id)) {
             selectedValues = selectedValues.filter((f) => f !== model_id);
         } else {
@@ -97,9 +106,29 @@
                         <h4 class="font-medium leading-none">
                             {peekedModel.name}
                         </h4>
+
                         <div class="text-sm text-muted-foreground">
                             {peekedModel.description}
                         </div>
+
+                        <div class="mt-4 grid gap-2">
+                            <h5 class="text-sm font-medium leading-none">Capabilities</h5>
+                            <ul class="text-sm text-muted-foreground">
+                                {#if peekedModel.canCallSkills}
+                                    <Badge variant="secondary" size="sm" class="w-fit">
+                                        <Check class="h-4 w-4 mr-2"/>
+                                        FUNCTION CALLING
+                                    </Badge>
+                                {:else}
+                                    <Badge variant="destructive" size="sm" class="w-fit">
+                                        <X class="h-4 w-4 mr-2"/>
+                                        NO FUNCTION CALLING
+                                    </Badge>
+                                {/if}
+                            </ul>
+
+                        </div>
+
                         {#if peekedModel.strengths}
                             <div class="mt-4 grid gap-2">
                                 <h5 class="text-sm font-medium leading-none">Strengths</h5>
@@ -115,9 +144,15 @@
                 <Command.Input placeholder="Search Models...."/>
                 <Command.List class="h-[var(--cmdk-list-height)] max-h-[18rem]">
                     <Command.Empty>No models found.</Command.Empty>
-                    {#each types as type}
-                        <Command.Group heading={type}>
-                            {#each models.filter((model) => model.type === type) as model}
+                    {#each providers as provider}
+                        <Command.Group heading={provider.name}>
+                            {#if !provider.isConnected}
+                                <Button variant="ghost" size="sm" class="w-full !justify-start" href="/models">
+                                    <Link class="h-3.5 w-3.5 mr-2"/>
+                                    <span class="text-sm">Connect</span>
+                                </Button>
+                            {/if}
+                            {#each provider.models as model}
                                 <HoverCard.Trigger asChild let:builder>
                                     <div
                                             use:builder.action
@@ -129,6 +164,7 @@
                                                 {model}
                                                 onSelect={() => handleSelect(model.id)}
                                                 onPeek={() => handlePeek(model)}
+                                                disabled={!provider.isConnected}
                                                 isSelected={selectedValues.includes(model.id)}
                                         />
                                     </div>
@@ -154,13 +190,16 @@
             right: 0;
             width: 8rem;
             background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #09090b 100%);
+            /*transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);;*/
         }
     }
 
 
     :global(.overflow-fade-parent:hover:has(.overflow-fade)) {
-            /*background-color: red;*/
-        &>.overflow-fade:after {
+        /*background-color: red;*/
+        /*transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);;*/
+
+        & > .overflow-fade:after {
             background: linear-gradient(90deg, rgba(0, 0, 0, 0) 0%, #27272a 100%);
 
         }

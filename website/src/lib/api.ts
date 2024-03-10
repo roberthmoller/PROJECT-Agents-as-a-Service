@@ -4,7 +4,7 @@ import {
     AgentApi,
     AuthApi,
     createConfiguration,
-    type Middleware,
+    type Middleware, ProvidersApi,
     type RequestContext,
     type ResponseContext,
     server1, ServerConfiguration,
@@ -36,7 +36,7 @@ class FirebaseAuthenticationMiddleware implements Middleware {
 // Create configuration parameter object
 const configurationParameters = {
     // baseServer: server1,
-    baseServer: new ServerConfiguration<{  }>("/api", {  }),
+    baseServer: new ServerConfiguration<{}>("/api", {}),
     authMethods: {},
 
     promiseMiddleware: [new FirebaseAuthenticationMiddleware()],
@@ -48,3 +48,4 @@ export const agentApi = new AgentApi(config);
 export const authApi = new AuthApi(config);
 export const sessionApi = new SessionApi(config);
 export const skillsApi = new SkillsApi(config);
+export const providersApi = new ProvidersApi(config);

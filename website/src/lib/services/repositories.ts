@@ -11,7 +11,7 @@ import {
 } from "firebase/firestore";
 import {db} from "$lib/firebase";
 import {
-    AgentSpecification, ApiKey,
+    AgentSpecification, ApiKey, ModelProviderConnection,
     SavedAgentSpecification, SavedApiKey,
     SavedMessageModel,
     SavedSessionSpecification, SavedSkillSpecification,
@@ -199,5 +199,34 @@ export class ApiKeyRepository extends Repository<SavedApiKey, ApiKey> {
         apiKey.secretSuffix = data.secret_suffix;
         apiKey.createdAt = data.created_at;
         return apiKey;
+    }
+}
+
+export class ProviderRepository extends Repository<ModelProviderConnection, any> {
+    readonly user: User;
+    readonly org: string;
+
+    constructor(user: User, org: string = "public") {
+        super();
+        this.user = user;
+        this.org = org;
+    }
+
+
+    get collection(): string {
+        return `v1/${this.org}/users/${this.user.uid}/providers`;
+    }
+
+
+    factory(doc: DocumentData): ModelProviderConnection {
+        const provider = new ModelProviderConnection();
+        const data = doc.data();
+        provider.name = data.name;
+        provider.logo = data.logo;
+        provider.apiKeyUrl = data.apiKeyUrl;
+        provider.apiUrl = data.apiUrl;
+        provider.models = data.models;
+        provider.isConnected = data.isConnected;
+        return provider;
     }
 }
