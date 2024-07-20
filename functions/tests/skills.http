@@ -1,0 +1,54 @@
+
+### Get skill requirements
+POST {{host}}/api/skills/requirements
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "ignore": [],
+  "code": "from fastapi import APIRouter, HTTPException, Depends\n\nfrom lib.api.auth.auth_model import FirebaseUser\nfrom lib.api.agent.agent_model import AgentSpecification, SavedAgentSpecification\nfrom lib.utils.firebase.admin import db\nfrom lib.utils.auth_utils import user_scope\n\nrouter = APIRouter(\nprefix=\"/agents\",\ntags=[\"Agent\"],)"
+}
+
+### Transformations: \n newlines,  4 spaces to \t, " to \"
+
+### Get skills
+GET {{host}}/api/skills
+Authorization: Bearer {{access_token}}
+
+
+### Create skill
+POST {{host}}/api/skills
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+}
+
+### Get skill by id
+GET {{host}}/api/skills/knzgb065dSUQBX7ueAkM
+Authorization: Bearer {{access_token}}
+
+
+### Update skill
+PUT {{host}}/api/skills/1
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+  "name": "skill1"
+}
+
+### Delete skill
+DELETE {{host}}/api/skills/1
+Authorization: Bearer {access_token}
+
+
+
+### Call skill
+POST {{host}}/api/skills/knzgb065dSUQBX7ueAkM?method=foo
+Content-Type: application/json
+Authorization: Bearer {{access_token}}
+
+{
+
+}

@@ -5,7 +5,7 @@ from lib.api.agent.agent_model import SavedAgentSpecification
 
 
 class SessionSpecification(BaseModel):
-    agents: list[str] = Field(title="The list of agents that should be part of the session.")
+    agents: list[str] = Field(title="The list of agent IDs that should be part of the session.")
 
     class Config:
         json_schema_extra = {
@@ -16,7 +16,7 @@ class SessionSpecification(BaseModel):
 
 
 class SavedSessionSpecification(SessionSpecification):
-    id: str | None = Field(default=None, title="The unique identifier of the item")
+    id: str = Field(title="The unique identifier of the item")
 
     class Config:
         json_schema_extra = {
@@ -27,7 +27,7 @@ class SavedSessionSpecification(SessionSpecification):
         }
 
 
-class SessionSummary(BaseModel):
+class Session(BaseModel):
     id: str
     agents: list[SavedAgentSpecification]
     messages: list[SavedMessageModel]

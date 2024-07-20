@@ -1,11 +1,19 @@
-from fastapi.security import HTTPBearer, HTTPBasic
+from fastapi.security import HTTPBearer, HTTPBasic, APIKeyHeader, HTTPAuthorizationCredentials
+from fastapi import Depends, HTTPException
 
-bearer_scheme = HTTPBearer(
-    scheme_name="AccessToken",
-    description="Authenticate with an access token"
+access_token_scheme = HTTPBearer(
+    description="Authenticate with an access token",
+    auto_error=False
 )
 
-basic_scheme = HTTPBasic(
-    scheme_name="Email & Password",
-    description="Authenticate with your email as the username and password"
+username_password_scheme = HTTPBasic(
+    description="Authenticate with your email as the username and password",
+    auto_error=False
 )
+
+def api_key_scheme(
+        api_key: str = Depends(APIKeyHeader(name='X-API-Key', auto_error=False))
+) -> HTTPAuthorizationCredentials:
+    if not api_key:
+        return None
+    return HTTPAuthorizationCredentials(scheme="Bearer", credentials=api_key)

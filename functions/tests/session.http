@@ -1,3 +1,39 @@
-### Send message
-POST https://{{host}}/session/123?message=Can you define the word multitude?
-Content-Type: text/plain
+### List sessions
+GET {{host}}/api/sessions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+
+
+### Create session
+POST {{host}}/api/sessions
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "agents": [
+    "3IbwmnpOyQ3mWW4cMOfd"
+  ]
+}
+
+
+### Get session
+GET {{host}}/api/sessions/WIgr32TlTnNha7tUQx2C
+Authorization: Bearer {{access_token}}
+
+
+### Send message in session
+### Todo change this message to a json object with the message, this way it can be used by ChatGPT as well
+POST {{host}}/api/sessions/WIgr32TlTnNha7tUQx2C
+Authorization: Bearer {{access_token}}
+Content-Type: application/json
+
+{
+  "content": ""
+}
+
+### Test
+### Todo change this message to a json object with the message, this way it can be used by ChatGPT as well
+GET {{host}}/api/sessions/123/test
+Authorization: Bearer {{access_token}}
+Content-Type: application/json

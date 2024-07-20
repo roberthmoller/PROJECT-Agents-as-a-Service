@@ -25,3 +25,6 @@ passlib[bcrypt]
 
 # Artificial Intelligence
 pyautogen
+
+# Code parsing
+pipreqs==0.4.13

@@ -1,20 +1,35 @@
 
 ### Authenticate user
-POST http://{{host}}/auth
-Content-Type: multipart/form-data; boundary=WebAppBoundary
+POST http://{{host}}/api/auth
+Authorization: Basic cm9iZXJ0QGhqb3J0c2hvbG0uY29tOlRlc3QxMjM=
 
---WebAppBoundary
-Content-Disposition: form-data; name="username"
-Content-Type: text/plain
+> {%
+    const body = response.body.toString();
+    client.global.set("access_token", body);
+%}
 
-robert@hjortsholm.com
---WebAppBoundary
-Content-Disposition: form-data; name="password"
-Content-Type: text/plain
+### Get user profile
+GET http://{{host}}/api/auth
+Authorization: Bearer eyJhbGciOiJSUzI1NiIsImtpZCI6IjUzZWFiMDBhNzc5MTk3Yzc0MWQ2NjJmY2EzODE1OGJkN2JlNGEyY2MiLCJ0eXAiOiJKV1QifQ.eyJuYW1lIjoiUm9iZXJ0IE3DuGxsZXIiLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EvQUNnOG9jSVFaclZUYi1tdnJuSG9kSGFqRFROdW51MlBFY2Ewa1JTV0NpTk5zRWkwPXM5Ni1jIiwiYWRtaW4iOnRydWUsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9hZ2VudHMtYXMtYS1zZXJ2aWNlIiwiYXVkIjoiYWdlbnRzLWFzLWEtc2VydmljZSIsImF1dGhfdGltZSI6MTcwNzA5MDUyNywidXNlcl9pZCI6Ild6d0NPRUZsZUdPWXV4cU1HeEdsajRDOTVsVTIiLCJzdWIiOiJXendDT0VGbGVHT1l1eHFNR3hHbGo0Qzk1bFUyIiwiaWF0IjoxNzA3MTE0ODMzLCJleHAiOjE3MDcxMTg0MzMsImVtYWlsIjoicm9iZXJ0QGhqb3J0c2hvbG0uY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZ29vZ2xlLmNvbSI6WyIxMTMxNTA3MzM4OTYyMTA2MzEyMzYiXSwiZW1haWwiOlsicm9iZXJ0QGhqb3J0c2hvbG0uY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9fQ.dj5VFP81CH8SbwC6RSPTMbmMuln7iFwh_jrfp3pvcLtlJ9NxsChaJx_tuEJrFrVZRRDGtAMRYA59BKCeSiFtQyu1xexGk4iG3yMGGxlnZxiY22c0nIuc4d_yF2fGT1s0w0NGMZb7c1my94oypN6Ek2DBD_ND2ft2OcrVPwXwCQhOGtSxF8MnhwwU0OYO9Trkd-IAPvBl0nqmVBWiqlTC1iEIKnuhD4Mju4YkVJ7FGaY-1Jh0Fi6TiIrwYzVD_zPJeAB5VdDLEhcZMS2C_6yUGe9RWMc1SUpcp0wGKI_KNBHXtG7br1li-9XrhBhxxzJbvwhvH3qV4aEVqQgMlLdIgw
 
-1234
---WebAppBoundary--
 
-### Get authenticated user
-GET http://{{host}}/auth
 
+
+### Get api key
+GET {{host}}/api/auth/api-key
+X-API-Key: 123456
+
+
+### Create api key
+POST {{host}}/api/auth/api-key
+Authorization: Bearer eyJhbGciOiJub25lIiwidHlwIjoiSldUIn0.eyJuYW1lIjoiTW91bnRhaW4gT3R0ZXIiLCJlbWFpbCI6Im1vdW50YWluLm90dGVyLjE2MkBleGFtcGxlLmNvbSIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJhdXRoX3RpbWUiOjE3MDkyNzc2NDMsInVzZXJfaWQiOiJhQUJGNDFwNU9teXd1NDBxNmtDQ2dHdENTU3l1IiwiZmlyZWJhc2UiOnsiaWRlbnRpdGllcyI6eyJlbWFpbCI6WyJtb3VudGFpbi5vdHRlci4xNjJAZXhhbXBsZS5jb20iXSwiZ29vZ2xlLmNvbSI6WyI2NTU0OTYxODY3NjI3MTc4NzI3Nzg5NTUyNDY0MDYwODQxNjM2NTMzIl19LCJzaWduX2luX3Byb3ZpZGVyIjoiZ29vZ2xlLmNvbSJ9LCJpYXQiOjE3MDkyNzc2NDMsImV4cCI6MTcwOTI4MTI0MywiYXVkIjoiYWdlbnRzLWFzLWEtc2VydmljZSIsImlzcyI6Imh0dHBzOi8vc2VjdXJldG9rZW4uZ29vZ2xlLmNvbS9hZ2VudHMtYXMtYS1zZXJ2aWNlIiwic3ViIjoiYUFCRjQxcDVPbXl3dTQwcTZrQ0NnR3RDU1N5dSJ9.
+Content-Type: application/json
+
+{
+    "name": "Test API Key"
+}
+
+
+### Test any auth
+GET {{host}}/api/auth
+X-API-Key: sk-jlRX/hfzTde6ptczLRFa08oZwYiqpINWbGab6ytbGvE=
