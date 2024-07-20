@@ -32,62 +32,62 @@
 
         <!--Login form-->
         <div>
-            <form on:submit|preventDefault={() => {}}>
-                <div class="grid gap-2">
-                    <div class="grid gap-1">
-                        <Label class="sr-only" for="email">Email</Label>
-                        <Input
-                                id="email"
-                                placeholder="name@example.com*"
-                                type="email"
-                                autocapitalize="none"
-                                autocomplete="email"
-                                autocorrect="off"
-                                disabled={isLoading}
-                                bind:value={email}
-                        />
-                    </div>
-                    <div class="grid gap-1">
-                        <Label class="sr-only" for="email">Password</Label>
-                        <Input
-                                id="password"
-                                placeholder="password*"
-                                type="password"
-                                autocapitalize="none"
-                                autocomplete="password"
-                                autocorrect="off"
-                                disabled={isLoading}
-                                bind:value={password}
-                        />
-                    </div>
-                    <Button disabled={isLoading || !isFormValid}
-                            on:click={() => signInWithEmailAndPassword(email, password)}>
-                        {#if isLoading}
-                            <Icons.spinner class="mr-2 h-4 w-4 animate-spin"/>
-                        {/if}
-                        Log in
-                    </Button>
-                </div>
-            </form>
+<!--            <form on:submit|preventDefault={() => {}}>-->
+<!--                <div class="grid gap-2">-->
+<!--                    <div class="grid gap-1">-->
+<!--                        <Label class="sr-only" for="email">Email</Label>-->
+<!--                        <Input-->
+<!--                                id="email"-->
+<!--                                placeholder="name@example.com*"-->
+<!--                                type="email"-->
+<!--                                autocapitalize="none"-->
+<!--                                autocomplete="email"-->
+<!--                                autocorrect="off"-->
+<!--                                disabled={isLoading}-->
+<!--                                bind:value={email}-->
+<!--                        />-->
+<!--                    </div>-->
+<!--                    <div class="grid gap-1">-->
+<!--                        <Label class="sr-only" for="email">Password</Label>-->
+<!--                        <Input-->
+<!--                                id="password"-->
+<!--                                placeholder="password*"-->
+<!--                                type="password"-->
+<!--                                autocapitalize="none"-->
+<!--                                autocomplete="password"-->
+<!--                                autocorrect="off"-->
+<!--                                disabled={isLoading}-->
+<!--                                bind:value={password}-->
+<!--                        />-->
+<!--                    </div>-->
+<!--                    <Button disabled={isLoading || !isFormValid}-->
+<!--                            on:click={() => signInWithEmailAndPassword(email, password)}>-->
+<!--                        {#if isLoading}-->
+<!--                            <Icons.spinner class="mr-2 h-4 w-4 animate-spin"/>-->
+<!--                        {/if}-->
+<!--                        Log in-->
+<!--                    </Button>-->
+<!--                </div>-->
+<!--            </form>-->
 
-            <div class="relative my-3">
-                <div class="absolute inset-0 flex items-center">
-                    <span class="w-full border-t"/>
-                </div>
-                <div class="relative flex justify-center text-xs uppercase">
-                    <span class="bg-background px-2 text-muted-foreground"> Or continue with </span>
-                </div>
-            </div>
+<!--            <div class="relative my-3">-->
+<!--                <div class="absolute inset-0 flex items-center">-->
+<!--                    <span class="w-full border-t"/>-->
+<!--                </div>-->
+<!--                <div class="relative flex justify-center text-xs uppercase">-->
+<!--                    <span class="bg-background px-2 text-muted-foreground"> Or continue with </span>-->
+<!--                </div>-->
+<!--            </div>-->
 
             <div class="flex flex-col gap-2">
-                <Button variant="outline" type="button" disabled={isLoading || true} on:click={signInWithGithub}>
-                    {#if isLoading}
-                        <Icons.spinner class="mr-2 h-4 w-4 animate-spin"/>
-                    {:else}
-                        <Icons.gitHub class="mr-2 h-4 w-4"/>
-                    {/if}
-                    GitHub
-                </Button>
+<!--                <Button variant="outline" type="button" disabled={isLoading || true} on:click={signInWithGithub}>-->
+<!--                    {#if isLoading}-->
+<!--                        <Icons.spinner class="mr-2 h-4 w-4 animate-spin"/>-->
+<!--                    {:else}-->
+<!--                        <Icons.gitHub class="mr-2 h-4 w-4"/>-->
+<!--                    {/if}-->
+<!--                    GitHub-->
+<!--                </Button>-->
 
                 <Button variant="outline" type="button" disabled={isLoading} on:click={signInWithGoogle}>
                     {#if isLoading}

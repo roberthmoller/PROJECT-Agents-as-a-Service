@@ -18,3 +18,5 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_AGENTS_AS_A_SERVICE }}'
           channelId: live
           projectId: agents-as-a-service
+        env:
+          FIREBASE_CLI_EXPERIMENTS: webframeworks
