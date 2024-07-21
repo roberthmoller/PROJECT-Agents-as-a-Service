@@ -1,20 +1,6 @@
 <script lang="ts">
     import {Command, UserCog, LogIn} from 'lucide-svelte';
     import {authState} from "$lib/firebase";
-    import {Input} from '$components/input';
-    import {Label} from '$components/Label';
-    import {Textarea} from '$components/textarea';
-    import {Button} from '$components/button';
-    import * as Form from "$components/form";
-    import {browser} from "$app/environment";
-    import SuperDebug, {
-        type SuperValidated,
-        type Infer,
-        superForm
-    } from "sveltekit-superforms";
-    import {zodClient} from "sveltekit-superforms/adapters";
-    import {toast} from "svelte-sonner";
-    import {formSchema, type FormSchema} from "./schema";
     import ContactForm from "./contact-form.svelte";
     import type { PageData } from "./$types.js";
     export let data: PageData;
