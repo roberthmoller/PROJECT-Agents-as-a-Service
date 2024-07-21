@@ -2,6 +2,7 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 
 import { AgentSpecification } from '../models/AgentSpecification';
+import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
 import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
@@ -10,13 +11,10 @@ import { HTTPValidationError } from '../models/HTTPValidationError';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
 import { ModelConnection } from '../models/ModelConnection';
+import { ModelDetails } from '../models/ModelDetails';
 import { ModelProviderConnection } from '../models/ModelProviderConnection';
-import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
-import { PhoneNumber } from '../models/PhoneNumber';
-import { PhotoUrl } from '../models/PhotoUrl';
 import { Requirements } from '../models/Requirements';
-import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedApiKey } from '../models/SavedApiKey';
 import { SavedMessageModel } from '../models/SavedMessageModel';
@@ -27,6 +25,7 @@ import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
 import { ValidationError } from '../models/ValidationError';
+import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 
 import { ObservableAgentApi } from "./ObservableAPI";
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
@@ -318,10 +317,10 @@ import { ProvidersApiRequestFactory, ProvidersApiResponseProcessor} from "../api
 export interface ProvidersApiConnectProviderProvidersProviderPostRequest {
     /**
      * 
-     * @type any
+     * @type string
      * @memberof ProvidersApiconnectProviderProvidersProviderPost
      */
-    provider: any
+    provider: string
     /**
      * 
      * @type ModelConnection
@@ -333,19 +332,19 @@ export interface ProvidersApiConnectProviderProvidersProviderPostRequest {
 export interface ProvidersApiDisconnectProviderProvidersProviderDeleteRequest {
     /**
      * 
-     * @type any
+     * @type string
      * @memberof ProvidersApidisconnectProviderProvidersProviderDelete
      */
-    provider: any
+    provider: string
 }
 
 export interface ProvidersApiGetProviderProvidersProviderGetRequest {
     /**
      * 
-     * @type any
+     * @type string
      * @memberof ProvidersApigetProviderProvidersProviderGet
      */
-    provider: any
+    provider: string
 }
 
 export interface ProvidersApiListProvidersProvidersGetRequest {
@@ -357,10 +356,10 @@ export interface ProvidersApiOptionsProvidersOptionsRequest {
 export interface ProvidersApiOptionsProvidersProviderOptionsRequest {
     /**
      * 
-     * @type any
+     * @type string
      * @memberof ProvidersApioptionsProvidersProviderOptions
      */
-    provider: any
+    provider: string
 }
 
 export class ObjectProvidersApi {
@@ -422,7 +421,7 @@ export class ObjectProvidersApi {
      * List Providers
      * @param param the request object
      */
-    public listProvidersProvidersGetWithHttpInfo(param: ProvidersApiListProvidersProvidersGetRequest = {}, options?: Configuration): Promise<HttpInfo<any>> {
+    public listProvidersProvidersGetWithHttpInfo(param: ProvidersApiListProvidersProvidersGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<ModelProviderConnection>>> {
         return this.api.listProvidersProvidersGetWithHttpInfo( options).toPromise();
     }
 
@@ -430,7 +429,7 @@ export class ObjectProvidersApi {
      * List Providers
      * @param param the request object
      */
-    public listProvidersProvidersGet(param: ProvidersApiListProvidersProvidersGetRequest = {}, options?: Configuration): Promise<any> {
+    public listProvidersProvidersGet(param: ProvidersApiListProvidersProvidersGetRequest = {}, options?: Configuration): Promise<Array<ModelProviderConnection>> {
         return this.api.listProvidersProvidersGet( options).toPromise();
     }
 
@@ -483,10 +482,10 @@ export interface SessionApiCreateSessionSessionsPostRequest {
 export interface SessionApiGetSummarySessionsSessionIdGetRequest {
     /**
      * 
-     * @type any
+     * @type string
      * @memberof SessionApigetSummarySessionsSessionIdGet
      */
-    sessionId: any
+    sessionId: string
 }
 
 export interface SessionApiListSessionsSessionsGetRequest {
@@ -495,10 +494,10 @@ export interface SessionApiListSessionsSessionsGetRequest {
 export interface SessionApiSendMessageSessionsSessionIdPostRequest {
     /**
      * 
-     * @type any
+     * @type string
      * @memberof SessionApisendMessageSessionsSessionIdPost
      */
-    sessionId: any
+    sessionId: string
     /**
      * 
      * @type MessageContentModel
@@ -550,7 +549,7 @@ export class ObjectSessionApi {
      * List Sessions
      * @param param the request object
      */
-    public listSessionsSessionsGetWithHttpInfo(param: SessionApiListSessionsSessionsGetRequest = {}, options?: Configuration): Promise<HttpInfo<any>> {
+    public listSessionsSessionsGetWithHttpInfo(param: SessionApiListSessionsSessionsGetRequest = {}, options?: Configuration): Promise<HttpInfo<Array<Session>>> {
         return this.api.listSessionsSessionsGetWithHttpInfo( options).toPromise();
     }
 
@@ -558,7 +557,7 @@ export class ObjectSessionApi {
      * List Sessions
      * @param param the request object
      */
-    public listSessionsSessionsGet(param: SessionApiListSessionsSessionsGetRequest = {}, options?: Configuration): Promise<any> {
+    public listSessionsSessionsGet(param: SessionApiListSessionsSessionsGetRequest = {}, options?: Configuration): Promise<Array<Session>> {
         return this.api.listSessionsSessionsGet( options).toPromise();
     }
 

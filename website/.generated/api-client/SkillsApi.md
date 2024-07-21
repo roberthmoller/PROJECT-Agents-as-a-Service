@@ -1,6 +1,6 @@
 # .SkillsApi
 
-All URIs are relative to *http://localhost:5002/api*
+All URIs are relative to *http://127.0.0.1:5001/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -90,7 +90,12 @@ const apiInstance = new .SkillsApi(configuration);
 
 let body:.SkillsApiCreateSkillSkillsPostRequest = {
   // SkillSpecification
-  skillSpecification: null,
+  skillSpecification: {
+    name: "name_example",
+    description: "",
+    requirements: "",
+    code: "code_example",
+  },
 };
 
 apiInstance.createSkillSkillsPost(body).then((data:any) => {
@@ -303,7 +308,9 @@ const apiInstance = new .SkillsApi(configuration);
 
 let body:.SkillsApiSkillRequirementsSkillsRequirementsPostRequest = {
   // Code
-  code: null,
+  code: {
+    code: "code_example",
+  },
 };
 
 apiInstance.skillRequirementsSkillsRequirementsPost(body).then((data:any) => {
@@ -360,7 +367,12 @@ let body:.SkillsApiUpdateSkillSkillsSkillIdPutRequest = {
   // string
   skillId: "skill_id_example",
   // SkillSpecification
-  skillSpecification: null,
+  skillSpecification: {
+    name: "name_example",
+    description: "",
+    requirements: "",
+    code: "code_example",
+  },
 };
 
 apiInstance.updateSkillSkillsSkillIdPut(body).then((data:any) => {

@@ -10,40 +10,41 @@
  * Do not edit the class manually.
  */
 
+import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
 import { HttpFile } from '../http/http';
 
 export class SavedAgentSpecification {
     /**
     * The name of the agent that will be used to identify it in the system.
     */
-    'name': any | null;
+    'name': string;
     /**
     * The message that the agent will send to the user when it is first connected
     */
-    'systemMessage': any | null;
+    'systemMessage': string;
     /**
     * The list of models that the agent can use to generate responses
     */
-    'models'?: any | null;
+    'models'?: Array<AgentSpecificationModelsInner>;
     /**
     * The list of skills that the agent can apply to the user\'s requests.
     */
-    'skills'?: any | null;
+    'skills'?: Array<string>;
     /**
     * A description of the agent for the user to be able to understand what the agent is about.
     */
-    'description': any | null;
+    'description': string;
     /**
     * The cache seed used to initialize the agent\'s random number generator
     */
-    'cacheSeed'?: any | null;
+    'cacheSeed'?: number;
     /**
     * The temperature of the agent\'s response generation process
     */
-    'temperature'?: any | null;
-    'createdAt'?: any | null;
-    'id': any | null;
-    'updatedAt'?: any | null;
+    'temperature'?: number;
+    'createdAt'?: string;
+    'id': string;
+    'updatedAt'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -51,61 +52,61 @@ export class SavedAgentSpecification {
         {
             "name": "name",
             "baseName": "name",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "systemMessage",
             "baseName": "system_message",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "models",
             "baseName": "models",
-            "type": "any",
+            "type": "Array<AgentSpecificationModelsInner>",
             "format": ""
         },
         {
             "name": "skills",
             "baseName": "skills",
-            "type": "any",
+            "type": "Array<string>",
             "format": ""
         },
         {
             "name": "description",
             "baseName": "description",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "cacheSeed",
             "baseName": "cache_seed",
-            "type": "any",
+            "type": "number",
             "format": ""
         },
         {
             "name": "temperature",
             "baseName": "temperature",
-            "type": "any",
+            "type": "number",
             "format": ""
         },
         {
             "name": "createdAt",
             "baseName": "created_at",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "id",
             "baseName": "id",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "updatedAt",
             "baseName": "updated_at",
-            "type": "any",
+            "type": "string",
             "format": ""
         }    ];
 

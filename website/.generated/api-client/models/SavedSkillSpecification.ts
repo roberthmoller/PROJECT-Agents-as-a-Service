@@ -16,21 +16,21 @@ export class SavedSkillSpecification {
     /**
     * The name of the skill that will be used to identify it in the system.
     */
-    'name': any | null;
+    'name': string;
     /**
     * The description of the skill that will be used to describe it in the system.
     */
-    'description'?: any | null;
+    'description'?: string;
     /**
     * The list of requirements that the skill must satisfy in order to be used.
     */
-    'requirements'?: any | null;
+    'requirements'?: string;
     /**
     * The code that will be used to execute the agent.
     */
-    'code': any | null;
-    'id': any | null;
-    'updatedAt'?: any | null;
+    'code': string;
+    'id': string;
+    'updatedAt'?: string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -38,37 +38,37 @@ export class SavedSkillSpecification {
         {
             "name": "name",
             "baseName": "name",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "description",
             "baseName": "description",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "requirements",
             "baseName": "requirements",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "code",
             "baseName": "code",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "id",
             "baseName": "id",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "updatedAt",
             "baseName": "updated_at",
-            "type": "any",
+            "type": "string",
             "format": ""
         }    ];
 

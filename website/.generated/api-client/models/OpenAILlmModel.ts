@@ -12,18 +12,16 @@
 
 import { HttpFile } from '../http/http';
 
-export class OpenAILlmModel {
-
-    static readonly discriminator: string | undefined = undefined;
-
-    static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-    ];
-
-    static getAttributeTypeMap() {
-        return OpenAILlmModel.attributeTypeMap;
-    }
-
-    public constructor() {
-    }
+export enum OpenAILlmModel {
+    _40125Preview = 'gpt-4-0125-preview',
+    _4TurboPreview = 'gpt-4-turbo-preview',
+    _41106Preview = 'gpt-4-1106-preview',
+    _4 = 'gpt-4',
+    _40613 = 'gpt-4-0613',
+    _432k = 'gpt-4-32k',
+    _432k0613 = 'gpt-4-32k-0613',
+    _35Turbo0125 = 'gpt-3.5-turbo-0125',
+    _35Turbo = 'gpt-3.5-turbo',
+    _35Turbo1106 = 'gpt-3.5-turbo-1106',
+    _35TurboInstruct = 'gpt-3.5-turbo-instruct'
 }
-

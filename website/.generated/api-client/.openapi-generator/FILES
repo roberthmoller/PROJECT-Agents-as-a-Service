@@ -22,6 +22,7 @@ http/isomorphic-fetch.ts
 index.ts
 middleware.ts
 models/AgentSpecification.ts
+models/AgentSpecificationModelsInner.ts
 models/ApiKey.ts
 models/Code.ts
 models/FirebaseUser.ts
@@ -30,14 +31,11 @@ models/HTTPValidationError.ts
 models/LocalLlmModel.ts
 models/MessageContentModel.ts
 models/ModelConnection.ts
+models/ModelDetails.ts
 models/ModelProviderConnection.ts
-models/Name.ts
 models/ObjectSerializer.ts
 models/OpenAILlmModel.ts
-models/PhoneNumber.ts
-models/PhotoUrl.ts
 models/Requirements.ts
-models/Role.ts
 models/SavedAgentSpecification.ts
 models/SavedApiKey.ts
 models/SavedMessageModel.ts
@@ -48,6 +46,7 @@ models/Session.ts
 models/SessionSpecification.ts
 models/SkillSpecification.ts
 models/ValidationError.ts
+models/ValidationErrorLocInner.ts
 models/all.ts
 package.json
 rxjsStub.ts

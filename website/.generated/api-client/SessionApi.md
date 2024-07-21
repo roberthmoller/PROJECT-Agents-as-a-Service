@@ -1,6 +1,6 @@
 # .SessionApi
 
-All URIs are relative to *http://localhost:5002/api*
+All URIs are relative to *http://127.0.0.1:5001/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -26,7 +26,11 @@ const apiInstance = new .SessionApi(configuration);
 
 let body:.SessionApiCreateSessionSessionsPostRequest = {
   // SessionSpecification
-  sessionSpecification: null,
+  sessionSpecification: {
+    agents: [
+      "agents_example",
+    ],
+  },
 };
 
 apiInstance.createSessionSessionsPost(body).then((data:any) => {
@@ -79,8 +83,8 @@ const configuration = .createConfiguration();
 const apiInstance = new .SessionApi(configuration);
 
 let body:.SessionApiGetSummarySessionsSessionIdGetRequest = {
-  // any
-  sessionId: null,
+  // string
+  sessionId: "session_id_example",
 };
 
 apiInstance.getSummarySessionsSessionIdGet(body).then((data:any) => {
@@ -93,7 +97,7 @@ apiInstance.getSummarySessionsSessionIdGet(body).then((data:any) => {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **sessionId** | **any** |  | defaults to undefined
+ **sessionId** | [**string**] |  | defaults to undefined
 
 
 ### Return type
@@ -119,7 +123,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](README.md#documentation-for-api-endpoints) [[Back to Model list]](README.md#documentation-for-models) [[Back to README]](README.md)
 
 # **listSessionsSessionsGet**
-> any listSessionsSessionsGet()
+> Array<Session> listSessionsSessionsGet()
 
 
 ### Example
@@ -146,7 +150,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-**any**
+**Array<Session>**
 
 ### Authorization
 
@@ -180,10 +184,13 @@ const configuration = .createConfiguration();
 const apiInstance = new .SessionApi(configuration);
 
 let body:.SessionApiSendMessageSessionsSessionIdPostRequest = {
-  // any
-  sessionId: null,
+  // string
+  sessionId: "session_id_example",
   // MessageContentModel
-  messageContentModel: null,
+  messageContentModel: {
+    content: "content_example",
+    role: "role_example",
+  },
 };
 
 apiInstance.sendMessageSessionsSessionIdPost(body).then((data:any) => {
@@ -197,7 +204,7 @@ apiInstance.sendMessageSessionsSessionIdPost(body).then((data:any) => {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **messageContentModel** | **MessageContentModel**|  |
- **sessionId** | **any** |  | defaults to undefined
+ **sessionId** | [**string**] |  | defaults to undefined
 
 
 ### Return type

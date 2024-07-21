@@ -19,8 +19,6 @@ jobs:
         with:
           tools-version: 11.9.0
           firebase_token: ${{ secrets.FIREBASE_TOKEN }}
-        env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworks
 
       - run: cd website
       - name: "Install Dependencies"
@@ -31,5 +29,3 @@ jobs:
         run: npm test
       - name: "Deploy preview to Firebase"
         run: firebase hosting:channel:deploy PR-${{ github.event.number }} --expires 1d
-        env:
-          FIREBASE_CLI_EXPERIMENTS: webframeworks

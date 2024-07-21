@@ -12,18 +12,7 @@
 
 import { HttpFile } from '../http/http';
 
-export class LocalLlmModel {
-
-    static readonly discriminator: string | undefined = undefined;
-
-    static readonly attributeTypeMap: Array<{name: string, baseName: string, type: string, format: string}> = [
-    ];
-
-    static getAttributeTypeMap() {
-        return LocalLlmModel.attributeTypeMap;
-    }
-
-    public constructor() {
-    }
+export enum LocalLlmModel {
+    Mixtral = 'mixtral',
+    OrcaMini = 'orca-mini'
 }
-

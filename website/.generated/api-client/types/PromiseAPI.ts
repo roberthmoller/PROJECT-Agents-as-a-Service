@@ -2,6 +2,7 @@ import { ResponseContext, RequestContext, HttpFile, HttpInfo } from '../http/htt
 import { Configuration} from '../configuration'
 
 import { AgentSpecification } from '../models/AgentSpecification';
+import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
 import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
@@ -10,13 +11,10 @@ import { HTTPValidationError } from '../models/HTTPValidationError';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
 import { ModelConnection } from '../models/ModelConnection';
+import { ModelDetails } from '../models/ModelDetails';
 import { ModelProviderConnection } from '../models/ModelProviderConnection';
-import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
-import { PhoneNumber } from '../models/PhoneNumber';
-import { PhotoUrl } from '../models/PhotoUrl';
 import { Requirements } from '../models/Requirements';
-import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedApiKey } from '../models/SavedApiKey';
 import { SavedMessageModel } from '../models/SavedMessageModel';
@@ -27,6 +25,7 @@ import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
 import { ValidationError } from '../models/ValidationError';
+import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 import { ObservableAgentApi } from './ObservableAPI';
 
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
@@ -289,7 +288,7 @@ export class PromiseProvidersApi {
      * @param provider 
      * @param modelConnection 
      */
-    public connectProviderProvidersProviderPostWithHttpInfo(provider: any, modelConnection: ModelConnection, _options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
+    public connectProviderProvidersProviderPostWithHttpInfo(provider: string, modelConnection: ModelConnection, _options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
         const result = this.api.connectProviderProvidersProviderPostWithHttpInfo(provider, modelConnection, _options);
         return result.toPromise();
     }
@@ -299,7 +298,7 @@ export class PromiseProvidersApi {
      * @param provider 
      * @param modelConnection 
      */
-    public connectProviderProvidersProviderPost(provider: any, modelConnection: ModelConnection, _options?: Configuration): Promise<ModelProviderConnection> {
+    public connectProviderProvidersProviderPost(provider: string, modelConnection: ModelConnection, _options?: Configuration): Promise<ModelProviderConnection> {
         const result = this.api.connectProviderProvidersProviderPost(provider, modelConnection, _options);
         return result.toPromise();
     }
@@ -308,7 +307,7 @@ export class PromiseProvidersApi {
      * Disconnect Provider
      * @param provider 
      */
-    public disconnectProviderProvidersProviderDeleteWithHttpInfo(provider: any, _options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
+    public disconnectProviderProvidersProviderDeleteWithHttpInfo(provider: string, _options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
         const result = this.api.disconnectProviderProvidersProviderDeleteWithHttpInfo(provider, _options);
         return result.toPromise();
     }
@@ -317,7 +316,7 @@ export class PromiseProvidersApi {
      * Disconnect Provider
      * @param provider 
      */
-    public disconnectProviderProvidersProviderDelete(provider: any, _options?: Configuration): Promise<ModelProviderConnection> {
+    public disconnectProviderProvidersProviderDelete(provider: string, _options?: Configuration): Promise<ModelProviderConnection> {
         const result = this.api.disconnectProviderProvidersProviderDelete(provider, _options);
         return result.toPromise();
     }
@@ -326,7 +325,7 @@ export class PromiseProvidersApi {
      * Get Provider
      * @param provider 
      */
-    public getProviderProvidersProviderGetWithHttpInfo(provider: any, _options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
+    public getProviderProvidersProviderGetWithHttpInfo(provider: string, _options?: Configuration): Promise<HttpInfo<ModelProviderConnection>> {
         const result = this.api.getProviderProvidersProviderGetWithHttpInfo(provider, _options);
         return result.toPromise();
     }
@@ -335,7 +334,7 @@ export class PromiseProvidersApi {
      * Get Provider
      * @param provider 
      */
-    public getProviderProvidersProviderGet(provider: any, _options?: Configuration): Promise<ModelProviderConnection> {
+    public getProviderProvidersProviderGet(provider: string, _options?: Configuration): Promise<ModelProviderConnection> {
         const result = this.api.getProviderProvidersProviderGet(provider, _options);
         return result.toPromise();
     }
@@ -343,7 +342,7 @@ export class PromiseProvidersApi {
     /**
      * List Providers
      */
-    public listProvidersProvidersGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
+    public listProvidersProvidersGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<ModelProviderConnection>>> {
         const result = this.api.listProvidersProvidersGetWithHttpInfo(_options);
         return result.toPromise();
     }
@@ -351,7 +350,7 @@ export class PromiseProvidersApi {
     /**
      * List Providers
      */
-    public listProvidersProvidersGet(_options?: Configuration): Promise<any> {
+    public listProvidersProvidersGet(_options?: Configuration): Promise<Array<ModelProviderConnection>> {
         const result = this.api.listProvidersProvidersGet(_options);
         return result.toPromise();
     }
@@ -376,7 +375,7 @@ export class PromiseProvidersApi {
      * Options
      * @param provider 
      */
-    public optionsProvidersProviderOptionsWithHttpInfo(provider: any, _options?: Configuration): Promise<HttpInfo<any>> {
+    public optionsProvidersProviderOptionsWithHttpInfo(provider: string, _options?: Configuration): Promise<HttpInfo<any>> {
         const result = this.api.optionsProvidersProviderOptionsWithHttpInfo(provider, _options);
         return result.toPromise();
     }
@@ -385,7 +384,7 @@ export class PromiseProvidersApi {
      * Options
      * @param provider 
      */
-    public optionsProvidersProviderOptions(provider: any, _options?: Configuration): Promise<any> {
+    public optionsProvidersProviderOptions(provider: string, _options?: Configuration): Promise<any> {
         const result = this.api.optionsProvidersProviderOptions(provider, _options);
         return result.toPromise();
     }
@@ -431,7 +430,7 @@ export class PromiseSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: any, _options?: Configuration): Promise<HttpInfo<Session>> {
+    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: string, _options?: Configuration): Promise<HttpInfo<Session>> {
         const result = this.api.getSummarySessionsSessionIdGetWithHttpInfo(sessionId, _options);
         return result.toPromise();
     }
@@ -440,7 +439,7 @@ export class PromiseSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionsSessionIdGet(sessionId: any, _options?: Configuration): Promise<Session> {
+    public getSummarySessionsSessionIdGet(sessionId: string, _options?: Configuration): Promise<Session> {
         const result = this.api.getSummarySessionsSessionIdGet(sessionId, _options);
         return result.toPromise();
     }
@@ -448,7 +447,7 @@ export class PromiseSessionApi {
     /**
      * List Sessions
      */
-    public listSessionsSessionsGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<any>> {
+    public listSessionsSessionsGetWithHttpInfo(_options?: Configuration): Promise<HttpInfo<Array<Session>>> {
         const result = this.api.listSessionsSessionsGetWithHttpInfo(_options);
         return result.toPromise();
     }
@@ -456,7 +455,7 @@ export class PromiseSessionApi {
     /**
      * List Sessions
      */
-    public listSessionsSessionsGet(_options?: Configuration): Promise<any> {
+    public listSessionsSessionsGet(_options?: Configuration): Promise<Array<Session>> {
         const result = this.api.listSessionsSessionsGet(_options);
         return result.toPromise();
     }
@@ -466,7 +465,7 @@ export class PromiseSessionApi {
      * @param sessionId 
      * @param messageContentModel 
      */
-    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Promise<HttpInfo<Session>> {
+    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: string, messageContentModel: MessageContentModel, _options?: Configuration): Promise<HttpInfo<Session>> {
         const result = this.api.sendMessageSessionsSessionIdPostWithHttpInfo(sessionId, messageContentModel, _options);
         return result.toPromise();
     }
@@ -476,7 +475,7 @@ export class PromiseSessionApi {
      * @param sessionId 
      * @param messageContentModel 
      */
-    public sendMessageSessionsSessionIdPost(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Promise<Session> {
+    public sendMessageSessionsSessionIdPost(sessionId: string, messageContentModel: MessageContentModel, _options?: Configuration): Promise<Session> {
         const result = this.api.sendMessageSessionsSessionIdPost(sessionId, messageContentModel, _options);
         return result.toPromise();
     }

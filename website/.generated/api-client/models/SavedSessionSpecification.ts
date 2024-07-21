@@ -13,8 +13,8 @@
 import { HttpFile } from '../http/http';
 
 export class SavedSessionSpecification {
-    'agents': any | null;
-    'id': any | null;
+    'agents': Array<string>;
+    'id': string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -22,13 +22,13 @@ export class SavedSessionSpecification {
         {
             "name": "agents",
             "baseName": "agents",
-            "type": "any",
+            "type": "Array<string>",
             "format": ""
         },
         {
             "name": "id",
             "baseName": "id",
-            "type": "any",
+            "type": "string",
             "format": ""
         }    ];
 

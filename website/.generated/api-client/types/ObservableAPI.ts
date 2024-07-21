@@ -3,6 +3,7 @@ import { Configuration} from '../configuration'
 import { Observable, of, from } from '../rxjsStub';
 import {mergeMap, map} from  '../rxjsStub';
 import { AgentSpecification } from '../models/AgentSpecification';
+import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
 import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
@@ -11,13 +12,10 @@ import { HTTPValidationError } from '../models/HTTPValidationError';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
 import { ModelConnection } from '../models/ModelConnection';
+import { ModelDetails } from '../models/ModelDetails';
 import { ModelProviderConnection } from '../models/ModelProviderConnection';
-import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
-import { PhoneNumber } from '../models/PhoneNumber';
-import { PhotoUrl } from '../models/PhotoUrl';
 import { Requirements } from '../models/Requirements';
-import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedApiKey } from '../models/SavedApiKey';
 import { SavedMessageModel } from '../models/SavedMessageModel';
@@ -28,6 +26,7 @@ import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
 import { ValidationError } from '../models/ValidationError';
+import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 
 import { AgentApiRequestFactory, AgentApiResponseProcessor} from "../apis/AgentApi";
 export class ObservableAgentApi {
@@ -420,7 +419,7 @@ export class ObservableProvidersApi {
      * @param provider 
      * @param modelConnection 
      */
-    public connectProviderProvidersProviderPostWithHttpInfo(provider: any, modelConnection: ModelConnection, _options?: Configuration): Observable<HttpInfo<ModelProviderConnection>> {
+    public connectProviderProvidersProviderPostWithHttpInfo(provider: string, modelConnection: ModelConnection, _options?: Configuration): Observable<HttpInfo<ModelProviderConnection>> {
         const requestContextPromise = this.requestFactory.connectProviderProvidersProviderPost(provider, modelConnection, _options);
 
         // build promise chain
@@ -444,7 +443,7 @@ export class ObservableProvidersApi {
      * @param provider 
      * @param modelConnection 
      */
-    public connectProviderProvidersProviderPost(provider: any, modelConnection: ModelConnection, _options?: Configuration): Observable<ModelProviderConnection> {
+    public connectProviderProvidersProviderPost(provider: string, modelConnection: ModelConnection, _options?: Configuration): Observable<ModelProviderConnection> {
         return this.connectProviderProvidersProviderPostWithHttpInfo(provider, modelConnection, _options).pipe(map((apiResponse: HttpInfo<ModelProviderConnection>) => apiResponse.data));
     }
 
@@ -452,7 +451,7 @@ export class ObservableProvidersApi {
      * Disconnect Provider
      * @param provider 
      */
-    public disconnectProviderProvidersProviderDeleteWithHttpInfo(provider: any, _options?: Configuration): Observable<HttpInfo<ModelProviderConnection>> {
+    public disconnectProviderProvidersProviderDeleteWithHttpInfo(provider: string, _options?: Configuration): Observable<HttpInfo<ModelProviderConnection>> {
         const requestContextPromise = this.requestFactory.disconnectProviderProvidersProviderDelete(provider, _options);
 
         // build promise chain
@@ -475,7 +474,7 @@ export class ObservableProvidersApi {
      * Disconnect Provider
      * @param provider 
      */
-    public disconnectProviderProvidersProviderDelete(provider: any, _options?: Configuration): Observable<ModelProviderConnection> {
+    public disconnectProviderProvidersProviderDelete(provider: string, _options?: Configuration): Observable<ModelProviderConnection> {
         return this.disconnectProviderProvidersProviderDeleteWithHttpInfo(provider, _options).pipe(map((apiResponse: HttpInfo<ModelProviderConnection>) => apiResponse.data));
     }
 
@@ -483,7 +482,7 @@ export class ObservableProvidersApi {
      * Get Provider
      * @param provider 
      */
-    public getProviderProvidersProviderGetWithHttpInfo(provider: any, _options?: Configuration): Observable<HttpInfo<ModelProviderConnection>> {
+    public getProviderProvidersProviderGetWithHttpInfo(provider: string, _options?: Configuration): Observable<HttpInfo<ModelProviderConnection>> {
         const requestContextPromise = this.requestFactory.getProviderProvidersProviderGet(provider, _options);
 
         // build promise chain
@@ -506,14 +505,14 @@ export class ObservableProvidersApi {
      * Get Provider
      * @param provider 
      */
-    public getProviderProvidersProviderGet(provider: any, _options?: Configuration): Observable<ModelProviderConnection> {
+    public getProviderProvidersProviderGet(provider: string, _options?: Configuration): Observable<ModelProviderConnection> {
         return this.getProviderProvidersProviderGetWithHttpInfo(provider, _options).pipe(map((apiResponse: HttpInfo<ModelProviderConnection>) => apiResponse.data));
     }
 
     /**
      * List Providers
      */
-    public listProvidersProvidersGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<any>> {
+    public listProvidersProvidersGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<Array<ModelProviderConnection>>> {
         const requestContextPromise = this.requestFactory.listProvidersProvidersGet(_options);
 
         // build promise chain
@@ -535,8 +534,8 @@ export class ObservableProvidersApi {
     /**
      * List Providers
      */
-    public listProvidersProvidersGet(_options?: Configuration): Observable<any> {
-        return this.listProvidersProvidersGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
+    public listProvidersProvidersGet(_options?: Configuration): Observable<Array<ModelProviderConnection>> {
+        return this.listProvidersProvidersGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<Array<ModelProviderConnection>>) => apiResponse.data));
     }
 
     /**
@@ -572,7 +571,7 @@ export class ObservableProvidersApi {
      * Options
      * @param provider 
      */
-    public optionsProvidersProviderOptionsWithHttpInfo(provider: any, _options?: Configuration): Observable<HttpInfo<any>> {
+    public optionsProvidersProviderOptionsWithHttpInfo(provider: string, _options?: Configuration): Observable<HttpInfo<any>> {
         const requestContextPromise = this.requestFactory.optionsProvidersProviderOptions(provider, _options);
 
         // build promise chain
@@ -595,7 +594,7 @@ export class ObservableProvidersApi {
      * Options
      * @param provider 
      */
-    public optionsProvidersProviderOptions(provider: any, _options?: Configuration): Observable<any> {
+    public optionsProvidersProviderOptions(provider: string, _options?: Configuration): Observable<any> {
         return this.optionsProvidersProviderOptionsWithHttpInfo(provider, _options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
     }
 
@@ -652,7 +651,7 @@ export class ObservableSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: any, _options?: Configuration): Observable<HttpInfo<Session>> {
+    public getSummarySessionsSessionIdGetWithHttpInfo(sessionId: string, _options?: Configuration): Observable<HttpInfo<Session>> {
         const requestContextPromise = this.requestFactory.getSummarySessionsSessionIdGet(sessionId, _options);
 
         // build promise chain
@@ -675,14 +674,14 @@ export class ObservableSessionApi {
      * Get Summary
      * @param sessionId 
      */
-    public getSummarySessionsSessionIdGet(sessionId: any, _options?: Configuration): Observable<Session> {
+    public getSummarySessionsSessionIdGet(sessionId: string, _options?: Configuration): Observable<Session> {
         return this.getSummarySessionsSessionIdGetWithHttpInfo(sessionId, _options).pipe(map((apiResponse: HttpInfo<Session>) => apiResponse.data));
     }
 
     /**
      * List Sessions
      */
-    public listSessionsSessionsGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<any>> {
+    public listSessionsSessionsGetWithHttpInfo(_options?: Configuration): Observable<HttpInfo<Array<Session>>> {
         const requestContextPromise = this.requestFactory.listSessionsSessionsGet(_options);
 
         // build promise chain
@@ -704,8 +703,8 @@ export class ObservableSessionApi {
     /**
      * List Sessions
      */
-    public listSessionsSessionsGet(_options?: Configuration): Observable<any> {
-        return this.listSessionsSessionsGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<any>) => apiResponse.data));
+    public listSessionsSessionsGet(_options?: Configuration): Observable<Array<Session>> {
+        return this.listSessionsSessionsGetWithHttpInfo(_options).pipe(map((apiResponse: HttpInfo<Array<Session>>) => apiResponse.data));
     }
 
     /**
@@ -713,7 +712,7 @@ export class ObservableSessionApi {
      * @param sessionId 
      * @param messageContentModel 
      */
-    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Observable<HttpInfo<Session>> {
+    public sendMessageSessionsSessionIdPostWithHttpInfo(sessionId: string, messageContentModel: MessageContentModel, _options?: Configuration): Observable<HttpInfo<Session>> {
         const requestContextPromise = this.requestFactory.sendMessageSessionsSessionIdPost(sessionId, messageContentModel, _options);
 
         // build promise chain
@@ -737,7 +736,7 @@ export class ObservableSessionApi {
      * @param sessionId 
      * @param messageContentModel 
      */
-    public sendMessageSessionsSessionIdPost(sessionId: any, messageContentModel: MessageContentModel, _options?: Configuration): Observable<Session> {
+    public sendMessageSessionsSessionIdPost(sessionId: string, messageContentModel: MessageContentModel, _options?: Configuration): Observable<Session> {
         return this.sendMessageSessionsSessionIdPostWithHttpInfo(sessionId, messageContentModel, _options).pipe(map((apiResponse: HttpInfo<Session>) => apiResponse.data));
     }
 

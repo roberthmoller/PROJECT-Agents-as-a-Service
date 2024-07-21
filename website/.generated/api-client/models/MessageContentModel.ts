@@ -10,15 +10,14 @@
  * Do not edit the class manually.
  */
 
-import { Role } from '../models/Role';
 import { HttpFile } from '../http/http';
 
 export class MessageContentModel {
     /**
     * The content of the message.
     */
-    'content': any | null;
-    'role'?: Role;
+    'content': string;
+    'role'?: string | null;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -26,13 +25,13 @@ export class MessageContentModel {
         {
             "name": "content",
             "baseName": "content",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "role",
             "baseName": "role",
-            "type": "Role",
+            "type": "string",
             "format": ""
         }    ];
 

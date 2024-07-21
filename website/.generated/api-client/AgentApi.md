@@ -1,6 +1,6 @@
 # .AgentApi
 
-All URIs are relative to *http://localhost:5002/api*
+All URIs are relative to *http://127.0.0.1:5001/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -28,7 +28,18 @@ const apiInstance = new .AgentApi(configuration);
 
 let body:.AgentApiCreateAgentAgentsPostRequest = {
   // AgentSpecification
-  agentSpecification: null,
+  agentSpecification: {
+    name: "name_example",
+    systemMessage: "systemMessage_example",
+    models: [
+      null,
+    ],
+    skills: [],
+    description: "description_example",
+    cacheSeed: 42,
+    temperature: 0,
+    createdAt: "createdAt_example",
+  },
 };
 
 apiInstance.createAgentAgentsPost(body).then((data:any) => {
@@ -243,7 +254,18 @@ let body:.AgentApiUpdateAgentAgentsAgentIdPutRequest = {
   // string
   agentId: "agent_id_example",
   // AgentSpecification
-  agentSpecification: null,
+  agentSpecification: {
+    name: "name_example",
+    systemMessage: "systemMessage_example",
+    models: [
+      null,
+    ],
+    skills: [],
+    description: "description_example",
+    cacheSeed: 42,
+    temperature: 0,
+    createdAt: "createdAt_example",
+  },
 };
 
 apiInstance.updateAgentAgentsAgentIdPut(body).then((data:any) => {

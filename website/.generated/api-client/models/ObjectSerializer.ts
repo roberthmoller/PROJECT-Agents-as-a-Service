@@ -1,4 +1,5 @@
 export * from '../models/AgentSpecification';
+export * from '../models/AgentSpecificationModelsInner';
 export * from '../models/ApiKey';
 export * from '../models/Code';
 export * from '../models/FirebaseUser';
@@ -7,13 +8,10 @@ export * from '../models/HTTPValidationError';
 export * from '../models/LocalLlmModel';
 export * from '../models/MessageContentModel';
 export * from '../models/ModelConnection';
+export * from '../models/ModelDetails';
 export * from '../models/ModelProviderConnection';
-export * from '../models/Name';
 export * from '../models/OpenAILlmModel';
-export * from '../models/PhoneNumber';
-export * from '../models/PhotoUrl';
 export * from '../models/Requirements';
-export * from '../models/Role';
 export * from '../models/SavedAgentSpecification';
 export * from '../models/SavedApiKey';
 export * from '../models/SavedMessageModel';
@@ -24,8 +22,10 @@ export * from '../models/Session';
 export * from '../models/SessionSpecification';
 export * from '../models/SkillSpecification';
 export * from '../models/ValidationError';
+export * from '../models/ValidationErrorLocInner';
 
 import { AgentSpecification } from '../models/AgentSpecification';
+import { AgentSpecificationModelsInner } from '../models/AgentSpecificationModelsInner';
 import { ApiKey } from '../models/ApiKey';
 import { Code } from '../models/Code';
 import { FirebaseUser } from '../models/FirebaseUser';
@@ -34,13 +34,10 @@ import { HTTPValidationError } from '../models/HTTPValidationError';
 import { LocalLlmModel } from '../models/LocalLlmModel';
 import { MessageContentModel } from '../models/MessageContentModel';
 import { ModelConnection } from '../models/ModelConnection';
+import { ModelDetails } from '../models/ModelDetails';
 import { ModelProviderConnection } from '../models/ModelProviderConnection';
-import { Name } from '../models/Name';
 import { OpenAILlmModel } from '../models/OpenAILlmModel';
-import { PhoneNumber } from '../models/PhoneNumber';
-import { PhotoUrl } from '../models/PhotoUrl';
 import { Requirements } from '../models/Requirements';
-import { Role } from '../models/Role';
 import { SavedAgentSpecification } from '../models/SavedAgentSpecification';
 import { SavedApiKey } from '../models/SavedApiKey';
 import { SavedMessageModel } from '../models/SavedMessageModel';
@@ -51,6 +48,7 @@ import { Session } from '../models/Session';
 import { SessionSpecification } from '../models/SessionSpecification';
 import { SkillSpecification } from '../models/SkillSpecification';
 import { ValidationError } from '../models/ValidationError';
+import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 
 /* tslint:disable:no-unused-variable */
 let primitives = [
@@ -65,25 +63,23 @@ let primitives = [
                  ];
 
 let enumsMap: Set<string> = new Set<string>([
+    "GroqLlmModel",
+    "LocalLlmModel",
+    "OpenAILlmModel",
 ]);
 
 let typeMap: {[index: string]: any} = {
     "AgentSpecification": AgentSpecification,
+    "AgentSpecificationModelsInner": AgentSpecificationModelsInner,
     "ApiKey": ApiKey,
     "Code": Code,
     "FirebaseUser": FirebaseUser,
-    "GroqLlmModel": GroqLlmModel,
     "HTTPValidationError": HTTPValidationError,
-    "LocalLlmModel": LocalLlmModel,
     "MessageContentModel": MessageContentModel,
     "ModelConnection": ModelConnection,
+    "ModelDetails": ModelDetails,
     "ModelProviderConnection": ModelProviderConnection,
-    "Name": Name,
-    "OpenAILlmModel": OpenAILlmModel,
-    "PhoneNumber": PhoneNumber,
-    "PhotoUrl": PhotoUrl,
     "Requirements": Requirements,
-    "Role": Role,
     "SavedAgentSpecification": SavedAgentSpecification,
     "SavedApiKey": SavedApiKey,
     "SavedMessageModel": SavedMessageModel,
@@ -94,6 +90,7 @@ let typeMap: {[index: string]: any} = {
     "SessionSpecification": SessionSpecification,
     "SkillSpecification": SkillSpecification,
     "ValidationError": ValidationError,
+    "ValidationErrorLocInner": ValidationErrorLocInner,
 }
 
 type MimeTypeDescriptor = {

@@ -10,12 +10,13 @@
  * Do not edit the class manually.
  */
 
+import { ValidationErrorLocInner } from '../models/ValidationErrorLocInner';
 import { HttpFile } from '../http/http';
 
 export class ValidationError {
-    'loc': any | null;
-    'msg': any | null;
-    'type': any | null;
+    'loc': Array<ValidationErrorLocInner>;
+    'msg': string;
+    'type': string;
 
     static readonly discriminator: string | undefined = undefined;
 
@@ -23,19 +24,19 @@ export class ValidationError {
         {
             "name": "loc",
             "baseName": "loc",
-            "type": "any",
+            "type": "Array<ValidationErrorLocInner>",
             "format": ""
         },
         {
             "name": "msg",
             "baseName": "msg",
-            "type": "any",
+            "type": "string",
             "format": ""
         },
         {
             "name": "type",
             "baseName": "type",
-            "type": "any",
+            "type": "string",
             "format": ""
         }    ];
 

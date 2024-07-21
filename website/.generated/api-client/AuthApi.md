@@ -1,6 +1,6 @@
 # .AuthApi
 
-All URIs are relative to *http://localhost:5002/api*
+All URIs are relative to *http://127.0.0.1:5001/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
@@ -26,7 +26,9 @@ const apiInstance = new .AuthApi(configuration);
 
 let body:.AuthApiCreateApiKeyAuthApiKeyPostRequest = {
   // ApiKey
-  apiKey: null,
+  apiKey: {
+    name: "name_example",
+  },
 };
 
 apiInstance.createApiKeyAuthApiKeyPost(body).then((data:any) => {
