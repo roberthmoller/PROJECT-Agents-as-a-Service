@@ -83,4 +83,4 @@ The pipeline is triggered on pull requests and merges to the `main` branch.
 
 ## License
 
-Agents-as-a-Service is licensed under the MIT License. See the [LICENSE](LICENSE) file for more information.
+Agents-as-a-Service is licensed under the MIT License. See the [LICENSE](licence.md) file for more information.
