@@ -1,11 +1,8 @@
 <script lang="ts">
     import {Input} from '$components/input';
-    import {Label} from '$components/Label';
     import {Textarea} from '$components/textarea';
-    import {Button} from '$components/button';
     import * as Form from "$components/form";
-    import {browser} from "$app/environment";
-    import SuperDebug, {
+    import {
         type SuperValidated,
         type Infer,
         superForm

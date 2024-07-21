@@ -30,7 +30,7 @@ jobs:
       - name: Build SvelteKit website
         run: |
           cd website
-          npm run build
+          npm run build --prod
 
       - name: Deploy SvelteKit website
         run: |
